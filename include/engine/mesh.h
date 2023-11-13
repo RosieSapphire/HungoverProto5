@@ -7,6 +7,7 @@
 
 /**
  * struct mesh - Mesh Structure
+ * @name: Mesh Name
  * @num_verts: Number of Vertices
  * @num_indis: Number of Indices
  * @verts: Vertices Array
@@ -23,5 +24,6 @@ struct mesh
 struct mesh *mesh_create_data(const char *name, const u16 num_verts,
 			      const u16 num_indis, const struct vertex *verts,
 			      const u16 *indis);
+void mesh_destroy(struct mesh *m);
 
 #endif /* _ENGINE_MESH_H_ */

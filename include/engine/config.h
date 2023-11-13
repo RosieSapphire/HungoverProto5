@@ -16,4 +16,7 @@
 #define CONF_NEAR  1
 #define CONF_FAR  256
 
+#define CONF_AUDIO_FREQ 32000
+#define CONF_NUM_AUDIO_BUF 4
+
 #endif /* _ENGINE_CONFIG_H_ */

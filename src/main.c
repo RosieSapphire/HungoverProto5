@@ -4,11 +4,30 @@
 
 #include "engine/util.h"
 #include "engine/config.h"
+#include "engine/sfx.h"
+#include "engine/scene.h"
 
 #include "game/title.h"
+#include "game/testroom.h"
 
 static surface_t *color_buffer;
 static surface_t depth_buffer;
+
+static void (*load_funcs[NUM_SCENES])(void) = {
+	title_load, testroom_load,
+};
+
+static void (*unload_funcs[NUM_SCENES])(void) = {
+	title_unload, testroom_unload,
+};
+
+enum scene_index (*update_funcs[NUM_SCENES])(struct input_parms) = {
+	title_update, testroom_update,
+};
+
+static void (*draw_funcs[NUM_SCENES])(f32) = {
+	title_draw, testroom_draw,
+};
 
 /**
  * _init - Initialization Function
@@ -19,8 +38,12 @@ static void _init(void)
 	      DEPTH_32_BPP, 3, GAMMA_NONE, FILTERS_RESAMPLE);
 	rdpq_init();
 	dfs_init(DFS_DEFAULT_LOCATION);
+	joypad_init();
+
 	debug_init_isviewer();
 	debug_init_usblog();
+
+	sfx_load();
 
 	gl_init();
 
@@ -38,7 +61,7 @@ static void _init(void)
 
 	depth_buffer = surface_alloc(FMT_RGBA16, 320, 240);
 
-	title_load();
+	(*load_funcs[scene_index])();
 }
 
 /**
@@ -50,9 +73,21 @@ static void _draw(f32 subtick)
 	color_buffer = display_get();
 	rdpq_attach(color_buffer, &depth_buffer);
 	gl_context_begin();
-	title_draw(subtick);
+	(*draw_funcs[scene_index])(subtick);
 	gl_context_end();
 	rdpq_detach_show();
+}
+
+/**
+ * _audio - Updates Audio
+ */
+static void _audio(void)
+{
+	if (!audio_can_write())
+		return;
+
+	mixer_poll(audio_write_begin(), audio_get_buffer_length());
+	audio_write_end();
 }
 
 /**
@@ -76,13 +111,30 @@ int main(void)
 		ticks_accum += ticks_delta;
 		while (ticks_accum >= CONF_DELTATICKS)
 		{
-			title_update();
+			joypad_poll();
+			struct input_parms iparms = {
+				joypad_get_buttons_pressed(JOYPAD_PORT_1),
+				joypad_get_buttons_held(JOYPAD_PORT_1),
+				joypad_get_inputs(JOYPAD_PORT_1),
+			};
+
+			const enum scene_index scene_ind_last = scene_index;
+
+			scene_index = (*update_funcs[scene_index])(iparms);
+
+			if (scene_ind_last != scene_index)
+			{
+				(*load_funcs[scene_index])();
+				(*unload_funcs[scene_ind_last])();
+			}
+
 			ticks_accum -= CONF_DELTATICKS;
 		}
 
 		const f32 subtick = (f32)ticks_accum / (f32)CONF_DELTATICKS;
 
 		_draw(subtick);
+		_audio();
 	}
 
 	return (0);

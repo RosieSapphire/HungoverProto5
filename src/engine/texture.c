@@ -28,3 +28,13 @@ struct texture texture_create_file(const char *path)
 
 	return (t);
 }
+
+/**
+ * texture_destroy - Destroys a Texture
+ * @t: Texture to Destroy
+ */
+void texture_destroy(struct texture *t)
+{
+	glDeleteTextures(1, &t->id);
+	sprite_free(t->spr);
+}

@@ -17,5 +17,6 @@ struct texture
 };
 
 struct texture texture_create_file(const char *path);
+void texture_destroy(struct texture *t);
 
 #endif /* _ENGINE_TEXTURE_H_ */

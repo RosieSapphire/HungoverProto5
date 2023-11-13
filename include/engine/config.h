@@ -14,7 +14,7 @@
 #define CONF_NAME_MAX 128
 
 #define CONF_NEAR  1
-#define CONF_FAR  256
+#define CONF_FAR  1024
 
 #define CONF_AUDIO_FREQ 32000
 #define CONF_NUM_AUDIO_BUF 4

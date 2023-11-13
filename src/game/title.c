@@ -8,6 +8,7 @@
 #include "game/title.h"
 
 static struct texture title_text;
+static struct texture proto_text;
 static struct scene *scene;
 static f32 timer_last, timer;
 
@@ -26,6 +27,8 @@ void title_load(void)
 	const u16 indis[] = {0, 1, 2, 2, 1, 3};
 
 	title_text = texture_create_file("rom:/title_text.ia8.sprite");
+	proto_text = texture_create_file("rom:/proto5.ia8.sprite");
+
 	scene = malloc(sizeof(*scene));
 	scene->num_meshes = 1;
 	scene->meshes = malloc(sizeof(struct mesh *));
@@ -71,19 +74,17 @@ enum scene_index title_update(struct input_parms iparms)
  * _title_setup_wiggle - Sets up Model Matrix with Wiggle for Title
  * @subtick: Delta Value between Frames
  */
-static void _title_setup_wiggle(f32 subtick)
+static void _title_setup_wiggle(f32 timer_lerp, u8 offset)
 {
-	const f32 timer_lerp = lerpf(timer_last, timer, subtick);
 	const f32 pos_off[3] = {
-		sinf(timer_lerp) * 3,
-		sinf(timer_lerp * 1.5f) * 3,
-		-128.0f,
+		sinf(timer_lerp + offset) * 3,
+		sinf((timer_lerp + offset) * 1.5f) * 3,
+		0,
 	};
-	const f32 rot_off = sinf(timer_lerp) * 4;
+	const f32 rot_off = sinf(timer_lerp + offset) * 4;
 
 	glTranslatef(pos_off[0], pos_off[1], pos_off[2]);
 	glRotatef(rot_off, 0, 0, 1);
-
 }
 
 /**
@@ -92,43 +93,42 @@ static void _title_setup_wiggle(f32 subtick)
  */
 void title_draw(f32 subtick)
 {
-	struct mesh *text_mesh = scene->meshes[0];
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
 
 	glClearColor(0, 0, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(3, GL_FLOAT, sizeof(struct vertex),
-		 text_mesh->verts->pos);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glTexCoordPointer(2, GL_FLOAT, sizeof(struct vertex),
-		 text_mesh->verts->uv);
-	glEnableClientState(GL_COLOR_ARRAY);
-	glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(struct vertex),
-		 text_mesh->verts->col);
-
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, title_text.id);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	_title_setup_wiggle(subtick);
-
 	const f32 timer_lerp = lerpf(timer_last, timer, subtick);
 	const f32 intro_zoom_value =
 		smoothf(0, 720, fminf(timer_lerp * 0.35f, 1.0f));
+	const struct mesh *text_mesh = scene->meshes[0];
 
-	glTranslatef(0, 0, (intro_zoom_value - 720) * 0.356f);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	_title_setup_wiggle(timer_lerp, 0);
+	glTranslatef(0, 0, ((intro_zoom_value - 720) * 0.356f) - 128.0f);
 	glRotatef(intro_zoom_value, 0, 0, 1);
+	mesh_draw(text_mesh, title_text.id);
 
-	glDrawElements(GL_TRIANGLES, text_mesh->num_indis,
-		GL_UNSIGNED_SHORT, text_mesh->indis);
+	const f32 timer_lerp_slow = timer_lerp * 0.333f;
+	u8 blink = (u8)((timer_lerp_slow - (u32)timer_lerp_slow) * 3.0f);
 
-	glBindTexture(GL_TEXTURE_2D, 0);
-	glDisable(GL_TEXTURE_2D);
+	if (!blink)
+	{
+		glDisable(GL_DEPTH_TEST);
+		glDisable(GL_BLEND);
+		return;
+	}
 
-	glDisableClientState(GL_COLOR_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisableClientState(GL_VERTEX_ARRAY);
+	glLoadIdentity();
+	glTranslatef(0, -64, -128);
+	glScalef(1.0f, 0.5f, 1.0f);
+	mesh_draw(text_mesh, proto_text.id);
 
+	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_BLEND);
 }

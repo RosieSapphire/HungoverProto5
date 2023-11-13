@@ -25,5 +25,6 @@ struct mesh *mesh_create_data(const char *name, const u16 num_verts,
 			      const u16 num_indis, const struct vertex *verts,
 			      const u16 *indis);
 void mesh_destroy(struct mesh *m);
+void mesh_draw(const struct mesh *m, const u32 tid);
 
 #endif /* _ENGINE_MESH_H_ */

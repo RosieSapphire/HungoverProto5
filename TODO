@@ -1,0 +1,3 @@
+- Make it so that the meshes are not baked into the .scn file, and in fact have
+their own format, which gets referenced by the scene file,
+via path or something.

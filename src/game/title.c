@@ -72,7 +72,8 @@ enum scene_index title_update(struct input_parms iparms)
 
 /**
  * _title_setup_wiggle - Sets up Model Matrix with Wiggle for Title
- * @subtick: Delta Value between Frames
+ * @timer_lerp: Timer lerped with Subtick
+ * @offset: Offsets the Jiggle effect by time
  */
 static void _title_setup_wiggle(f32 timer_lerp, u8 offset)
 {

@@ -7,17 +7,29 @@
 static struct scene scene;
 static f32 angle_last, angle;
 
+/**
+ * testroom_load - Loads assets for Testroom
+ */
 void testroom_load(void)
 {
 	scene_read_file(&scene, "rom:/test.scn");
 	angle_last = angle = 0.0f;
 }
 
+/**
+ * testroom_unload - Unloads assets for Testroom
+ */
 void testroom_unload(void)
 {
 	scene_destroy(&scene);
 }
 
+/**
+ * testroom_update - Updates Testroom and all its stuff
+ * @iparms: Input Parameters
+ *
+ * Return: Desired Next Scene Index
+ */
 enum scene_index testroom_update(struct input_parms iparms)
 {
 	if (iparms.press.start)
@@ -29,6 +41,10 @@ enum scene_index testroom_update(struct input_parms iparms)
 	return (SCENE_TESTROOM);
 }
 
+/**
+ * testroom_draw - Draws all the stuff for Testroom
+ * @subtick: Delta Value Between Frames
+ */
 void testroom_draw(f32 subtick)
 {
 	glClearColor(0.1f, 0.2f, 0.3f, 1.0f);

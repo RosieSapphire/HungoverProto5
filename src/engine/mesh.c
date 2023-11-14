@@ -23,13 +23,12 @@ static void _mesh_debug(const struct mesh *m)
 
 /**
  * mesh_create_data - Creates Mesh from Data
+ * @m: Mesh to Write to
  * @name: Mesh Name
  * @num_verts: Number of Vertices
  * @num_indis: Number of Indices
  * @verts: Vertices Array
  * @indis: Indices Array
- *
- * Return: Constructed Mesh
  */
 void mesh_create_data(struct mesh *m, const char *name, const u16 num_verts,
 		      const u16 num_indis, const struct vertex *verts,
@@ -62,6 +61,11 @@ void mesh_destroy(struct mesh *m)
 	m->verts = NULL;
 }
 
+/**
+ * mesh_draw - Draws a Mesh
+ * @m: Mesh to be Drawn
+ * @tid: OpenGL Texture ID
+ */
 void mesh_draw(const struct mesh *m, const u32 tid)
 {
 	glEnableClientState(GL_VERTEX_ARRAY);

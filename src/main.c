@@ -91,10 +91,9 @@ static void _audio(void)
  */
 int main(void)
 {
-	_init();
-
 	u32 ticks_last, ticks_now, ticks_accum, ticks_delta;
 
+	_init();
 	ticks_last = ticks_accum = 0;
 	while (1)
 	{
@@ -130,6 +129,5 @@ int main(void)
 		_draw(subtick);
 		_audio();
 	}
-
 	return (0);
 }

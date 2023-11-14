@@ -5,6 +5,11 @@
 
 enum scene_index scene_index = SCENE_TITLE;
 
+/**
+ * scene_read_file - Reads Scene Object from File
+ * @s: Scene Read Output
+ * @path: Path to File to Read from
+ */
 void scene_read_file(struct scene *s, const char *path)
 {
 	FILE *f = fopen(path, "rb");

@@ -31,11 +31,10 @@ static void _mesh_debug(const struct mesh *m)
  *
  * Return: Constructed Mesh
  */
-struct mesh *mesh_create_data(const char *name, const u16 num_verts,
-			      const u16 num_indis, const struct vertex *verts,
-			      const u16 *indis)
+void mesh_create_data(struct mesh *m, const char *name, const u16 num_verts,
+		      const u16 num_indis, const struct vertex *verts,
+		      const u16 *indis)
 {
-	struct mesh *m = malloc(sizeof(*m));
 	const u32 verts_size = sizeof(*m->verts) * num_verts;
 	const u32 indis_size = sizeof(*m->indis) * num_indis;
 
@@ -47,8 +46,6 @@ struct mesh *mesh_create_data(const char *name, const u16 num_verts,
 	memcpy(m->verts, verts, verts_size);
 	memcpy(m->indis, indis, indis_size);
 	_mesh_debug(m);
-
-	return (m);
 }
 
 /**

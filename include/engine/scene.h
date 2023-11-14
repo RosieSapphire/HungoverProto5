@@ -26,9 +26,11 @@ extern enum scene_index scene_index;
 struct scene
 {
 	u16 num_meshes;
-	struct mesh **meshes;
+	struct mesh *meshes;
 };
 
+void scene_read_file(struct scene *s, const char *path);
+void scene_draw(const struct scene *s);
 void scene_destroy(struct scene *s);
 
 #endif /* _ENGINE_SCENE_H_ */

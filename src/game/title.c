@@ -31,8 +31,8 @@ void title_load(void)
 
 	scene = malloc(sizeof(*scene));
 	scene->num_meshes = 1;
-	scene->meshes = malloc(sizeof(struct mesh *));
-	scene->meshes[0] = mesh_create_data("Test", 4, 6, verts, indis);
+	scene->meshes = malloc(sizeof(struct mesh) * 1);
+	mesh_create_data(scene->meshes + 0, "Test", 4, 6, verts, indis);
 
 	timer_last = timer = 0.0f;
 
@@ -105,7 +105,7 @@ void title_draw(f32 subtick)
 	const f32 timer_lerp = lerpf(timer_last, timer, subtick);
 	const f32 intro_zoom_value =
 		smoothf(0, 720, fminf(timer_lerp * 0.35f, 1.0f));
-	const struct mesh *text_mesh = scene->meshes[0];
+	const struct mesh *text_mesh = scene->meshes + 0;
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

@@ -20,7 +20,7 @@ $(BIN): $(OBJ)
 	$(CC) $(CFLAGS) -c $^ $(INC)
 
 clean:
-	rm -rf $(BIN) *.scn *.o
+	rm -rf $(BIN) *.scn *.mdl *.o
 
 betty-style:
 	betty-style --allow-global-variables $(BETTY_SCAN)

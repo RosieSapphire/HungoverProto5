@@ -12,7 +12,7 @@ static f32 angle_last, angle;
  */
 void testroom_load(void)
 {
-	scene_read_file(&scene, "rom:/test.scn");
+	scene_read_file(&scene, "rom:/Test.scn");
 	angle_last = angle = 0.0f;
 }
 

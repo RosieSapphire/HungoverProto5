@@ -5,44 +5,8 @@
 #include <assimp/cimport.h>
 #include <assimp/postprocess.h>
 
+#include "util.h"
 #include "scene.h"
-
-static size_t _fwriteflipu16(const u16 *ptr, FILE *stream)
-{
-	u16 flip = ((*ptr >> 8) | (*ptr << 8));
-
-	return (fwrite(&flip, sizeof(u16), 1, stream));
-}
-
-static size_t _fwriteflipf32(const f32 *ptr, FILE *stream)
-{
-	u32 tmp = *((u32 *)ptr);
-
-	tmp = ((tmp << 8) & 0xFF00FF00) | ((tmp >> 8) & 0x00FF00FF);
-	tmp = (tmp << 16) | (tmp >> 16);
-
-	f32 num = (*((f32 *)&tmp));
-
-	return (fwrite(&num, sizeof(f32), 1, stream));
-}
-
-static void _freadflipu16(u16 *ptr, FILE *stream)
-{
-	fread(ptr, sizeof(u16), 1, stream);
-	*ptr = ((*ptr >> 8) | (*ptr << 8));
-}
-
-static void _freadflipf32(f32 *ptr, FILE *stream)
-{
-	fread(ptr, sizeof(f32), 1, stream);
-
-	u32 tmp = *((u32 *)ptr);
-
-	tmp = ((tmp << 8) & 0xFF00FF00) | ((tmp >> 8) & 0x00FF00FF);
-	tmp = (tmp << 16) | (tmp >> 16);
-
-	*ptr = (*((f32 *)&tmp));
-}
 
 /**
  * _scene_debug_assimp - Debugs everything for Scene Structure
@@ -85,10 +49,9 @@ static void _scene_convert_assimp(const struct aiScene *si, struct scene *so)
 	{
 		const struct aiMesh *aimesh = si->mMeshes[i];
 		struct mesh *mesh = so->meshes + i;
+		const u32 name_len = strlen(aimesh->mName.data);
 
-		strncpy(mesh->name, aimesh->mName.data,
-	  		strlen(aimesh->mName.data));
-
+		strncpy(mesh->name, aimesh->mName.data, name_len);
 		mesh->num_verts = aimesh->mNumVertices;
 		mesh->verts = malloc(sizeof(struct vertex) * mesh->num_verts);
 		for (u16 j = 0; j < mesh->num_verts; j++)
@@ -121,6 +84,44 @@ static void _scene_convert_assimp(const struct aiScene *si, struct scene *so)
 	}
 }
 
+static void _scene_write_mesh_file(const struct mesh *m, const char *scnpath,
+				   FILE *scnfile)
+{
+	const u32 strlength = strlen(scnpath);
+	char mdlpath[512];
+	char *scnpath_crop = malloc(strlength - 2);
+
+	strncpy(scnpath_crop, scnpath, strlength - 3);
+	scnpath_crop[strlength - 4] = 0;
+	sprintf(mdlpath, "%s.%s.mdl", scnpath_crop, m->name);
+
+	FILE *f = fopen(mdlpath, "wb");
+
+	fwrite(m->name, sizeof(char), CONF_NAME_MAX, f);
+	fwriteflipu16(&m->num_verts, f);
+	fwriteflipu16(&m->num_indis, f);
+	for (u16 j = 0; j < m->num_verts; j++)
+	{
+		const struct vertex *v = m->verts + j;
+
+		fwriteflipf32(v->pos + 0, f);
+		fwriteflipf32(v->pos + 1, f);
+		fwriteflipf32(v->pos + 2, f);
+
+		fwriteflipf32(v->uv + 0, f);
+		fwriteflipf32(v->uv + 1, f);
+
+		fwrite(v->col, sizeof(u32), 1, f);
+	}
+
+	for (u16 j = 0; j < m->num_indis; j++)
+		fwriteflipu16(m->indis + j, f);
+
+	fclose(f);
+
+	fwrite(mdlpath, sizeof(char), CONF_NAME_MAX, scnfile);
+}
+
 /**
  * _scene_write_file - Writes Converted Scene to File
  * @s: Scene to Write
@@ -137,73 +138,83 @@ static void _scene_write_file(const struct scene *s, const char *outpath)
 		f = fopen(outpath, "wb");
 	}
 
-	_fwriteflipu16(&s->num_meshes, f);
+	fwriteflipu16(&s->num_meshes, f);
 	for (u16 i = 0; i < s->num_meshes; i++)
 	{
-		const struct mesh *m = s->meshes + i;
-
-		fwrite(m->name, sizeof(char), CONF_NAME_MAX, f);
-		_fwriteflipu16(&m->num_verts, f);
-		_fwriteflipu16(&m->num_indis, f);
-		for (u16 j = 0; j < m->num_verts; j++)
-		{
-			const struct vertex *v = m->verts + j;
-
-			_fwriteflipf32(v->pos + 0, f);
-			_fwriteflipf32(v->pos + 1, f);
-			_fwriteflipf32(v->pos + 2, f);
-
-			_fwriteflipf32(v->uv + 0, f);
-			_fwriteflipf32(v->uv + 1, f);
-
-			fwrite(v->col, sizeof(u32), 1, f);
-		}
-
-		for (u16 j = 0; j < m->num_indis; j++)
-			_fwriteflipu16(m->indis + j, f);
+		_scene_write_mesh_file(s->meshes + i, outpath, f);
 	}
 
 	fclose(f);
 }
 
+static void _scene_import_test_mesh(struct scene *s, const char *mpath, u8 i)
+{
+	struct mesh *m = s->meshes + i;
+	FILE *mf = fopen(mpath, "rb");
+
+	if (!mf)
+	{
+		fprintf(stderr, "Couldn't find mesh from '%s'\n", mpath);
+		exit(1);
+	}
+
+	fread(m->name, sizeof(char), CONF_NAME_MAX, mf);
+	freadflipu16(&m->num_verts, mf);
+	freadflipu16(&m->num_indis, mf);
+	m->verts = malloc(sizeof(struct vertex) * m->num_verts);
+	m->indis = malloc(sizeof(u16) * m->num_indis);
+	for (u16 j = 0; j < m->num_verts; j++)
+	{
+		struct vertex *v = m->verts + j;
+
+		freadflipf32(v->pos + 0, mf);
+		freadflipf32(v->pos + 1, mf);
+		freadflipf32(v->pos + 2, mf);
+
+		freadflipf32(v->uv + 0, mf);
+		freadflipf32(v->uv + 1, mf);
+
+		fread(v->col, sizeof(u32), 1, mf);
+	}
+
+	for (u16 j = 0; j < m->num_indis; j++)
+		freadflipu16(m->indis + j, mf);
+
+	fclose(mf);
+}
+
+/**
+ * _scene_import_test - Test Scene Importing
+ * @s: Scene to Import To
+ * @path: Path to Import From
+ */
 static void _scene_import_test(struct scene *s, const char *path)
 {
-	FILE *f = fopen(path, "rb");
+	FILE *sf = fopen(path, "rb");
 
-	if (!f)
+	if (!sf)
 	{
 		fprintf(stderr, "Couldn't find scene at '%s'\n", path);
 		exit(1);
 	}
 
-	_freadflipu16(&s->num_meshes, f);
+	freadflipu16(&s->num_meshes, sf);
+	s->meshes = malloc(sizeof(struct mesh) * s->num_meshes);
 	for (u16 i = 0; i < s->num_meshes; i++)
 	{
-		struct mesh *m = s->meshes + i;
+		char pathbuf[512];
 
-		fread(m->name, sizeof(char), CONF_NAME_MAX, f);
-		_freadflipu16(&m->num_verts, f);
-		_freadflipu16(&m->num_indis, f);
-		for (u16 j = 0; j < m->num_verts; j++)
-		{
-			struct vertex *v = m->verts + j;
-
-			_freadflipf32(v->pos + 0, f);
-			_freadflipf32(v->pos + 1, f);
-			_freadflipf32(v->pos + 2, f);
-
-			_freadflipf32(v->uv + 0, f);
-			_freadflipf32(v->uv + 1, f);
-
-			fread(v->col, sizeof(u32), 1, f);
-		}
+		fread(pathbuf, sizeof(char), CONF_NAME_MAX, sf);
+		_scene_import_test_mesh(s, pathbuf, i);
 	}
 
-	fclose(f);
+	fclose(sf);
 }
 
 /**
  * main - Main Function
+ * @argc: Argument Count
+ * @argv: Argument Values
  *
  * Return: 0 for Success
  */
@@ -212,7 +223,7 @@ int main(int argc, char **argv)
 	if (argc != 3)
 	{
 		printf("Usage %s: [.glb input] [.scn output]\n", argv[0]);
-		return 1;
+		return (1);
 	}
 
 	const char *pathin = argv[1];

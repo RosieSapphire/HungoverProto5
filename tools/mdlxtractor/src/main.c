@@ -43,8 +43,9 @@ static void _scene_debug_assimp(const struct scene *s)
  */
 static void _scene_convert_assimp(const struct aiScene *si, struct scene *so)
 {
+	assert(si->mNumMeshes);
 	so->num_meshes = si->mNumMeshes;
-	so->meshes = malloc(sizeof(struct mesh *) * so->num_meshes);
+	so->meshes = malloc(sizeof(struct mesh) * so->num_meshes);
 	for (u16 i = 0; i < so->num_meshes; i++)
 	{
 		const struct aiMesh *aimesh = si->mMeshes[i];

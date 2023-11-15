@@ -47,14 +47,18 @@ enum scene_index testroom_update(struct input_parms iparms)
  */
 void testroom_draw(f32 subtick)
 {
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
 	glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+	f32 angle_lerp = lerpf(angle_last, angle, subtick);
+
 	glTranslatef(0, 0, -3);
-	glRotatef(lerpf(angle_last, angle, subtick), 0, 0, 1);
-	glRotatef(lerpf(angle_last, angle, subtick), 0, 1, 0);
+	glRotatef(angle_lerp, 0, 1, 0);
 
 	scene_draw(&scene);
+	glDisable(GL_DEPTH_TEST);
 }

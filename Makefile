@@ -7,15 +7,17 @@ src = $(wildcard src/*.c src/*/*.c)
 assets_wav = $(wildcard assets/*.wav)
 assets_png = $(wildcard assets/*.png)
 assets_ttf = $(wildcard assets/*.ttf)
+assets_glb = $(wildcard assets/*.glb)
 
 assets_conv = $(addprefix filesystem/,$(notdir $(assets_wav:%.wav=%.wav64))) \
               $(addprefix filesystem/,$(notdir $(assets_png:%.png=%.sprite))) \
-              $(addprefix filesystem/,$(notdir $(assets_ttf:%.ttf=%.font64)))
+              $(addprefix filesystem/,$(notdir $(assets_ttf:%.ttf=%.font64))) \
+	      $(addprefix filesystem/,$(notdir $(assets_glb:%.glb=%.scn)))
 
 AUDIOCONV_FLAGS=--ym-compress true
 MKSPRITE_FLAGS=-c 1
 
-SCENEIMP=./tools/sceneimp/sceneimp
+MDLXTRACTOR=./tools/mdlxtractor/mdlxtractor
 
 all: $(GAME).z64
 
@@ -29,15 +31,10 @@ filesystem/%.sprite: assets/%.png
 	@echo "    [SPRITE] $@"
 	@$(N64_MKSPRITE) $(MKSPRITE_FLAGS) -o filesystem "$<"
 
-filesystem/debug_font.font64: assets/debug_font.ttf
+filesystem/%.scn: assets/%.glb
 	@mkdir -p $(dir $@)
-	@echo "    [FONT] $@"
-	@$(N64_MKFONT) --size 8 -o filesystem "$<"
-
-filesystem/door_num_font.font64: assets/door_num_font.ttf
-	@mkdir -p $(dir $@)
-	@echo "    [FONT] $@"
-	@$(N64_MKFONT) --size 36 -o filesystem "$<"
+	@echo "    [SCENE] $@"
+	@$(MDLXTRACTOR) $< $@
 
 $(BUILD_DIR)/$(GAME).dfs: $(assets_conv)
 $(BUILD_DIR)/$(GAME).elf: $(src:%.c=$(BUILD_DIR)/%.o)

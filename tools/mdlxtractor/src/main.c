@@ -8,6 +8,16 @@
 #include "util.h"
 #include "scene.h"
 
+static void _scene_debug_node(const struct node *n, const u8 depth)
+{
+	for (u8 i = 0; i < depth; i++)
+		printf("\t");
+	printf("[NODE] %s (Mesh %d)\n", n->name, n->mesh_ind);
+	for (u16 i = 0; i < n->num_children; i++)
+		_scene_debug_node(n->children + i, depth + 1);
+
+}
+
 /**
  * _scene_debug_assimp - Debugs everything for Scene Structure
  * @s: Scene to Debug
@@ -34,6 +44,29 @@ static void _scene_debug_assimp(const struct scene *s)
 				j, col[0], col[1], col[2], col[3]);
 		}
 	}
+
+	_scene_debug_node(&s->root_node, 0);
+}
+
+static void _scene_convert_node(const struct aiNode *ni,
+				struct node *no, u8 depth)
+{
+	strncpy(no->name, ni->mName.data, CONF_NAME_MAX);
+
+	if (!ni->mNumMeshes)
+		no->mesh_ind = 0xFFFF;
+	else
+		no->mesh_ind = ni->mMeshes[0];
+
+	for (u8 i = 0; i < depth; i++)
+		printf("\t");
+	printf("[NODE] %s (Mesh %d)\n", no->name, no->mesh_ind);
+
+	no->num_children = ni->mNumChildren;
+	no->children = malloc(sizeof(struct node) * no->num_children);
+	for (u16 i = 0; i < no->num_children; i++)
+		_scene_convert_node(ni->mChildren[i], no->children + i,
+		      depth + 1);
 }
 
 /**
@@ -83,6 +116,8 @@ static void _scene_convert_assimp(const struct aiScene *si, struct scene *so)
 			}
 		}
 	}
+
+	_scene_convert_node(si->mRootNode, &so->root_node, 0);
 }
 
 static void _scene_write_mesh_file(const struct mesh *m, const char *scnpath,
@@ -231,7 +266,7 @@ int main(int argc, char **argv)
 	const char *pathout = argv[2];
 
 	const u32 flags = aiProcess_Triangulate | aiProcess_FlipUVs |
-		aiProcess_OptimizeGraph | aiProcess_ImproveCacheLocality |
+		aiProcess_ImproveCacheLocality |
 		aiProcess_JoinIdenticalVertices |
 		aiProcess_ValidateDataStructure;
 	const struct aiScene *aiscene = aiImportFile(pathin, flags);

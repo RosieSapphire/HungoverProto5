@@ -6,8 +6,8 @@
 
 struct node
 {
-	char name[CONF_NAME_MAX];
-	u16 mesh_ind, num_children;
+	char mesh_path[CONF_PATH_MAX];
+	u16 num_children, mesh_ind;
 	f32 trans[4][4];
 	struct node *children;
 };

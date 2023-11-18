@@ -1,9 +1,21 @@
 #include <stdio.h>
 #include <libdragon.h>
+#include <GL/gl.h>
 
 #include "engine/scene.h"
 
 enum scene_index scene_index = SCENE_TITLE;
+
+static void _scene_read_node(struct scene *s, struct node *n, FILE *f)
+{
+	fread(n->mesh_path, sizeof(char), CONF_PATH_MAX, f);
+	fread(&n->num_children, sizeof(u16), 1, f);
+	fread(&n->mesh_ind, sizeof(u16), 1, f);
+	fread(n->trans, sizeof(f32), 16, f);
+	n->children = malloc(sizeof(struct node) * n->num_children);
+	for (u16 i = 0; i < n->num_children; i++)
+		_scene_read_node(s, n->children + i, f);
+}
 
 /**
  * scene_read_file - Reads Scene Object from File
@@ -20,20 +32,19 @@ void scene_read_file(struct scene *s, const char *path)
 		exit(1);
 	}
 
+	_scene_read_node(s, &s->root_node, sf);
+
 	fread(&s->num_meshes, sizeof(u16), 1, sf);
 	s->meshes = malloc(sizeof(struct mesh) * s->num_meshes);
 
 	for (u16 i = 0; i < s->num_meshes; i++)
 	{
 		const char *prefix = "rom:/";
-		char mfpath[CONF_NAME_MAX];
-
-		fread(mfpath, sizeof(char), CONF_NAME_MAX, sf);
-
+		const char *mfpath = s->root_node.children[i].mesh_path;
 		char *mfpath_conv = malloc(strlen(mfpath) + strlen(prefix));
 
 		strcpy(mfpath_conv, prefix);
-		strcat(mfpath_conv, mfpath + strlen("filesystem/"));
+		strcat(mfpath_conv, mfpath + strlen("assets/"));
 
 		FILE *mf = fopen(mfpath_conv, "rb");
 
@@ -68,6 +79,21 @@ void scene_read_file(struct scene *s, const char *path)
 	fclose(sf);
 }
 
+static const struct node *_scene_node_from_mesh_ind(const struct node *n,
+					      const u16 mesh_ind)
+{
+	if (n->mesh_ind == mesh_ind)
+		return (n);
+
+	const struct node *nf;
+
+	for (u16 i = 0; i < n->num_children; i++)
+		if ((nf = _scene_node_from_mesh_ind(n->children + i, mesh_ind)))
+			return (nf);
+
+	return (NULL);
+}
+
 /**
  * scene_draw - Draws a Scene and its Meshes
  * @s: Scene to Draw
@@ -75,7 +101,30 @@ void scene_read_file(struct scene *s, const char *path)
 void scene_draw(const struct scene *s)
 {
 	for (u16 i = 0; i < s->num_meshes; i++)
-		mesh_draw(s->meshes + i, 0);
+	{
+		const struct mesh *m = s->meshes + i;
+		const struct node *n =
+			_scene_node_from_mesh_ind(&s->root_node, i);
+
+		if (!n)
+			continue;
+
+		debugf("%s:\n", n->mesh_path);
+		for (u8 i = 0; i < 4; i++)
+		{
+			for (u8 j = 0; j < 4; j++)
+			{
+				debugf("%f ", n->trans[i][j]);
+			}
+			debugf("\n");
+		}
+		debugf("\n");
+
+		glPushMatrix();
+		glMultMatrixf((f32 *)n->trans);
+		mesh_draw(m, 0);
+		glPopMatrix();
+	}
 }
 
 /**

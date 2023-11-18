@@ -8,14 +8,20 @@
 #include "util.h"
 #include "scene.h"
 
+static void _matrix_transpose(f32 *in, f32 *out)
+{
+	for (int i = 0; i < 4; i++)
+		for (int j = 0; j < 4; j++)
+			out[j * 4 + i] = in[i * 4 + j];
+}
+
 static void _scene_debug_node(const struct node *n, const u8 depth)
 {
 	for (u8 i = 0; i < depth; i++)
 		printf("\t");
-	printf("[NODE] %s (Mesh %d)\n", n->name, n->mesh_ind);
+	printf("[NODE %d] '%s'\n", n->mesh_ind, n->mesh_path);
 	for (u16 i = 0; i < n->num_children; i++)
 		_scene_debug_node(n->children + i, depth + 1);
-
 }
 
 /**
@@ -48,25 +54,40 @@ static void _scene_debug_assimp(const struct scene *s)
 	_scene_debug_node(&s->root_node, 0);
 }
 
-static void _scene_convert_node(const struct aiNode *ni,
-				struct node *no, u8 depth)
+static void _mesh_path_from_scene_path(char *out, const char *mname,
+				       const char *scnpath, const u32 maxlen)
 {
-	strncpy(no->name, ni->mName.data, CONF_NAME_MAX);
+	const u32 scnpathlen = strlen(scnpath);
+	char *scnpath_crop = malloc(scnpathlen - 2);
 
+	strncpy(scnpath_crop, scnpath, scnpathlen - 3);
+	scnpath_crop[scnpathlen - 4] = 0;
+	snprintf(out, maxlen, "%s.%s.mdl", scnpath_crop, mname);
+	free(scnpath_crop);
+}
+
+static void _scene_convert_node(const struct scene *s, const char *scnpath,
+				const struct aiNode *ni,
+				struct node *no)
+{
 	if (!ni->mNumMeshes)
+	{
+		strcpy(no->mesh_path, "N/A");
 		no->mesh_ind = 0xFFFF;
+	}
 	else
+	{
+		_mesh_path_from_scene_path(no->mesh_path,
+			     ni->mName.data, scnpath, CONF_PATH_MAX);
 		no->mesh_ind = ni->mMeshes[0];
+	}
 
-	for (u8 i = 0; i < depth; i++)
-		printf("\t");
-	printf("[NODE] %s (Mesh %d)\n", no->name, no->mesh_ind);
-
+	_matrix_transpose((f32 *)&ni->mTransformation, (f32 *)no->trans);
 	no->num_children = ni->mNumChildren;
 	no->children = malloc(sizeof(struct node) * no->num_children);
 	for (u16 i = 0; i < no->num_children; i++)
-		_scene_convert_node(ni->mChildren[i], no->children + i,
-		      depth + 1);
+		_scene_convert_node(s, scnpath,
+		      ni->mChildren[i], no->children + i);
 }
 
 /**
@@ -74,8 +95,11 @@ static void _scene_convert_node(const struct aiNode *ni,
  * @si: Assimp Scene
  * @so: Output Scene
  */
-static void _scene_convert_assimp(const struct aiScene *si, struct scene *so)
+static void _scene_convert_assimp(const struct aiScene *si, struct scene *so,
+				  const char *scnpath)
 {
+	_scene_convert_node(so, scnpath, si->mRootNode, &so->root_node);
+
 	assert(si->mNumMeshes);
 	so->num_meshes = si->mNumMeshes;
 	so->meshes = malloc(sizeof(struct mesh) * so->num_meshes);
@@ -108,29 +132,17 @@ static void _scene_convert_assimp(const struct aiScene *si, struct scene *so)
 		mesh->num_indis = aimesh->mNumFaces * 3;
 		mesh->indis = malloc(sizeof(u16) * mesh->num_indis);
 		for (u16 j = 0; j < mesh->num_indis / 3; j++)
-		{
 			for (u16 k = 0; k < 3; k++)
-			{
 				mesh->indis[j * 3 + k] =
-					aimesh->mFaces[j].mIndices[k];
-			}
-		}
+						aimesh->mFaces[j].mIndices[k];
 	}
-
-	_scene_convert_node(si->mRootNode, &so->root_node, 0);
 }
 
-static void _scene_write_mesh_file(const struct mesh *m, const char *scnpath,
-				   FILE *scnfile)
+static void _scene_write_mesh_file(const struct mesh *m, const char *scnpath)
 {
-	const u32 strlength = strlen(scnpath);
-	char mdlpath[512];
-	char *scnpath_crop = malloc(strlength - 2);
+	char mdlpath[CONF_PATH_MAX];
 
-	strncpy(scnpath_crop, scnpath, strlength - 3);
-	scnpath_crop[strlength - 4] = 0;
-	sprintf(mdlpath, "%s.%s.mdl", scnpath_crop, m->name);
-
+	_mesh_path_from_scene_path(mdlpath, m->name, scnpath, 512);
 	FILE *f = fopen(mdlpath, "wb");
 
 	fwrite(m->name, sizeof(char), CONF_NAME_MAX, f);
@@ -154,8 +166,20 @@ static void _scene_write_mesh_file(const struct mesh *m, const char *scnpath,
 		fwriteflipu16(m->indis + j, f);
 
 	fclose(f);
+}
 
-	fwrite(mdlpath, sizeof(char), CONF_NAME_MAX, scnfile);
+static void _scene_write_node(const struct scene *s, const struct node *n,
+			      const char *scnpath, FILE *scnfile)
+{
+	fwrite(n->mesh_path, sizeof(char), CONF_PATH_MAX, scnfile);
+	fwriteflipu16(&n->num_children, scnfile);
+	fwriteflipu16(&n->mesh_ind, scnfile);
+
+	for (u8 i = 0; i < 16; i++)
+		fwriteflipf32((f32 *)n->trans + i, scnfile);
+
+	for (u16 i = 0; i < n->num_children; i++)
+		_scene_write_node(s, n->children + i, scnpath, scnfile);
 }
 
 /**
@@ -174,18 +198,17 @@ static void _scene_write_file(const struct scene *s, const char *outpath)
 		f = fopen(outpath, "wb");
 	}
 
+	_scene_write_node(s, &s->root_node, outpath, f);
+
 	fwriteflipu16(&s->num_meshes, f);
 	for (u16 i = 0; i < s->num_meshes; i++)
-	{
-		_scene_write_mesh_file(s->meshes + i, outpath, f);
-	}
+		_scene_write_mesh_file(s->meshes + i, outpath);
 
 	fclose(f);
 }
 
-static void _scene_import_test_mesh(struct scene *s, const char *mpath, u8 i)
+static void _scene_read_mesh(struct mesh *m, const char *mpath)
 {
-	struct mesh *m = s->meshes + i;
 	FILE *mf = fopen(mpath, "rb");
 
 	if (!mf)
@@ -219,12 +242,25 @@ static void _scene_import_test_mesh(struct scene *s, const char *mpath, u8 i)
 	fclose(mf);
 }
 
+static void _scene_read_node(struct scene *s, struct node *n, FILE *f)
+{
+	fread(n->mesh_path, sizeof(char), CONF_PATH_MAX, f);
+	freadflipu16(&n->num_children, f);
+	freadflipu16(&n->mesh_ind, f);
+
+	for (u8 i = 0; i < 16; i++)
+		freadflipf32((f32 *)n->trans + i, f);
+
+	for (u16 i = 0; i < n->num_children; i++)
+		_scene_read_node(s, n->children + i, f);
+}
+
 /**
- * _scene_import_test - Test Scene Importing
+ * _scene_read - Test Scene Importing
  * @s: Scene to Import To
  * @path: Path to Import From
  */
-static void _scene_import_test(struct scene *s, const char *path)
+static void _scene_read_file(struct scene *s, const char *path)
 {
 	FILE *sf = fopen(path, "rb");
 
@@ -234,14 +270,21 @@ static void _scene_import_test(struct scene *s, const char *path)
 		exit(1);
 	}
 
+	_scene_read_node(s, &s->root_node, sf);
+
 	freadflipu16(&s->num_meshes, sf);
 	s->meshes = malloc(sizeof(struct mesh) * s->num_meshes);
+	/**
+	 * FIXME: This will cause a crash later
+	 */
 	for (u16 i = 0; i < s->num_meshes; i++)
 	{
-		char pathbuf[512];
+		char path_correct[CONF_PATH_MAX];
 
-		fread(pathbuf, sizeof(char), CONF_NAME_MAX, sf);
-		_scene_import_test_mesh(s, pathbuf, i);
+		sprintf(path_correct, "filesystem/%s",
+	  		s->root_node.children[i].mesh_path + 7);
+
+		_scene_read_mesh(s->meshes + i, path_correct);
 	}
 
 	fclose(sf);
@@ -264,7 +307,6 @@ int main(int argc, char **argv)
 
 	const char *pathin = argv[1];
 	const char *pathout = argv[2];
-
 	const u32 flags = aiProcess_Triangulate | aiProcess_FlipUVs |
 		aiProcess_ImproveCacheLocality |
 		aiProcess_JoinIdenticalVertices |
@@ -279,9 +321,9 @@ int main(int argc, char **argv)
 
 	struct scene s;
 
-	_scene_convert_assimp(aiscene, &s);
+	_scene_convert_assimp(aiscene, &s, pathin);
 	_scene_write_file(&s, pathout);
-	_scene_import_test(&s, pathout);
+	_scene_read_file(&s, pathout);
 	_scene_debug_assimp(&s);
 
 	return (0);

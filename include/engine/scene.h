@@ -2,6 +2,7 @@
 #define _ENGINE_SCENE_H_
 
 #include "engine/mesh.h"
+#include "engine/node.h"
 
 /**
  * enum scene_index - Scene Index
@@ -26,6 +27,7 @@ extern enum scene_index scene_index;
 struct scene
 {
 	u16 num_meshes;
+	struct node root_node;
 	struct mesh *meshes;
 };
 

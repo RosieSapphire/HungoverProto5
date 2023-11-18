@@ -12,8 +12,8 @@
 struct scene
 {
 	u16 num_meshes;
-	struct mesh *meshes;
 	struct node root_node;
+	struct mesh *meshes;
 };
 
 #endif /* _SCENE_H_ */

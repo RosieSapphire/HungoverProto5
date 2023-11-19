@@ -1,19 +1,20 @@
 #include <GL/gl.h>
 
 #include "engine/util.h"
+#include "engine/camera.h"
 
 #include "game/testroom.h"
 
 static struct scene scene;
-static f32 angle_last, angle;
+static struct camera cam;
 
 /**
  * testroom_load - Loads assets for Testroom
  */
 void testroom_load(void)
 {
+	camera_init(&cam);
 	scene_read_file(&scene, "rom:/Test.scn");
-	angle_last = angle = 0.0f;
 }
 
 /**
@@ -35,8 +36,7 @@ enum scene_index testroom_update(struct input_parms iparms)
 	if (iparms.press.start)
 		return (SCENE_TITLE);
 
-	angle_last = angle;
-	angle += 2.4f;
+	camera_update(&cam, iparms);
 
 	return (SCENE_TESTROOM);
 }
@@ -54,10 +54,8 @@ void testroom_draw(f32 subtick)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	f32 angle_lerp = lerpf(angle_last, angle, subtick);
-
+	camera_view_matrix_setup(&cam, subtick);
 	glTranslatef(0, 0, -3);
-	glRotatef(angle_lerp, 0, 1, 0);
 
 	scene_draw(&scene);
 	glDisable(GL_DEPTH_TEST);

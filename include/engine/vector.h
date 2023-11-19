@@ -6,7 +6,7 @@
 /*
  * Basic
  */
-void vector_copy(const f32 *src, f32 *dst, const u8 comp);
+void vector_copy(f32 *dst, const f32 *src, const u8 comp);
 void vector_zero(f32 *vec, const u8 comp);
 void vector_print(f32 *x, const u8 comp);
 
@@ -26,5 +26,6 @@ f32 vector_dot(const f32 *a, const f32 *b, const u8 comp);
 f32 vector_magnitude_sqr(f32 *x, const u8 comp);
 f32 vector_magnitude(f32 *x, const u8 comp);
 f32 vector_normalize(f32 *x, const u8 comp);
+void vector3_cross(const f32 *a, const f32 *b, f32 *o);
 
 #endif /* ENGINE_VECTOR_H_ */

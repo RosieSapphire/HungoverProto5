@@ -2,7 +2,7 @@
 
 #include "engine/scene.h"
 
-enum scene_index scene_index = SCENE_TITLE;
+enum scene_index scene_index = SCENE_TESTROOM;
 
 /**
  * _scene_node_from_mesh_ind - Finds a Node from a Mesh Index

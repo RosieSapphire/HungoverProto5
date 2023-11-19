@@ -34,3 +34,16 @@ f32 vector_normalize(f32 *x, const u8 comp)
 
 	return (mag);
 }
+
+/**
+ * vector3_cross - Vector 3 Cross Product
+ * @a: Vector A
+ * @b: Vector B
+ * @o: Vector Output
+ */
+void vector3_cross(const f32 *a, const f32 *b, f32 *o)
+{
+	o[0] = a[1] * b[2] - a[2] * b[1];
+	o[1] = a[2] * b[0] - a[0] * b[2];
+	o[2] = a[0] * b[1] - a[1] * b[0];
+}

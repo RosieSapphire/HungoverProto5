@@ -5,13 +5,13 @@
 
 /**
  * vector_copy - Copies a Vector
- * @src: Vector Source
  * @dst: Vector Destination
+ * @src: Vector Source
  * @comp: Number of Components
  *
  * Description: Copies a Vector from SRC to DST
  */
-void vector_copy(const f32 *src, f32 *dst, const u8 comp)
+void vector_copy(f32 *dst, const f32 *src, const u8 comp)
 {
 	memcpy(dst, src, sizeof(f32) * comp);
 }

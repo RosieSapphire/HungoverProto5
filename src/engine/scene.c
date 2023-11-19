@@ -109,17 +109,6 @@ void scene_draw(const struct scene *s)
 		if (!n)
 			continue;
 
-		debugf("%s:\n", n->mesh_path);
-		for (u8 i = 0; i < 4; i++)
-		{
-			for (u8 j = 0; j < 4; j++)
-			{
-				debugf("%f ", n->trans[i][j]);
-			}
-			debugf("\n");
-		}
-		debugf("\n");
-
 		glPushMatrix();
 		glMultMatrixf((f32 *)n->trans);
 		mesh_draw(m, 0);

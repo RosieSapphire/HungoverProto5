@@ -4,6 +4,13 @@
 
 enum scene_index scene_index = SCENE_TITLE;
 
+/**
+ * _scene_node_from_mesh_ind - Finds a Node from a Mesh Index
+ * @n: Node to start searching
+ * @mesh_ind: Mesh Index to find
+ *
+ * Return: Const Pointer to Node Found
+ */
 static const struct node *_scene_node_from_mesh_ind(const struct node *n,
 					      const u16 mesh_ind)
 {
@@ -13,8 +20,11 @@ static const struct node *_scene_node_from_mesh_ind(const struct node *n,
 	const struct node *nf;
 
 	for (u16 i = 0; i < n->num_children; i++)
-		if ((nf = _scene_node_from_mesh_ind(n->children + i, mesh_ind)))
+	{
+		nf = _scene_node_from_mesh_ind(n->children + i, mesh_ind);
+		if (nf)
 			return (nf);
+	}
 
 	return (NULL);
 }

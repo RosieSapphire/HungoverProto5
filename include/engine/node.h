@@ -4,6 +4,14 @@
 #include "engine/types.h"
 #include "engine/config.h"
 
+/**
+ * struct node - Node Structure
+ * @mesh_path: Path to Mesh for Node
+ * @num_children: Number of Node Children
+ * @mesh_ind: Mesh Index
+ * @trans: Transformation Matrix
+ * @children: Node Children Array
+ */
 struct node
 {
 	char mesh_path[CONF_PATH_MAX];

@@ -22,6 +22,7 @@ extern enum scene_index scene_index;
 /**
  * struct scene - Scene Structure
  * @num_meshes: Number of Meshes
+ * @root_node: Root Node for the Scene
  * @meshes: Meshes Array
  */
 struct scene

@@ -5,7 +5,12 @@
 
 #include "engine/scene.h"
 
-static void _scene_read_node(struct scene *s, struct node *n, FILE *f)
+/**
+ * _scene_read_node - Reads a Node from a Scene file
+ * @n: Node to Read to
+ * @f: File to Read from
+ */
+static void _scene_read_node(struct node *n, FILE *f)
 {
 	fread(n->mesh_path, sizeof(char), CONF_PATH_MAX, f);
 	fread(&n->num_children, sizeof(u16), 1, f);
@@ -13,9 +18,14 @@ static void _scene_read_node(struct scene *s, struct node *n, FILE *f)
 	fread(n->trans, sizeof(f32), 16, f);
 	n->children = malloc(sizeof(struct node) * n->num_children);
 	for (u16 i = 0; i < n->num_children; i++)
-		_scene_read_node(s, n->children + i, f);
+		_scene_read_node(n->children + i, f);
 }
 
+/**
+ * _scene_read_mesh - Reads a Mesh from its own File
+ * @s: Scene to Read Mesh to
+ * @i: Mesh Index
+ */
 static void _scene_read_mesh(const struct scene *s, u16 i)
 {
 	const char *prefix = "rom:/";
@@ -70,11 +80,9 @@ void scene_read_file(struct scene *s, const char *path)
 		exit(1);
 	}
 
-	_scene_read_node(s, &s->root_node, sf);
-
+	_scene_read_node(&s->root_node, sf);
 	fread(&s->num_meshes, sizeof(u16), 1, sf);
 	s->meshes = malloc(sizeof(struct mesh) * s->num_meshes);
-
 	for (u16 i = 0; i < s->num_meshes; i++)
 		_scene_read_mesh(s, i);
 

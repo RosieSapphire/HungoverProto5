@@ -39,10 +39,11 @@ void camera_update(struct camera *c, const struct input_parms iparms)
 		(f32)(iparms.held.c_up - iparms.held.c_down) * 0.1f;
 	const f32 move_side =
 		(f32)(iparms.held.c_right - iparms.held.c_left) * 0.1f;
-	const u8 go_fast = iparms.held.z + 1;
+	const u8 go_fast = (iparms.held.z > 0) + 1;
 
 	camera_get_focus_now(c, focus);
 	vector_sub(focus, c->eye, forw, 3);
+	vector_normalize(forw, 3);
 	vector3_cross(forw, (f32[3]) {0, 1, 0}, side);
 	vector_scale(forw, move_forw * go_fast, 3);
 	vector_scale(side, move_side * go_fast, 3);
@@ -50,23 +51,7 @@ void camera_update(struct camera *c, const struct input_parms iparms)
 	vector_copy(c->eye_last, c->eye, 3);
 	vector_add(move, forw, move, 3);
 	vector_add(move, side, move, 3);
-	vector_normalize(move, 3);
 	vector_add(c->eye, move, c->eye, 3);
-}
-
-/**
- * camera_get_focus_last - Gets Camera's Focus on Last Frame
- * @c: Camera
- * @out: Focus Last Output
- */
-void camera_get_focus_last(const struct camera *c, f32 *out)
-{
-	const f32 cospl = cosf(c->angles_last[1]);
-
-	vector_copy(out, c->eye_last, 3);
-	out[0] += cosf(c->angles_last[0]) * cospl;
-	out[1] += sinf(c->angles_last[1]);
-	out[2] += sinf(c->angles_last[0]) * cospl;
 }
 
 /**

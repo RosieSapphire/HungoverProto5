@@ -8,6 +8,20 @@
 #include "util.h"
 #include "scene.h"
 
+static u16 _mesh_ind_by_name(const char *name, const struct mesh *meshes,
+			     const u16 num_meshes)
+{
+	for (u16 i = 0; i < num_meshes; i++)
+	{
+		const struct mesh *m = meshes + i;
+
+		if (!strcmp(m->name, name))
+			return (i);
+	}
+
+	return (0xFFFF);
+}
+
 static void _matrix_transpose(f32 *in, f32 *out)
 {
 	for (int i = 0; i < 4; i++)
@@ -52,6 +66,42 @@ static void _scene_debug_assimp(const struct scene *s)
 	}
 
 	_scene_debug_node(&s->root_node, 0);
+
+	printf("\n");
+
+	for (u16 i = 0; i < s->num_anims; i++)
+	{
+		const struct animation *a = s->anims + i;
+
+		printf("[ANIM %d] %s\n", i, a->name);
+		for (u16 j = 0; j < a->num_pos; j++)
+		{
+			const f32 *pos = a->pos_keys[j].val;
+
+			printf("\t[POS %d] %.3f, %.3f, %.3f\n",
+				j, pos[0], pos[1], pos[2]);
+		}
+
+		printf("\n");
+
+		for (u16 j = 0; j < a->num_rot; j++)
+		{
+			const f32 *rot = a->rot_keys[j].val;
+
+			printf("\t[ROTATE %d] %.3f, %.3f, %.3f, %.3f\n",
+				j, rot[0], rot[1], rot[2], rot[3]);
+		}
+
+		printf("\n");
+
+		for (u16 j = 0; j < a->num_sca; j++)
+		{
+			const f32 *sca = a->sca_keys[j].val;
+
+			printf("\t[SCALE %d] %.3f, %.3f, %.3f\n",
+				j, sca[0], sca[1], sca[2]);
+		}
+	}
 }
 
 static void _mesh_path_from_scene_path(char *out, const char *mname,
@@ -136,6 +186,65 @@ static void _scene_convert_assimp(const struct aiScene *si, struct scene *so,
 				mesh->indis[j * 3 + k] =
 						aimesh->mFaces[j].mIndices[k];
 	}
+
+	so->num_anims = si->mNumAnimations;
+	so->anims = malloc(sizeof(struct animation) * so->num_anims);
+	for (u16 i = 0; i < so->num_anims; i++)
+	{
+		const struct aiAnimation *aianim = si->mAnimations[i];
+
+		/*
+		 * FIXME: This assumes that each animation only holds 1 mesh
+		 */
+		const struct aiNodeAnim *aichan = aianim->mChannels[0];
+		struct animation *anim = so->anims + i;
+		const u32 name_len = strlen(aianim->mName.data);
+
+		strncpy(anim->name, aianim->mName.data, name_len);
+
+		anim->num_pos = aichan->mNumPositionKeys;
+		anim->pos_keys =
+			malloc(sizeof(struct vec3_key) * anim->num_pos);
+		for (u16 j = 0; j < anim->num_pos; j++)
+		{
+			struct vec3_key *poskey = anim->pos_keys + j;
+
+			poskey->val[0] = aichan->mPositionKeys[j].mValue.x;
+			poskey->val[1] = aichan->mPositionKeys[j].mValue.y;
+			poskey->val[2] = aichan->mPositionKeys[j].mValue.z;
+		}
+
+		anim->num_rot = aichan->mNumRotationKeys;
+		anim->rot_keys =
+			malloc(sizeof(struct vec4_key) * anim->num_rot);
+		for (u16 j = 0; j < anim->num_rot; j++)
+		{
+			struct vec4_key *rotkey = anim->rot_keys + j;
+
+			rotkey->val[0] = aichan->mRotationKeys[j].mValue.x;
+			rotkey->val[1] = aichan->mRotationKeys[j].mValue.y;
+			rotkey->val[2] = aichan->mRotationKeys[j].mValue.z;
+			rotkey->val[3] = aichan->mRotationKeys[j].mValue.w;
+		}
+
+		anim->num_sca = aichan->mNumScalingKeys;
+		anim->sca_keys =
+			malloc(sizeof(struct vec3_key) * anim->num_sca);
+		for (u16 j = 0; j < anim->num_sca; j++)
+		{
+			struct vec3_key *scakey = anim->sca_keys + j;
+
+			scakey->val[0] = aichan->mScalingKeys[j].mValue.x;
+			scakey->val[1] = aichan->mScalingKeys[j].mValue.y;
+			scakey->val[2] = aichan->mScalingKeys[j].mValue.z;
+		}
+
+		anim->length = (u16)((aianim->mDuration /
+		       aianim->mTicksPerSecond) * 24);
+
+		anim->mesh_ind = _mesh_ind_by_name(aichan->mNodeName.data,
+				     so->meshes, so->num_meshes);
+	}
 }
 
 static void _scene_write_mesh_file(const struct mesh *m, const char *scnpath)
@@ -182,6 +291,42 @@ static void _scene_write_node(const struct scene *s, const struct node *n,
 		_scene_write_node(s, n->children + i, scnpath, scnfile);
 }
 
+static void _scene_write_anim(const struct animation *a, FILE *f)
+{
+	fwrite(a->name, sizeof(char), CONF_NAME_MAX, f);
+	fwriteflipu16(&a->num_pos, f);
+	fwriteflipu16(&a->num_rot, f);
+	fwriteflipu16(&a->num_sca, f);
+	for (u16 j = 0; j < a->num_pos; j++)
+	{
+		struct vec3_key *poskey = a->pos_keys + j;
+
+		fwriteflipf32(poskey->val + 0, f);
+		fwriteflipf32(poskey->val + 1, f);
+		fwriteflipf32(poskey->val + 2, f);
+	}
+	for (u16 j = 0; j < a->num_rot; j++)
+	{
+		struct vec4_key *rotkey = a->rot_keys + j;
+
+		fwriteflipf32(rotkey->val + 0, f);
+		fwriteflipf32(rotkey->val + 1, f);
+		fwriteflipf32(rotkey->val + 2, f);
+		fwriteflipf32(rotkey->val + 3, f);
+	}
+	for (u16 j = 0; j < a->num_sca; j++)
+	{
+		struct vec3_key *scakey = a->sca_keys + j;
+
+		fwriteflipf32(scakey->val + 0, f);
+		fwriteflipf32(scakey->val + 1, f);
+		fwriteflipf32(scakey->val + 2, f);
+	}
+
+	fwriteflipu16(&a->length, f);
+	fwriteflipu16(&a->mesh_ind, f);
+}
+
 /**
  * _scene_write_file - Writes Converted Scene to File
  * @s: Scene to Write
@@ -203,6 +348,10 @@ static void _scene_write_file(const struct scene *s, const char *outpath)
 	fwriteflipu16(&s->num_meshes, f);
 	for (u16 i = 0; i < s->num_meshes; i++)
 		_scene_write_mesh_file(s->meshes + i, outpath);
+
+	fwriteflipu16(&s->num_anims, f);
+	for (u16 i = 0; i < s->num_anims; i++)
+		_scene_write_anim(s->anims + i, f);
 
 	fclose(f);
 }
@@ -255,6 +404,45 @@ static void _scene_read_node(struct scene *s, struct node *n, FILE *f)
 		_scene_read_node(s, n->children + i, f);
 }
 
+static void _scene_read_anim(struct animation *a, FILE *f)
+{
+	fread(a->name, sizeof(char), CONF_NAME_MAX, f);
+	freadflipu16(&a->num_pos, f);
+	freadflipu16(&a->num_rot, f);
+	freadflipu16(&a->num_sca, f);
+	a->pos_keys = malloc(sizeof(struct vec3_key) * a->num_pos);
+	a->rot_keys = malloc(sizeof(struct vec4_key) * a->num_rot);
+	a->sca_keys = malloc(sizeof(struct vec3_key) * a->num_sca);
+	for (u16 j = 0; j < a->num_pos; j++)
+	{
+		struct vec3_key *poskey = a->pos_keys + j;
+
+		freadflipf32(poskey->val + 0, f);
+		freadflipf32(poskey->val + 1, f);
+		freadflipf32(poskey->val + 2, f);
+	}
+	for (u16 j = 0; j < a->num_rot; j++)
+	{
+		struct vec4_key *rotkey = a->rot_keys + j;
+
+		freadflipf32(rotkey->val + 0, f);
+		freadflipf32(rotkey->val + 1, f);
+		freadflipf32(rotkey->val + 2, f);
+		freadflipf32(rotkey->val + 3, f);
+	}
+	for (u16 j = 0; j < a->num_sca; j++)
+	{
+		struct vec3_key *scakey = a->sca_keys + j;
+
+		freadflipf32(scakey->val + 0, f);
+		freadflipf32(scakey->val + 1, f);
+		freadflipf32(scakey->val + 2, f);
+	}
+
+	freadflipu16(&a->length, f);
+	freadflipu16(&a->mesh_ind, f);
+}
+
 /**
  * _scene_read - Test Scene Importing
  * @s: Scene to Import To
@@ -286,6 +474,10 @@ static void _scene_read_file(struct scene *s, const char *path)
 
 		_scene_read_mesh(s->meshes + i, path_correct);
 	}
+
+	freadflipu16(&s->num_anims, sf);
+	for (u16 i = 0; i < s->num_anims; i++)
+		_scene_read_anim(s->anims + i, sf);
 
 	fclose(sf);
 }

@@ -443,6 +443,24 @@ static void _scene_read_anim(struct animation *a, FILE *f)
 	freadflipu16(&a->mesh_ind, f);
 }
 
+static const struct node *_node_from_mesh_ind(const struct node *n,
+					      const u16 mid)
+{
+	if (mid == n->mesh_ind)
+		return (n);
+
+	const struct node *nf;
+
+	for (u16 i = 0; i < n->num_children; i++)
+	{
+		nf = _node_from_mesh_ind(n->children + i, mid);
+		if (nf)
+			return (nf);
+	}
+
+	return (NULL);
+}
+
 /**
  * _scene_read - Test Scene Importing
  * @s: Scene to Import To
@@ -467,10 +485,15 @@ static void _scene_read_file(struct scene *s, const char *path)
 	 */
 	for (u16 i = 0; i < s->num_meshes; i++)
 	{
+		const struct node *n = _node_from_mesh_ind(&s->root_node, i);
+
+		if (!n)
+			continue;
+
 		char path_correct[CONF_PATH_MAX];
 
 		sprintf(path_correct, "filesystem/%s",
-	  		s->root_node.children[i].mesh_path + 7);
+	  		n->mesh_path + strlen("assets/"));
 
 		_scene_read_mesh(s->meshes + i, path_correct);
 	}
@@ -514,9 +537,9 @@ int main(int argc, char **argv)
 	struct scene s;
 
 	_scene_convert_assimp(aiscene, &s, pathin);
+	_scene_debug_assimp(&s);
 	_scene_write_file(&s, pathout);
 	_scene_read_file(&s, pathout);
-	_scene_debug_assimp(&s);
 
 	return (0);
 }

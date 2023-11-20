@@ -36,6 +36,18 @@ void quat_lerp(const f32 *a, const f32 *b, f32 *c, const f32 t)
 	vector_normalize(c, 4);
 }
 
+void matrix_mult(const f32 a[4][4], const f32 b[4][4], f32 o[4][4])
+{
+	f32 a_tmp[4][4];
+
+	memcpy(a_tmp, a, sizeof(f32) * 16);
+	memset(o, 0, sizeof(f32) * 16);
+	for(int row = 0; row < 4; row++)
+		for(int col = 0; col < 4; col++)
+			for(int ind = 0; ind < 4; ind++)
+				o[col][row] += a_tmp[ind][row] * b[col][ind];
+}
+
 /**
  * pos_from_mat - Position from Matrix
  * @mat: The Matrix (Starring Keanu Reeves)

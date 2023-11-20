@@ -23,6 +23,7 @@ f32 wrapf(f32 x, f32 max);
  */
 void projection_setup(void);
 void quat_lerp(const f32 *a, const f32 *b, f32 *c, const f32 t);
+void matrix_mult(const f32 a[4][4], const f32 b[4][4], f32 o[4][4]);
 void pos_from_mat(const f32 *mat, f32 *pos);
 
 #endif /* _ENGINE_UTIL_H_ */

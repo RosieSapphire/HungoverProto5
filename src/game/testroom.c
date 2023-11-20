@@ -37,6 +37,7 @@ enum scene_index testroom_update(struct input_parms iparms)
 		return (SCENE_TITLE);
 
 	camera_update(&cam, iparms);
+	scene_anims_update(&scene);
 
 	return (SCENE_TESTROOM);
 }
@@ -57,6 +58,6 @@ void testroom_draw(f32 subtick)
 	camera_view_matrix_setup(&cam, subtick);
 	glTranslatef(0, 0, -3);
 
-	scene_draw(&scene);
+	scene_draw(&scene, subtick);
 	glDisable(GL_DEPTH_TEST);
 }

@@ -3,6 +3,7 @@
 
 #include "engine/mesh.h"
 #include "engine/node.h"
+#include "engine/animation.h"
 
 /**
  * enum scene_index - Scene Index
@@ -30,10 +31,13 @@ struct scene
 	u16 num_meshes;
 	struct node root_node;
 	struct mesh *meshes;
+	u16 num_anims;
+	struct animation *anims;
 };
 
 void scene_read_file(struct scene *s, const char *path);
-void scene_draw(const struct scene *s);
+void scene_anims_update(struct scene *s);
+void scene_draw(const struct scene *s, const f32 subtick);
 void scene_destroy(struct scene *s);
 
 #endif /* _ENGINE_SCENE_H_ */

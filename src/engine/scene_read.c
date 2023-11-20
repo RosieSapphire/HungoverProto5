@@ -66,6 +66,33 @@ static void _scene_read_mesh(const struct scene *s, u16 i)
 }
 
 /**
+ * _scene_read_animation - Reads an Animation from a Scene Struct
+ */
+static void _scene_read_animation(struct animation *a, FILE *f)
+{
+	fread(a->name, sizeof(char), CONF_NAME_MAX, f);
+	fread(&a->num_pos, sizeof(u16), 1, f);
+	fread(&a->num_rot, sizeof(u16), 1, f);
+	fread(&a->num_sca, sizeof(u16), 1, f);
+	a->pos_keys = malloc(sizeof(struct vec3_key) * a->num_pos);
+	a->rot_keys = malloc(sizeof(struct vec4_key) * a->num_rot);
+	a->sca_keys = malloc(sizeof(struct vec3_key) * a->num_sca);
+	for (u16 j = 0; j < a->num_pos; j++)
+		fread(a->pos_keys + j, sizeof(f32), 3, f);
+
+	for (u16 j = 0; j < a->num_rot; j++)
+		fread(a->rot_keys + j, sizeof(f32), 4, f);
+
+	for (u16 j = 0; j < a->num_sca; j++)
+		fread(a->sca_keys + j, sizeof(f32), 3, f);
+
+	fread(&a->length, sizeof(u16), 1, f);
+	fread(&a->mesh_ind, sizeof(u16), 1, f);
+	a->frame = a->frame_last = 0;
+	a->flags = ANIM_IS_PLAYING | ANIM_LOOPS;
+}
+
+/**
  * scene_read_file - Reads Scene Object from File
  * @s: Scene Read Output
  * @path: Path to File to Read from
@@ -81,10 +108,16 @@ void scene_read_file(struct scene *s, const char *path)
 	}
 
 	_scene_read_node(&s->root_node, sf);
+
 	fread(&s->num_meshes, sizeof(u16), 1, sf);
 	s->meshes = malloc(sizeof(struct mesh) * s->num_meshes);
 	for (u16 i = 0; i < s->num_meshes; i++)
 		_scene_read_mesh(s, i);
+
+	fread(&s->num_anims, sizeof(u16), 1, sf);
+	s->anims = malloc(sizeof(struct animation) * s->num_anims);
+	for (u16 i = 0; i < s->num_anims; i++)
+		_scene_read_animation(s->anims + i, sf);
 
 	fclose(sf);
 }

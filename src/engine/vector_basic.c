@@ -13,7 +13,8 @@
  */
 void vector_copy(f32 *dst, const f32 *src, const u8 comp)
 {
-	memcpy(dst, src, sizeof(f32) * comp);
+	for (u8 i = 0; i < comp; i++)
+		dst[i] = src[i];
 }
 
 /**

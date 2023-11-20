@@ -105,14 +105,14 @@ static void _scene_debug_assimp(const struct scene *s)
 }
 
 static void _mesh_path_from_scene_path(char *out, const char *mname,
-				       const char *scnpath, const u32 maxlen)
+				       const char *scnpath)
 {
 	const u32 scnpathlen = strlen(scnpath);
-	char *scnpath_crop = malloc(scnpathlen - 2);
+	char *scnpath_crop = malloc(scnpathlen);
 
-	strncpy(scnpath_crop, scnpath, scnpathlen - 3);
+	strncpy(scnpath_crop, scnpath, scnpathlen);
 	scnpath_crop[scnpathlen - 4] = 0;
-	snprintf(out, maxlen, "%s.%s.mdl", scnpath_crop, mname);
+	sprintf(out, "%s.%s.mdl", scnpath_crop, mname);
 	free(scnpath_crop);
 }
 
@@ -128,7 +128,7 @@ static void _scene_convert_node(const struct scene *s, const char *scnpath,
 	else
 	{
 		_mesh_path_from_scene_path(no->mesh_path,
-			     ni->mName.data, scnpath, CONF_PATH_MAX);
+			     ni->mName.data, scnpath);
 		no->mesh_ind = ni->mMeshes[0];
 	}
 
@@ -157,7 +157,7 @@ static void _scene_convert_assimp(const struct aiScene *si, struct scene *so,
 	{
 		const struct aiMesh *aimesh = si->mMeshes[i];
 		struct mesh *mesh = so->meshes + i;
-		const u32 name_len = strlen(aimesh->mName.data);
+		const u32 name_len = strlen(aimesh->mName.data) + 1;
 
 		strncpy(mesh->name, aimesh->mName.data, name_len);
 		mesh->num_verts = aimesh->mNumVertices;
@@ -251,8 +251,15 @@ static void _scene_write_mesh_file(const struct mesh *m, const char *scnpath)
 {
 	char mdlpath[CONF_PATH_MAX];
 
-	_mesh_path_from_scene_path(mdlpath, m->name, scnpath, 512);
+	_mesh_path_from_scene_path(mdlpath, m->name, scnpath);
 	FILE *f = fopen(mdlpath, "wb");
+
+	if (f)
+	{
+		fclose(f);
+		remove(mdlpath);
+		f = fopen(mdlpath, "wb");
+	}
 
 	fwrite(m->name, sizeof(char), CONF_NAME_MAX, f);
 	fwriteflipu16(&m->num_verts, f);

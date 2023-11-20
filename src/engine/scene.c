@@ -14,32 +14,41 @@ void scene_anims_update(struct scene *s)
 }
 
 static void _scene_draw_node(const struct scene *s,
-			     const struct node *n, const f32 subtick,
-			     f32 root_mat[4][4])
+			     const struct node *n, const f32 subtick)
 {
-	matrix_mult(root_mat, n->trans, root_mat);
-
 	if (n->mesh_ind == 0xFFFF)
-		goto try_children;
+	{
+		for (int i = 0; i < n->num_children; i++)
+			_scene_draw_node(s, n->children + i, subtick);
+
+		return;
+	}
 
 	const struct mesh *m = s->meshes + n->mesh_ind;
+	u16 anim_ind = 0xFFFF;
 
-	glPushMatrix();
-	// glMultMatrixf((f32 *)root_mat);
-	glMultMatrixf((f32 *)n->trans);
 	for (u16 i = 0; i < s->num_anims; i++)
 	{
-		if (s->anims[i].mesh_ind != n->mesh_ind)
-			continue;
-
-		animation_matrix_multiply(s->anims + i, subtick);
+		if (s->anims[i].mesh_ind == n->mesh_ind)
+		{
+			anim_ind = i;
+			break;
+		}
 	}
-	mesh_draw(m, 0);
-	glPopMatrix();
 
-try_children:
+	glPushMatrix();
+
+	if (anim_ind != 0xFFFF)
+		animation_matrix_multiply(s->anims + anim_ind, subtick);
+	else
+		glMultMatrixf((f32 *)n->trans);
+
+	mesh_draw(m, 0);
+
 	for (u16 i = 0; i < n->num_children; i++)
-		_scene_draw_node(s, n->children + i, subtick, root_mat);
+		_scene_draw_node(s, n->children + i, subtick);
+
+	glPopMatrix();
 }
 
 /**
@@ -49,40 +58,7 @@ try_children:
  */
 void scene_draw(const struct scene *s, const f32 subtick)
 {
-	f32 ident[4][4] = {
-		{1, 0, 0, 0},
-		{0, 1, 0, 0},
-		{0, 0, 1, 0},
-		{0, 0, 0, 1},
-	};
-
-	_scene_draw_node(s, &s->root_node, subtick, ident);
-
-	/*
-	for (u16 i = 0; i < s->num_meshes; i++)
-	{
-		const struct mesh *m = s->meshes + i;
-		const struct node *n =
-			_scene_node_from_mesh_ind(&s->root_node, i);
-
-
-		if (!n)
-			continue;
-
-		glPushMatrix();
-		glMultMatrixf((f32 *)n->trans);
-		for (u16 j = 0; j < s->num_anims; j++)
-		{
-			if (s->anims[j].mesh_ind != i)
-				continue;
-
-			animation_matrix_multiply(s->anims + j, subtick);
-		}
-
-		mesh_draw(m, 0);
-		glPopMatrix();
-	}
-	*/
+	_scene_draw_node(s, &s->root_node, subtick);
 }
 
 /**

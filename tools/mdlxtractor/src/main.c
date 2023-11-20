@@ -198,7 +198,7 @@ static void _scene_convert_assimp(const struct aiScene *si, struct scene *so,
 		 */
 		const struct aiNodeAnim *aichan = aianim->mChannels[0];
 		struct animation *anim = so->anims + i;
-		const u32 name_len = strlen(aianim->mName.data);
+		const u32 name_len = strlen(aianim->mName.data) + 1;
 
 		strncpy(anim->name, aianim->mName.data, name_len);
 
@@ -529,10 +529,8 @@ int main(int argc, char **argv)
 
 	const char *pathin = argv[1];
 	const char *pathout = argv[2];
-	const u32 flags = aiProcess_Triangulate | aiProcess_FlipUVs |
-		aiProcess_ImproveCacheLocality |
-		aiProcess_JoinIdenticalVertices |
-		aiProcess_ValidateDataStructure;
+	const u32 flags = aiProcess_Triangulate | aiProcess_FlipUVs
+		| aiProcess_JoinIdenticalVertices;
 	const struct aiScene *aiscene = aiImportFile(pathin, flags);
 
 	if (!aiscene)

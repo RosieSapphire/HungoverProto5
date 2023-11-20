@@ -61,6 +61,12 @@ void scene_draw(const struct scene *s, const f32 subtick)
 	_scene_draw_node(s, &s->root_node, subtick);
 }
 
+void scene_anims_set_flags(struct scene *s, u8 flags)
+{
+	for (u16 i = 0; i < s->num_anims; i++)
+		s->anims[i].flags = flags;
+}
+
 /**
  * scene_destroy - Destroys a Scene
  * @s: Scene to Destroy
@@ -71,4 +77,5 @@ void scene_destroy(struct scene *s)
 		mesh_destroy(s->meshes + i);
 
 	s->num_meshes = 0;
+	s->num_anims = 0;
 }

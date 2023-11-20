@@ -38,6 +38,7 @@ struct scene
 void scene_read_file(struct scene *s, const char *path);
 void scene_anims_update(struct scene *s);
 void scene_draw(const struct scene *s, const f32 subtick);
+void scene_anims_set_flags(struct scene *s, u8 flags);
 void scene_destroy(struct scene *s);
 
 #endif /* _ENGINE_SCENE_H_ */

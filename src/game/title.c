@@ -9,7 +9,7 @@
 
 static struct texture title_text;
 static struct texture proto_text;
-static struct scene *scene;
+static struct scene scene;
 static f32 timer_last, timer;
 
 /**
@@ -29,12 +29,11 @@ void title_load(void)
 	title_text = texture_create_file("rom:/title_text.ia8.sprite");
 	proto_text = texture_create_file("rom:/proto5.ia8.sprite");
 
-	scene = malloc(sizeof(*scene));
-	scene->num_meshes = 1;
-	scene->meshes = malloc(sizeof(struct mesh) * 1);
-	mesh_create_data(scene->meshes + 0, "Test", 4, 6, verts, indis);
-	scene->num_anims = 0;
-	scene->anims = NULL;
+	scene.num_meshes = 1;
+	scene.meshes = malloc(sizeof(struct mesh));
+	mesh_create_data(scene.meshes, "Quad", 4, 6, verts, indis);
+	scene.num_anims = 0;
+	scene.anims = NULL;
 
 	timer_last = timer = 0.0f;
 
@@ -48,7 +47,7 @@ void title_load(void)
 void title_unload(void)
 {
 	timer_last = timer = 0.0f;
-	scene_destroy(scene);
+	scene_destroy(&scene);
 	texture_destroy(&title_text);
 }
 
@@ -102,13 +101,18 @@ void title_draw(f32 subtick)
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 
-	glClearColor(0, 0, 0, 1);
+	const f32 timer_lerp = lerpf(timer_last, timer, subtick);
+	const f32 stl1 = (sinf(timer_lerp) + 1.0f) / 4.0f;
+	const f32 stl2 = (sinf(timer_lerp + 69) + 1.0f) / 4.0f;
+	const f32 ctl = (cosf(timer_lerp) + 1.0f) / 4.0f;
+
+	glClearColor(stl1, ctl, stl2, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	const f32 timer_lerp = lerpf(timer_last, timer, subtick);
+	debugf("%f\n", timer_lerp);
 	const f32 intro_zoom_value =
 		smoothf(0, 720, fminf(timer_lerp * 0.35f, 1.0f));
-	const struct mesh *text_mesh = scene->meshes + 0;
+	const struct mesh *text_mesh = scene.meshes + 0;
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

@@ -13,7 +13,7 @@
 #define CONF_PATH_MAX 128
 
 #define CONF_NEAR  0.1f
-#define CONF_FAR  64
+#define CONF_FAR  512
 
 #define CONF_AUDIO_FREQ 32000
 #define CONF_NUM_AUDIO_BUF 4

@@ -18,6 +18,7 @@ void player_init(struct player *p, u8 items_equipped_flags)
 	vector_zero(p->turn_offset, 2);
 	vector_zero(p->turn_offset_last, 2);
 	p->item_flags = items_equipped_flags;
+	p->headbob_timer = p->headbob_timer_last = 0;
 
 	if (p->item_flags & ITEM_HAS_PISTOL)
 	{
@@ -110,6 +111,9 @@ static void _player_accelerate(struct player *p,
 		vector_scale(p->vel, maxvelsqr / velmagsqr, 3);
 
 	vector_add(p->vel, accel, p->vel, 3);
+
+	p->headbob_timer_last = p->headbob_timer;
+	p->headbob_timer += vector_magnitude_sqr(p->vel, 3) * 4;
 }
 
 static void _player_friction(struct player *p)
@@ -174,6 +178,15 @@ void player_item_draw(const struct player *p, const f32 subtick)
 	glLoadIdentity();
 	glScalef(0.1f, 0.1f, 0.1f);
 	glTranslatef(1.35f, -1.8f, -2.2f);
+
+	f32 velmag = vector_magnitude(p->vel, 3);
+	debugf("%f\n", velmag);
+
+	const f32 headbob_timer_lerp = lerpf(p->headbob_timer_last,
+				p->headbob_timer, subtick);
+
+	glTranslatef(sinf(headbob_timer_lerp) * velmag,
+	      fabsf(cosf(headbob_timer_lerp) * velmag), 0);
 
 	f32 turn_offset_lerp[2];
 

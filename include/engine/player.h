@@ -30,6 +30,7 @@ struct player
 	f32 recoil_amnt, recoil_amnt_last;
 	f32 recoil_dir[2];
 	f32 turn_offset[2], turn_offset_last[2];
+	f32 headbob_timer, headbob_timer_last;
 };
 
 void player_init(struct player *p, u8 items_equipped_flags);

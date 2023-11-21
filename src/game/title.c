@@ -33,6 +33,8 @@ void title_load(void)
 	scene->num_meshes = 1;
 	scene->meshes = malloc(sizeof(struct mesh) * 1);
 	mesh_create_data(scene->meshes + 0, "Test", 4, 6, verts, indis);
+	scene->num_anims = 0;
+	scene->anims = NULL;
 
 	timer_last = timer = 0.0f;
 

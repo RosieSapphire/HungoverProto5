@@ -34,6 +34,7 @@ static void (*draw_funcs[NUM_SCENES])(f32) = {
  */
 static void _init(void)
 {
+	srand(TICKS_READ());
 	display_init((resolution_t){CONF_WIDTH, CONF_HEIGHT, 0},
 	      DEPTH_32_BPP, 3, GAMMA_NONE, FILTERS_RESAMPLE);
 	rdpq_init();
@@ -47,7 +48,7 @@ static void _init(void)
 
 	gl_init();
 
-	// glEnable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 	glFrontFace(GL_CCW);
 

@@ -5,7 +5,7 @@
 #include "engine/animation.h"
 #include "engine/scene.h"
 
-enum scene_index scene_index = SCENE_TESTROOM;
+enum scene_index scene_index = SCENE_TITLE;
 
 void scene_anims_update(struct scene *s)
 {
@@ -65,6 +65,17 @@ void scene_anims_set_flags(struct scene *s, u8 flags)
 {
 	for (u16 i = 0; i < s->num_anims; i++)
 		s->anims[i].flags = flags;
+}
+
+void scene_anims_set_frame(struct scene *s, u16 frame)
+{
+	for (u16 i = 0; i < s->num_anims; i++)
+	{
+		struct animation *a = s->anims + i;
+
+		assert(frame < a->length);
+		a->frame = frame;
+	}
 }
 
 /**

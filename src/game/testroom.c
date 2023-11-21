@@ -4,6 +4,7 @@
 #include "engine/util.h"
 #include "engine/camera.h"
 #include "engine/player.h"
+#include "engine/sfx.h"
 
 #include "game/testroom.h"
 
@@ -31,6 +32,7 @@ void testroom_load(void)
 	scene_read_file(&pistol, "rom:/Pistol.scn");
 
 	scene_anims_set_flags(&pistol, ANIM_LOOPS);
+	scene_anims_set_frame(&pistol, 0);
 }
 
 /**
@@ -58,10 +60,26 @@ enum scene_index testroom_update(struct input_parms iparms)
 	else
 		player_update(&player, iparms);
 
+	/*
+	 * Gun Fires
+	 */
+	player.recoil_amnt_last = player.recoil_amnt;
 	if (iparms.press.z)
 	{
-		pistol.anims->flags = ANIM_IS_PLAYING;
-		pistol.anims->frame = 0;
+		scene_anims_set_flags(&pistol, ANIM_IS_PLAYING);
+		scene_anims_set_frame(&pistol, 0);
+		wav64_play(&pistol_fire_sfx, SFXC_ITEM);
+		player.recoil_amnt += 0.2f;
+		vector_copy(player.recoil_dir, (f32[2]) {
+			(f32)((rand() % 255) - 127) / 128.0f,
+			(f32)((rand() % 255) - 127) / 128.0f}, 2);
+	}
+
+	if (player.recoil_amnt > 0.0f)
+	{
+		player.recoil_amnt -= 0.35f * player.recoil_amnt;
+		if (player.recoil_amnt < 0.001f)
+			player.recoil_amnt = 0.0f;
 	}
 
 	scene_anims_update(&scene);

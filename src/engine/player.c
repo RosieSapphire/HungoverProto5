@@ -1,3 +1,5 @@
+#include <GL/glu.h>
+
 #include "engine/util.h"
 #include "engine/vector.h"
 #include "engine/player.h"
@@ -50,7 +52,6 @@ static void _player_accelerate(struct player *p,
 		vector_scale(p->vel, maxvelsqr / velmagsqr, 3);
 
 	vector_add(p->vel, accel, p->vel, 3);
-	debugf("%f\n", vector_magnitude(p->vel, 3));
 }
 
 static void _player_friction(struct player *p)
@@ -84,5 +85,25 @@ void player_update(struct player *p, const struct input_parms iparms)
 
 void player_camera_view_matrix_setup(const struct player *p, const f32 subtick)
 {
-	camera_view_matrix_setup(&p->view, subtick);
+	f32 eye_lerp[3];
+	f32 angles_lerp[2];
+	f32 focus_lerp[3];
+
+	f32 recoil_vec[2];
+	f32 recoil_amnt_lerp =
+		lerpf(p->recoil_amnt_last, p->recoil_amnt, subtick);
+	
+	vector_copy(recoil_vec, p->recoil_dir, 2);
+	vector_scale(recoil_vec, recoil_amnt_lerp, 2);
+
+	vector_lerp(p->view.eye_last, p->view.eye,
+	     subtick, eye_lerp, 3);
+	vector_lerp(p->view.angles_last, p->view.angles,
+	     subtick, angles_lerp, 2);
+	vector_add(angles_lerp, recoil_vec, angles_lerp, 2);
+	camera_get_focus_lerp(eye_lerp, angles_lerp, focus_lerp);
+
+	gluLookAt(eye_lerp[0], eye_lerp[1], eye_lerp[2],
+		focus_lerp[0], focus_lerp[1], focus_lerp[2],
+		0, 1, 0);
 }

@@ -83,7 +83,8 @@ void player_update(struct player *p, const struct input_parms iparms)
 	vector_copy(p->view.eye, p->pos, 3);
 }
 
-void player_camera_view_matrix_setup(const struct player *p, const f32 subtick)
+void player_camera_view_matrix_setup(const struct player *p,
+				     const f32 subtick)
 {
 	f32 eye_lerp[3];
 	f32 angles_lerp[2];
@@ -92,7 +93,7 @@ void player_camera_view_matrix_setup(const struct player *p, const f32 subtick)
 	f32 recoil_vec[2];
 	f32 recoil_amnt_lerp =
 		lerpf(p->recoil_amnt_last, p->recoil_amnt, subtick);
-	
+
 	vector_copy(recoil_vec, p->recoil_dir, 2);
 	vector_scale(recoil_vec, recoil_amnt_lerp, 2);
 

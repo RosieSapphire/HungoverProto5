@@ -5,6 +5,11 @@
 #include "engine/input.h"
 #include "engine/scene.h"
 
+enum testroom_flags
+{
+	TR_FREECAM_ENABLED = 0x1,
+};
+
 void testroom_load(void);
 void testroom_unload(void);
 enum scene_index testroom_update(struct input_parms iparms);

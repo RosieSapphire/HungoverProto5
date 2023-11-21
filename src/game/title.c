@@ -97,10 +97,8 @@ void title_draw(f32 subtick)
 {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
-
 	const f32 timer_lerp = lerpf(timer_last, timer, subtick);
 	const f32 stl1 = (sinf(timer_lerp) + 1.0f) / 4.0f;
 	const f32 stl2 = (sinf(timer_lerp + 69) + 1.0f) / 4.0f;
@@ -108,8 +106,6 @@ void title_draw(f32 subtick)
 
 	glClearColor(stl1, ctl, stl2, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	debugf("%f\n", timer_lerp);
 	const f32 intro_zoom_value =
 		smoothf(0, 720, fminf(timer_lerp * 0.35f, 1.0f));
 	const struct mesh *text_mesh = scene.meshes + 0;
@@ -120,7 +116,6 @@ void title_draw(f32 subtick)
 	glTranslatef(0, 0, ((intro_zoom_value - 720) * 0.356f) - 128.0f);
 	glRotatef(intro_zoom_value, 0, 0, 1);
 	mesh_draw(text_mesh, title_text.id);
-
 	const f32 timer_lerp_slow = timer_lerp * 0.333f;
 	u8 blink = (u8)((timer_lerp_slow - (u32)timer_lerp_slow) * 3.0f);
 

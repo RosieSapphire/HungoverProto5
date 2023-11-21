@@ -2,16 +2,9 @@
 
 #include "engine/util.h"
 #include "engine/vector.h"
-#include "engine/animation.h"
 #include "engine/scene.h"
 
 enum scene_index scene_index = SCENE_TITLE;
-
-void scene_anims_update(struct scene *s)
-{
-	for (u16 i = 0; i < s->num_anims; i++)
-		animation_update(s->anims + i);
-}
 
 static void _scene_draw_node(const struct scene *s,
 			     const struct node *n, const f32 subtick)
@@ -59,23 +52,6 @@ static void _scene_draw_node(const struct scene *s,
 void scene_draw(const struct scene *s, const f32 subtick)
 {
 	_scene_draw_node(s, &s->root_node, subtick);
-}
-
-void scene_anims_set_flags(struct scene *s, u8 flags)
-{
-	for (u16 i = 0; i < s->num_anims; i++)
-		s->anims[i].flags = flags;
-}
-
-void scene_anims_set_frame(struct scene *s, u16 frame)
-{
-	for (u16 i = 0; i < s->num_anims; i++)
-	{
-		struct animation *a = s->anims + i;
-
-		assert(frame < a->length);
-		a->frame = frame;
-	}
 }
 
 /**

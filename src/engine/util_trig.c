@@ -42,17 +42,17 @@ void matrix_mult(const f32 a[4][4], const f32 b[4][4], f32 o[4][4])
 
 	memcpy(a_tmp, a, sizeof(f32) * 16);
 	memset(o, 0, sizeof(f32) * 16);
-	for(int row = 0; row < 4; row++)
-		for(int col = 0; col < 4; col++)
-			for(int ind = 0; ind < 4; ind++)
+	for (int row = 0; row < 4; row++)
+		for (int col = 0; col < 4; col++)
+			for (int ind = 0; ind < 4; ind++)
 				o[col][row] += a_tmp[ind][row] * b[col][ind];
 }
 
 void matrix_debug(const f32 m[4][4])
 {
-	for(int row = 0; row < 4; row++)
+	for (int row = 0; row < 4; row++)
 	{
-		for(int col = 0; col < 4; col++)
+		for (int col = 0; col < 4; col++)
 		{
 			debugf("%f ", m[row][col]);
 		}

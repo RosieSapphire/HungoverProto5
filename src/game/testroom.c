@@ -14,12 +14,7 @@ static struct camera cam;
 
 static struct player player;
 
-enum testroom_flags
-{
-	TR_FREECAM_ENABLED = 0x1,
-};
-
-static enum testroom_flags testroom_flags = 0;
+static enum testroom_flags testroom_flags;
 
 /**
  * testroom_load - Loads assets for Testroom

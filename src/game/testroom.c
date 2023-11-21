@@ -9,7 +9,6 @@
 
 static struct scene scene;
 static struct camera cam;
-
 static struct player player;
 
 static enum testroom_flags testroom_flags;
@@ -80,10 +79,6 @@ void testroom_draw(f32 subtick)
 		return;
 	}
 
-	glLoadIdentity();
-	glScalef(0.1f, 0.1f, 0.1f);
-	glTranslatef(1.35f, -1.8f, -2.2f);
-	glRotatef(-90, 0, 1, 0);
 	player_item_draw(&player, subtick);
 
 	glDisable(GL_DEPTH_TEST);

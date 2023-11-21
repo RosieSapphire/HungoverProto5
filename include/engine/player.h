@@ -29,6 +29,7 @@ struct player
 	struct item pistol;
 	f32 recoil_amnt, recoil_amnt_last;
 	f32 recoil_dir[2];
+	f32 turn_offset[2], turn_offset_last[2];
 };
 
 void player_init(struct player *p, u8 items_equipped_flags);

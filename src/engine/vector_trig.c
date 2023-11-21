@@ -12,12 +12,12 @@ f32 vector_dot(const f32 *a, const f32 *b, const u8 comp)
 	return (total);
 }
 
-f32 vector_magnitude_sqr(f32 *x, const u8 comp)
+f32 vector_magnitude_sqr(const f32 *x, const u8 comp)
 {
 	return (vector_dot(x, x, comp));
 }
 
-f32 vector_magnitude(f32 *x, const u8 comp)
+f32 vector_magnitude(const f32 *x, const u8 comp)
 {
 	return (sqrtf(vector_magnitude_sqr(x, comp)));
 }

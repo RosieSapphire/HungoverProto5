@@ -23,8 +23,8 @@ void vector_smooth(f32 *a, f32 *b, f32 t, f32 *o, const u8 comp);
  * Trig
  */
 f32 vector_dot(const f32 *a, const f32 *b, const u8 comp);
-f32 vector_magnitude_sqr(f32 *x, const u8 comp);
-f32 vector_magnitude(f32 *x, const u8 comp);
+f32 vector_magnitude_sqr(const f32 *x, const u8 comp);
+f32 vector_magnitude(const f32 *x, const u8 comp);
 f32 vector_normalize(f32 *x, const u8 comp);
 void vector3_cross(const f32 *a, const f32 *b, f32 *o);
 

@@ -1,3 +1,4 @@
+#include <GL/gl.h>
 #include <GL/glu.h>
 
 #include "engine/sfx.h"
@@ -14,6 +15,8 @@ void player_init(struct player *p, u8 items_equipped_flags)
 	camera_init(&p->view);
 	vector_copy(p->pos, p->view.eye, 3);
 	vector_zero(p->vel, 3);
+	vector_zero(p->turn_offset, 2);
+	vector_zero(p->turn_offset_last, 2);
 	p->item_flags = items_equipped_flags;
 
 	if (p->item_flags & ITEM_HAS_PISTOL)
@@ -31,13 +34,53 @@ void player_terminate(struct player *p)
 	scene_destroy(&p->pistol.s);
 }
 
-static void _player_camera_look_update(struct camera *c,
+static void _player_camera_look_update(struct player *p,
 				  const struct input_parms iparms)
 {
-	vector_copy(c->angles_last, c->angles, 2);
-	c->angles[0] += (f32)iparms.stick.stick_x * 0.005f;
-	c->angles[1] -= (f32)iparms.stick.stick_y * 0.005f;
-	c->angles[1] = clampf(c->angles[1], -1.57f, 1.57f);
+	const f32 stick[2] = {
+		(f32)iparms.stick.stick_x * 0.005f,
+		(f32)iparms.stick.stick_y * 0.005f,
+	};
+
+	/*
+	 * Turning Camera
+	 */
+	vector_copy(p->view.angles_last, p->view.angles, 2);
+	p->view.angles[0] += stick[0];
+	p->view.angles[1] -= stick[1];
+	p->view.angles[1] = clampf(p->view.angles[1], -1.57f, 1.57f);
+
+	const f32 turn_vec[2] = {
+		p->view.angles_last[0] - p->view.angles[0],
+		p->view.angles_last[1] - p->view.angles[1],
+	};
+
+	/*
+	 * Item moving in hand from camera turn
+	 */
+	const f32 turn_off_mag = vector_magnitude(p->turn_offset, 2);
+
+	vector_copy(p->turn_offset_last, p->turn_offset, 2);
+	if (turn_off_mag > 0.0f)
+	{
+		f32 newturn = turn_off_mag - (turn_off_mag * 0.2f);
+	
+		if (newturn < 0.001f)
+			newturn = 0;
+		newturn /= turn_off_mag;
+		vector_scale(p->turn_offset, newturn, 2);
+	}
+	else
+	{
+		vector_zero(p->turn_offset, 3);
+	}
+
+	vector_add(p->turn_offset, turn_vec, p->turn_offset, 2);
+
+	const f32 turn_off_max = 1.0f;
+
+	if (turn_off_mag > turn_off_max)
+		vector_scale(p->turn_offset, turn_off_max / turn_off_mag, 2);
 
 }
 
@@ -90,7 +133,7 @@ static void _player_friction(struct player *p)
 void player_update(struct player *p, const struct input_parms iparms)
 {
 
-	_player_camera_look_update(&p->view, iparms);
+	_player_camera_look_update(p, iparms);
 	vector_copy(p->view.eye_last, p->pos, 3);
 	_player_friction(p);
 	_player_accelerate(p, iparms);
@@ -128,6 +171,19 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 
 void player_item_draw(const struct player *p, const f32 subtick)
 {
+	glLoadIdentity();
+	glScalef(0.1f, 0.1f, 0.1f);
+	glTranslatef(1.35f, -1.8f, -2.2f);
+
+	f32 turn_offset_lerp[2];
+
+	vector_lerp(p->turn_offset_last, p->turn_offset,
+	     subtick, turn_offset_lerp, 2);
+	vector_scale(turn_offset_lerp, 0.35f, 2);
+
+	glTranslatef(turn_offset_lerp[0], turn_offset_lerp[1], 0);
+	glRotatef(-90, 0, 1, 0);
+
 	switch (p->item_selected)
 	{
 	case ITEM_SELECT_PISTOL:

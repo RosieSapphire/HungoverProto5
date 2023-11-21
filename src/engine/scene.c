@@ -4,7 +4,7 @@
 #include "engine/vector.h"
 #include "engine/scene.h"
 
-enum scene_index scene_index = SCENE_TITLE;
+enum scene_index scene_index = SCENE_TESTROOM;
 
 static void _scene_draw_node(const struct scene *s,
 			     const struct node *n, const f32 subtick)

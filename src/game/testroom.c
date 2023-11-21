@@ -4,12 +4,10 @@
 #include "engine/util.h"
 #include "engine/camera.h"
 #include "engine/player.h"
-#include "engine/sfx.h"
 
 #include "game/testroom.h"
 
 static struct scene scene;
-static struct scene pistol;
 static struct camera cam;
 
 static struct player player;
@@ -22,12 +20,8 @@ static enum testroom_flags testroom_flags;
 void testroom_load(void)
 {
 	camera_init(&cam);
-	player_init(&player, ITEM_PISTOL);
+	player_init(&player, ITEM_HAS_PISTOL);
 	scene_read_file(&scene, "rom:/Test.scn");
-	scene_read_file(&pistol, "rom:/Pistol.scn");
-
-	scene_anims_set_flags(&pistol, ANIM_LOOPS);
-	scene_anims_set_frame(&pistol, 0);
 }
 
 /**
@@ -35,7 +29,6 @@ void testroom_load(void)
  */
 void testroom_unload(void)
 {
-	scene_destroy(&pistol);
 	scene_destroy(&scene);
 }
 
@@ -55,30 +48,8 @@ enum scene_index testroom_update(struct input_parms iparms)
 	else
 		player_update(&player, iparms);
 
-	/*
-	 * Gun Fires
-	 */
-	player.recoil_amnt_last = player.recoil_amnt;
-	if (iparms.press.z)
-	{
-		scene_anims_set_flags(&pistol, ANIM_IS_PLAYING);
-		scene_anims_set_frame(&pistol, 0);
-		wav64_play(&pistol_fire_sfx, SFXC_ITEM);
-		player.recoil_amnt += 0.2f;
-		vector_copy(player.recoil_dir, (f32[2]) {
-			(f32)((rand() % 255) - 127) / 128.0f,
-			(f32)((rand() % 255) - 127) / 128.0f}, 2);
-	}
-
-	if (player.recoil_amnt > 0.0f)
-	{
-		player.recoil_amnt -= 0.35f * player.recoil_amnt;
-		if (player.recoil_amnt < 0.001f)
-			player.recoil_amnt = 0.0f;
-	}
-
 	scene_anims_update(&scene);
-	scene_anims_update(&pistol);
+	player_items_update(&player, iparms);
 
 	return (SCENE_TESTROOM);
 }
@@ -113,7 +84,7 @@ void testroom_draw(f32 subtick)
 	glScalef(0.1f, 0.1f, 0.1f);
 	glTranslatef(1.35f, -1.8f, -2.2f);
 	glRotatef(-90, 0, 1, 0);
-	scene_draw(&pistol, subtick);
+	player_item_draw(&player, subtick);
 
 	glDisable(GL_DEPTH_TEST);
 }

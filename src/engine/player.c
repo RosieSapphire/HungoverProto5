@@ -1,5 +1,6 @@
 #include <GL/glu.h>
 
+#include "engine/sfx.h"
 #include "engine/util.h"
 #include "engine/vector.h"
 #include "engine/player.h"
@@ -14,6 +15,20 @@ void player_init(struct player *p, u8 items_equipped_flags)
 	vector_copy(p->pos, p->view.eye, 3);
 	vector_zero(p->vel, 3);
 	p->item_flags = items_equipped_flags;
+
+	if (p->item_flags & ITEM_HAS_PISTOL)
+	{
+		scene_read_file(&p->pistol.s, "rom:/Pistol.scn");
+		scene_anims_set_flags(&p->pistol.s, ANIM_LOOPS);
+		scene_anims_set_frame(&p->pistol.s, 0);
+		p->item_selected = ITEM_SELECT_PISTOL;
+	}
+}
+
+void player_terminate(struct player *p)
+{
+	p->item_flags = ITEM_HAS_NONE;
+	scene_destroy(&p->pistol.s);
 }
 
 static void _player_camera_look_update(struct camera *c,
@@ -81,6 +96,50 @@ void player_update(struct player *p, const struct input_parms iparms)
 	_player_accelerate(p, iparms);
 	vector_add(p->pos, p->vel, p->pos, 3);
 	vector_copy(p->view.eye, p->pos, 3);
+}
+
+void player_items_update(struct player *p, const struct input_parms iparms)
+{
+	/*
+	 * Gun Fires
+	 */
+	p->recoil_amnt_last = p->recoil_amnt;
+
+	if (iparms.press.z && p->item_selected == ITEM_SELECT_PISTOL)
+	{
+		scene_anims_set_flags(&p->pistol.s, ANIM_IS_PLAYING);
+		scene_anims_set_frame(&p->pistol.s, 0);
+		wav64_play(&pistol_fire_sfx, SFXC_ITEM);
+		p->recoil_amnt += 0.2f;
+		vector_copy(p->recoil_dir, (f32[2]) {
+			(f32)((rand() % 255) - 127) / 128.0f,
+			(f32)((rand() % 255) - 127) / 128.0f}, 2);
+	}
+
+	if (p->recoil_amnt > 0.0f)
+	{
+		p->recoil_amnt -= 0.35f * p->recoil_amnt;
+		if (p->recoil_amnt < 0.001f)
+			p->recoil_amnt = 0.0f;
+	}
+
+	scene_anims_update(&p->pistol.s);
+}
+
+void player_item_draw(const struct player *p, const f32 subtick)
+{
+	switch (p->item_selected)
+	{
+	case ITEM_SELECT_PISTOL:
+		scene_draw(&p->pistol.s, subtick);
+		return;
+
+	case ITEM_SELECT_BONG:
+		return;
+
+	default:
+		return;
+	}
 }
 
 void player_camera_view_matrix_setup(const struct player *p,

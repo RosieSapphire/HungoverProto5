@@ -12,10 +12,11 @@ enum sfx_channels
 {
 	SFXC_MUSIC,
 	SFXC_ITEM,
+	SFXC_PLAYER,
 	NUM_SFXC,
 };
 
-extern wav64_t title_music, pistol_fire_sfx;
+extern wav64_t title_music, pistol_fire_sfx, footstep2_sfx;
 
 void sfx_load(void);
 

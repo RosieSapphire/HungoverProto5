@@ -115,6 +115,17 @@ static void _player_accelerate(struct player *p,
 
 	p->headbob_timer_last = p->headbob_timer;
 	p->headbob_timer += vector_magnitude(p->vel, 3);
+
+	if (signbit(cosf(p->headbob_timer)) !=
+		signbit(cosf(p->headbob_timer_last)))
+	{
+		const f32 vol = sqrtf(velmagsqr) * 2;
+		const u16 freq = CONF_AUDIO_FREQ + (rand() & 0xFFF);
+
+		mixer_ch_set_freq(SFXC_PLAYER, freq);
+		mixer_ch_set_vol(SFXC_PLAYER, vol, vol);
+		wav64_play(&footstep2_sfx, SFXC_PLAYER);
+	}
 }
 
 static void _player_friction(struct player *p)
@@ -183,7 +194,7 @@ void player_item_draw(const struct player *p, const f32 subtick)
 
 	const f32 velmag_a = vector_magnitude_sqr(p->vel_last, 3);
 	const f32 velmag_b = vector_magnitude_sqr(p->vel, 3);
-	const f32 velmag_lerp = lerpf(velmag_a, velmag_b, subtick);
+	const f32 velmag_lerp = sqrtf(lerpf(velmag_a, velmag_b, subtick));
 	const f32 headbob_timer_lerp = lerpf(p->headbob_timer_last,
 				p->headbob_timer, subtick);
 

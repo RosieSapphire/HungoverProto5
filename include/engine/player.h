@@ -23,7 +23,7 @@ enum item_equipped_flags
 struct player
 {
 	struct camera view;
-	f32 pos[3], vel[3];
+	f32 pos[3], vel[3], vel_last[3];
 	u8 item_flags;
 	u8 item_selected;
 	struct item pistol;

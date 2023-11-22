@@ -15,6 +15,7 @@ void player_init(struct player *p, u8 items_equipped_flags)
 	camera_init(&p->view);
 	vector_copy(p->pos, p->view.eye, 3);
 	vector_zero(p->vel, 3);
+	vector_zero(p->vel_last, 3);
 	vector_zero(p->turn_offset, 2);
 	vector_zero(p->turn_offset_last, 2);
 	p->item_flags = items_equipped_flags;
@@ -113,13 +114,14 @@ static void _player_accelerate(struct player *p,
 	vector_add(p->vel, accel, p->vel, 3);
 
 	p->headbob_timer_last = p->headbob_timer;
-	p->headbob_timer += vector_magnitude_sqr(p->vel, 3) * 4;
+	p->headbob_timer += vector_magnitude(p->vel, 3);
 }
 
 static void _player_friction(struct player *p)
 {
 	const f32 speed = vector_magnitude(p->vel, 3);
 
+	vector_copy(p->vel_last, p->vel, 3);
 	if (speed <= 0.0f)
 	{
 		vector_zero(p->vel, 3);
@@ -179,14 +181,14 @@ void player_item_draw(const struct player *p, const f32 subtick)
 	glScalef(0.1f, 0.1f, 0.1f);
 	glTranslatef(1.35f, -1.8f, -2.2f);
 
-	f32 velmag = vector_magnitude(p->vel, 3);
-	debugf("%f\n", velmag);
-
+	const f32 velmag_a = vector_magnitude_sqr(p->vel_last, 3);
+	const f32 velmag_b = vector_magnitude_sqr(p->vel, 3);
+	const f32 velmag_lerp = lerpf(velmag_a, velmag_b, subtick);
 	const f32 headbob_timer_lerp = lerpf(p->headbob_timer_last,
 				p->headbob_timer, subtick);
 
-	glTranslatef(sinf(headbob_timer_lerp) * velmag,
-	      fabsf(cosf(headbob_timer_lerp) * velmag), 0);
+	glTranslatef(sinf(headbob_timer_lerp) * velmag_lerp,
+	      sinf(headbob_timer_lerp * 2) * velmag_lerp * 0.5f, 0);
 
 	f32 turn_offset_lerp[2];
 

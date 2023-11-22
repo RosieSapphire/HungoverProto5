@@ -67,9 +67,7 @@ static void _draw(f32 subtick)
 {
 	color_buffer = display_get();
 	rdpq_attach(color_buffer, &depth_buffer);
-	gl_context_begin();
 	(*draw_funcs[scene_index])(subtick);
-	gl_context_end();
 	rdpq_detach_show();
 }
 

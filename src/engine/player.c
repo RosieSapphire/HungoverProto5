@@ -39,10 +39,16 @@ void player_terminate(struct player *p)
 static void _player_camera_look_update(struct player *p,
 				  const struct input_parms iparms)
 {
-	const f32 stick[2] = {
-		(f32)iparms.stick.stick_x * 0.005f,
-		(f32)iparms.stick.stick_y * 0.005f,
+	f32 stick[2] = {
+		(f32)iparms.stick.stick_x * 0.0035f,
+		(f32)iparms.stick.stick_y * 0.0035f,
 	};
+
+	if (fabsf(stick[0]) < 0.01f)
+		stick[0] = 0.0f;
+
+	if (fabsf(stick[1]) < 0.01f)
+		stick[1] = 0.0f;
 
 	/*
 	 * Turning Camera
@@ -190,16 +196,17 @@ void player_item_draw(const struct player *p, const f32 subtick)
 {
 	glLoadIdentity();
 	glScalef(0.1f, 0.1f, 0.1f);
-	glTranslatef(1.35f, -1.8f, -2.2f);
+	glTranslatef(1.35f, -2.0f, -2.2f);
 
 	const f32 velmag_a = vector_magnitude_sqr(p->vel_last, 3);
 	const f32 velmag_b = vector_magnitude_sqr(p->vel, 3);
-	const f32 velmag_lerp = sqrtf(lerpf(velmag_a, velmag_b, subtick));
+	const f32 velmag_lerp =
+		sqrtf(lerpf(velmag_a, velmag_b, subtick)) * 0.5f;
 	const f32 headbob_timer_lerp = lerpf(p->headbob_timer_last,
 				p->headbob_timer, subtick);
 
 	glTranslatef(sinf(headbob_timer_lerp) * velmag_lerp,
-	      sinf(headbob_timer_lerp * 2) * velmag_lerp * 0.5f, 0);
+	      fabsf(cosf(headbob_timer_lerp) * velmag_lerp * 0.5f), 0);
 
 	f32 turn_offset_lerp[2];
 
@@ -207,8 +214,10 @@ void player_item_draw(const struct player *p, const f32 subtick)
 	     subtick, turn_offset_lerp, 2);
 	vector_scale(turn_offset_lerp, 0.35f, 2);
 
-	glTranslatef(turn_offset_lerp[0], turn_offset_lerp[1], 0);
+	glTranslatef(-turn_offset_lerp[0], -turn_offset_lerp[1], 0);
 	glRotatef(-90, 0, 1, 0);
+	glRotatef(turn_offset_lerp[0] * 30, 0, 1, 0);
+	glRotatef(turn_offset_lerp[1] * 30, 0, 0, 1);
 
 	switch (p->item_selected)
 	{

@@ -1,4 +1,5 @@
 #include <GL/gl.h>
+#include <GL/gl_integration.h>
 
 #include "engine/util.h"
 #include "engine/sfx.h"
@@ -95,6 +96,7 @@ static void _title_setup_wiggle(f32 timer_lerp, u8 offset)
  */
 void title_draw(f32 subtick)
 {
+	gl_context_begin();
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_DEPTH_TEST);
@@ -133,4 +135,5 @@ void title_draw(f32 subtick)
 
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
+	gl_context_end();
 }

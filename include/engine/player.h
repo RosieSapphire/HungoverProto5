@@ -5,6 +5,7 @@
 #include "engine/input.h"
 #include "engine/camera.h"
 #include "engine/item.h"
+#include "engine/collision_mesh.h"
 
 enum item_selected
 {
@@ -34,7 +35,8 @@ struct player
 };
 
 void player_init(struct player *p, u8 items_equipped_flags);
-void player_update(struct player *p, const struct input_parms iparms);
+void player_update(const struct scene *s, struct player *p,
+		   const struct input_parms iparms);
 void player_items_update(struct player *p, const struct input_parms iparms);
 void player_item_draw(const struct player *p, const f32 subtick);
 void player_camera_view_matrix_setup(const struct player *p,

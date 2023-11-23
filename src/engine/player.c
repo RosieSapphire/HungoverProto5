@@ -5,14 +5,18 @@
 #include "engine/util.h"
 #include "engine/vector.h"
 #include "engine/player.h"
+#include "engine/raycast.h"
+#include "engine/collision_mesh.h"
 
 #define ACCEL_RATE 0.1f
 #define MAX_VEL    0.8f
 #define FRICTION   4.0f
+#define HEIGHT     2.48f
 
 void player_init(struct player *p, u8 items_equipped_flags)
 {
 	camera_init(&p->view);
+	// vector_copy(p->view.eye, (f32[3]) {0, 0, 0}, 3);
 	vector_copy(p->pos, p->view.eye, 3);
 	vector_zero(p->vel, 3);
 	vector_zero(p->vel_last, 3);
@@ -92,6 +96,37 @@ static void _player_camera_look_update(struct player *p,
 
 }
 
+static void _player_floor_collision(const struct collision_mesh *m,
+				    struct player *p)
+{
+	f32 dir[3] = {0, -1, 0}, eye[3], dist;
+
+	for(u16 i = 0; i < m->num_verts / 3; i++) {
+		vec3 v[3], a, b, n;
+
+		vector_copy(v[0], m->verts[i * 3 + 0], 3);
+		vector_copy(v[1], m->verts[i * 3 + 1], 3);
+		vector_copy(v[2], m->verts[i * 3 + 2], 3);
+
+		vector_sub(v[1], v[0], a, 3);
+		vector_sub(v[2], v[0], b, 3);
+		vector3_cross(a, b, n);
+		vector_normalize(n, 3);
+
+		vector_copy(eye, p->pos, 3);
+		vector_add(eye, (f32[3]) {0, 0.5f, 0}, eye, 3);
+		if (!raycast_triangle(eye, dir, v, &dist))
+			continue;
+
+		f32 push_vec[3];
+		float push = fmaxf(HEIGHT - dist, 0);
+
+		vector_copy(push_vec, n, 3);
+		vector_scale(push_vec, push, 3);
+		vector_add(p->pos, push_vec, p->pos, 3);
+	}
+}
+
 static void _player_accelerate(struct player *p,
 			       const struct input_parms iparms)
 {
@@ -132,6 +167,11 @@ static void _player_accelerate(struct player *p,
 		mixer_ch_set_vol(SFXC_PLAYER, vol, vol);
 		wav64_play(&footstep2_sfx, SFXC_PLAYER);
 	}
+
+	if (iparms.held.l)
+	{
+		vector_add(p->pos, (f32[3]) {0, -0.1f, 0}, p->pos, 3);
+	}
 }
 
 static void _player_friction(struct player *p)
@@ -153,7 +193,8 @@ static void _player_friction(struct player *p)
 	vector_scale(p->vel, newspeed, 3);
 }
 
-void player_update(struct player *p, const struct input_parms iparms)
+void player_update(const struct scene *s, struct player *p,
+		   const struct input_parms iparms)
 {
 
 	_player_camera_look_update(p, iparms);
@@ -162,6 +203,17 @@ void player_update(struct player *p, const struct input_parms iparms)
 	_player_accelerate(p, iparms);
 	vector_add(p->pos, p->vel, p->pos, 3);
 	vector_copy(p->view.eye, p->pos, 3);
+
+	static u8 gen_col_mesh = 0;
+	static struct collision_mesh cm;
+
+	if (!gen_col_mesh)
+	{
+		collision_mesh_gen(&cm, s->meshes + 3);
+		gen_col_mesh = 1;
+	}
+
+	_player_floor_collision(&cm, p);
 }
 
 void player_items_update(struct player *p, const struct input_parms iparms)

@@ -1,7 +1,7 @@
 #include "engine/config.h"
 #include "engine/crosshair.h"
 
-rspq_block_t *crosshair_rspq_block_gen(__attribute__((unused))const u16 dim)
+rspq_block_t *crosshair_rspq_block_gen(const u16 dim)
 {
 	rspq_block_begin();
 	rdpq_set_mode_fill(RGBA32(0xFF, 0xFF, 0xFF, 0xFF));

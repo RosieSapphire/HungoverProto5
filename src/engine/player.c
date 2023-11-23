@@ -57,7 +57,6 @@ static void _player_camera_look_update(struct player *p,
 	/*
 	 * Turning Camera
 	 */
-	vector_copy(p->view.angles_last, p->view.angles, 2);
 	p->view.angles[0] += stick[0];
 	p->view.angles[1] -= stick[1];
 	p->view.angles[1] = clampf(p->view.angles[1], -1.57f, 1.57f);
@@ -72,7 +71,6 @@ static void _player_camera_look_update(struct player *p,
 	 */
 	const f32 turn_off_mag = vector_magnitude(p->turn_offset, 2);
 
-	vector_copy(p->turn_offset_last, p->turn_offset, 2);
 	if (turn_off_mag > 0.0f)
 	{
 		f32 newturn = turn_off_mag - (turn_off_mag * 0.2f);
@@ -99,7 +97,7 @@ static void _player_camera_look_update(struct player *p,
 static void _player_floor_collision(const struct collision_mesh *m,
 				    struct player *p)
 {
-	f32 dir[3] = {0, -1, 0}, eye[3], dist;
+	f32 dir[3], eye[3], dist;
 
 	for(u16 i = 0; i < m->num_verts / 3; i++) {
 		vec3 v[3], a, b, n;
@@ -115,11 +113,15 @@ static void _player_floor_collision(const struct collision_mesh *m,
 
 		vector_copy(eye, p->pos, 3);
 		vector_add(eye, (f32[3]) {0, 0.5f, 0}, eye, 3);
+
+		vector_copy(dir, n, 3);
+		vector_scale(dir, -1, 3);
+
 		if (!raycast_triangle(eye, dir, v, &dist))
 			continue;
 
 		f32 push_vec[3];
-		float push = fmaxf(HEIGHT - dist, 0);
+		float push = fmaxf(HEIGHT - dist + 0.5f, 0);
 
 		vector_copy(push_vec, n, 3);
 		vector_scale(push_vec, push, 3);
@@ -178,7 +180,6 @@ static void _player_friction(struct player *p)
 {
 	const f32 speed = vector_magnitude(p->vel, 3);
 
-	vector_copy(p->vel_last, p->vel, 3);
 	if (speed <= 0.0f)
 	{
 		vector_zero(p->vel, 3);
@@ -196,13 +197,16 @@ static void _player_friction(struct player *p)
 void player_update(const struct scene *s, struct player *p,
 		   const struct input_parms iparms)
 {
+	vector_copy(p->view.angles_last, p->view.angles, 2);
+	vector_copy(p->view.eye_last, p->view.eye, 3);
+	vector_copy(p->turn_offset_last, p->turn_offset, 2);
+	vector_copy(p->view.eye_last, p->pos, 3);
+	vector_copy(p->vel_last, p->vel, 3);
 
 	_player_camera_look_update(p, iparms);
-	vector_copy(p->view.eye_last, p->pos, 3);
 	_player_friction(p);
 	_player_accelerate(p, iparms);
 	vector_add(p->pos, p->vel, p->pos, 3);
-	vector_copy(p->view.eye, p->pos, 3);
 
 	static u8 gen_col_mesh = 0;
 	static struct collision_mesh cm;
@@ -214,6 +218,7 @@ void player_update(const struct scene *s, struct player *p,
 	}
 
 	_player_floor_collision(&cm, p);
+	vector_copy(p->view.eye, p->pos, 3);
 }
 
 void player_items_update(struct player *p, const struct input_parms iparms)

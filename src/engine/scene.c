@@ -36,7 +36,7 @@ static void _scene_draw_node(const struct scene *s,
 	else
 		glMultMatrixf((f32 *)n->trans);
 
-	mesh_draw(m, 0);
+	mesh_draw(m);
 
 	for (u16 i = 0; i < n->num_children; i++)
 		_scene_draw_node(s, n->children + i, subtick);

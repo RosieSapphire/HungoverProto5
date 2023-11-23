@@ -41,6 +41,7 @@ void mesh_destroy(struct mesh *m)
 	free(m->indis);
 	m->indis = NULL;
 	m->verts = NULL;
+	rspq_block_free(m->block);
 }
 
 /**
@@ -48,26 +49,7 @@ void mesh_destroy(struct mesh *m)
  * @m: Mesh to be Drawn
  * @tid: OpenGL Texture ID
  */
-void mesh_draw(const struct mesh *m, const u32 tid)
+void mesh_draw(const struct mesh *m)
 {
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(3, GL_FLOAT, sizeof(struct vertex), m->verts->pos);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glTexCoordPointer(2, GL_FLOAT, sizeof(struct vertex), m->verts->uv);
-	glEnableClientState(GL_COLOR_ARRAY);
-	glColorPointer(4, GL_UNSIGNED_BYTE,
-		sizeof(struct vertex), m->verts->col);
-
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, tid);
-
-	glDrawElements(GL_TRIANGLES, m->num_indis,
-		GL_UNSIGNED_SHORT, m->indis);
-
-	glBindTexture(GL_TEXTURE_2D, 0);
-	glDisable(GL_TEXTURE_2D);
-
-	glDisableClientState(GL_COLOR_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisableClientState(GL_VERTEX_ARRAY);
+	rspq_block_run(m->block);
 }

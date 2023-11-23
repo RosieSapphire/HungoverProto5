@@ -2,8 +2,7 @@
 #include "engine/collision_mesh.h"
 #include "engine/raycast.h"
 
-u8 raycast_triangle(vec3 eye, vec3 dir,
-		    vec3 positions[3], f32 *distance)
+u8 raycast_triangle(vec3 eye, vec3 dir, vec3 positions[3], f32 *distance)
 {
 	f32 edge1[3], edge2[3], p[3], t[3], q[3];
 
@@ -13,28 +12,29 @@ u8 raycast_triangle(vec3 eye, vec3 dir,
 
 	f32 det = vector_dot(edge1, p, 3);
 	const f32 epsilon = 0.001f;
-	if(det > -epsilon && det < epsilon)
-		return 0;
-	
-	f32 inv_det = 1.0f / det;
-	vector_sub(eye, positions[0], t, 3);
 
+	if (det > -epsilon && det < epsilon)
+		return (0);
+
+	f32 inv_det = 1.0f / det;
+
+	vector_sub(eye, positions[0], t, 3);
 	f32 u = inv_det * vector_dot(t, p, 3);
 
 	if (u < 0.0f || u > 1.0f)
-		return 0;
-	
+		return (0);
+
 	vector3_cross(t, edge1, q);
 
 	f32 v = inv_det * vector_dot(dir, q, 3);
 
 	if (v < 0.0f || u + v > 1.0f)
-		return 0;
-	
+		return (0);
+
 	f32 dist = inv_det * vector_dot(edge2, q, 3);
 
 	if (!distance)
-		return dist > epsilon;
+		return (dist > epsilon);
 
 	*distance = dist;
 

@@ -84,28 +84,7 @@ static void _scene_read_mesh(const struct scene *s, u16 i)
 	fread(m->indis, sizeof(u16), m->num_indis, mf);
 	fclose(mf);
 
-	rspq_block_begin();
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(3, GL_FLOAT, sizeof(struct vertex), m->verts->pos);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glTexCoordPointer(2, GL_FLOAT, sizeof(struct vertex), m->verts->uv);
-	glEnableClientState(GL_COLOR_ARRAY);
-	glColorPointer(4, GL_UNSIGNED_BYTE,
-		sizeof(struct vertex), m->verts->col);
-
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	glDrawElements(GL_TRIANGLES, m->num_indis,
-		GL_UNSIGNED_SHORT, m->indis);
-
-	glBindTexture(GL_TEXTURE_2D, 0);
-	glDisable(GL_TEXTURE_2D);
-
-	glDisableClientState(GL_COLOR_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisableClientState(GL_VERTEX_ARRAY);
-	m->block = rspq_block_end();
+	mesh_gen_rspqblock(m);
 }
 
 /**

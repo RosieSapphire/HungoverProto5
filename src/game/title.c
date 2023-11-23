@@ -117,7 +117,7 @@ void title_draw(f32 subtick)
 	_title_setup_wiggle(timer_lerp, 0);
 	glTranslatef(0, 0, ((intro_zoom_value - 720) * 0.356f) - 128.0f);
 	glRotatef(intro_zoom_value, 0, 0, 1);
-	mesh_draw(text_mesh);//, title_text.id);
+	mesh_draw(text_mesh);
 	const f32 timer_lerp_slow = timer_lerp * 0.333f;
 	u8 blink = (u8)((timer_lerp_slow - (u32)timer_lerp_slow) * 3.0f);
 
@@ -131,7 +131,7 @@ void title_draw(f32 subtick)
 	glLoadIdentity();
 	glTranslatef(0, -64, -128);
 	glScalef(1.0f, 0.5f, 1.0f);
-	mesh_draw(text_mesh);//, proto_text.id);
+	mesh_draw(text_mesh);
 
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);

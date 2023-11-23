@@ -22,8 +22,8 @@ static enum testroom_flags testroom_flags;
 void testroom_load(void)
 {
 	camera_init(&cam);
-	player_init(&player, ITEM_HAS_PISTOL);
 	scene_read_file(&scene, "rom:/Test.scn");
+	player_init(&scene, &player, ITEM_HAS_PISTOL);
 	crosshair_block = crosshair_rspq_block_gen(7);
 }
 
@@ -50,7 +50,7 @@ enum scene_index testroom_update(struct input_parms iparms)
 	if (testroom_flags & TR_FREECAM_ENABLED)
 		camera_update(&cam, iparms);
 	else
-		player_update(&scene, &player, iparms);
+		player_update(&player, iparms);
 
 	scene_anims_update(&scene);
 	player_items_update(&player, iparms);

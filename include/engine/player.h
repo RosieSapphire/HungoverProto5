@@ -34,12 +34,29 @@ struct player
 	f32 headbob_timer, headbob_timer_last;
 };
 
-void player_init(struct player *p, u8 items_equipped_flags);
-void player_update(const struct scene *s, struct player *p,
-		   const struct input_parms iparms);
+/*
+ * Main
+ */
+void player_init(const struct scene *s, struct player *p,
+		 u8 items_equipped_flags);
+void player_update(struct player *p, const struct input_parms iparms);
 void player_items_update(struct player *p, const struct input_parms iparms);
 void player_item_draw(const struct player *p, const f32 subtick);
+
+/*
+ * Camera
+ */
 void player_camera_view_matrix_setup(const struct player *p,
 				     const f32 subtick);
+void player_camera_look_update(struct player *p,
+			       const struct input_parms iparms);
+
+/*
+ * Physics
+ */
+void player_friction(struct player *p);
+void player_accelerate(struct player *p, const struct input_parms iparms);
+void player_floor_collision(const struct collision_mesh *m,
+			    struct player *p);
 
 #endif /* _ENGINE_PLAYER_H_ */

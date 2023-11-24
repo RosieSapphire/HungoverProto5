@@ -48,10 +48,9 @@ void player_check_pickup(struct scene *s, struct player *p)
 
 		f32 vec[3];
 		f32 dist;
+		const struct node *n = node_from_mesh_ind(&s->root_node, i);
 
-		vector_sub(p->pos,
-	     		node_from_mesh_ind(&s->root_node, i)->trans[3],
-			vec, 3);
+		vector_sub(p->pos, n->trans[3], vec, 3);
 		dist = vector_magnitude_sqr(vec, 3);
 
 		if (dist < 3.5f)
@@ -60,7 +59,6 @@ void player_check_pickup(struct scene *s, struct player *p)
 			p->item_selected = ITEM_SELECT_PISTOL;
 			player_item_load(p);
 			m->flags &= ~(MESH_IS_ACTIVE);
-
 		}
 	}
 }

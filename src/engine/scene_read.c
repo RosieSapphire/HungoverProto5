@@ -22,33 +22,15 @@ static void _scene_read_node(struct node *n, FILE *f)
 		_scene_read_node(n->children + i, f);
 }
 
-static const struct node *_node_from_mesh_ind(const struct node *n,
-					      const u16 mid)
-{
-	if (mid == n->mesh_ind)
-		return (n);
-
-	const struct node *nf;
-
-	for (u16 i = 0; i < n->num_children; i++)
-	{
-		nf = _node_from_mesh_ind(n->children + i, mid);
-		if (nf)
-			return (nf);
-	}
-
-	return (NULL);
-}
-
 /**
  * _scene_read_mesh - Reads a Mesh from its own File
  * @s: Scene to Read Mesh to
  * @i: Mesh Index
  */
-static void _scene_read_mesh(const struct scene *s, u16 i)
+static void _scene_read_mesh(struct scene *s, u16 i)
 {
 	const char *prefix = "rom:/";
-	const struct node *n = _node_from_mesh_ind(&s->root_node, i);
+	struct node *n = node_from_mesh_ind(&s->root_node, i);
 	const char *mfpath = n->mesh_path;
 	char *mfpath_conv = malloc(strlen(mfpath) + strlen(prefix));
 
@@ -85,6 +67,7 @@ static void _scene_read_mesh(const struct scene *s, u16 i)
 	fclose(mf);
 
 	mesh_gen_rspqblock(m);
+	m->flags = MESH_IS_ACTIVE;
 }
 
 /**

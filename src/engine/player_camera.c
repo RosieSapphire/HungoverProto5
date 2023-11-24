@@ -145,9 +145,6 @@ void player_accelerate(struct player *p, const struct input_parms iparms)
 		mixer_ch_set_vol(SFXC_PLAYER, vol, vol);
 		wav64_play(&footstep2_sfx, SFXC_PLAYER);
 	}
-
-	if (iparms.held.l)
-		vector_add(p->pos, (f32[3]) {0, -0.1f, 0}, p->pos, 3);
 }
 
 void player_floor_collision(const struct collision_mesh *m,

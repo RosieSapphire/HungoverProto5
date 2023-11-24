@@ -7,6 +7,11 @@
 #include "engine/types.h"
 #include "engine/vertex.h"
 
+enum mesh_flags : u8
+{
+	MESH_IS_ACTIVE = 0x1,
+};
+
 /**
  * struct mesh - Mesh Structure
  * @name: Mesh Name
@@ -22,6 +27,7 @@ struct mesh
 	struct vertex *verts;
 	u16 *indis;
 	rspq_block_t *block;
+	u8 flags;
 };
 
 void mesh_create_data(struct mesh *m, const char *name, const u16 num_verts,

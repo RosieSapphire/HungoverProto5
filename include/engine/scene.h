@@ -41,6 +41,7 @@ struct scene
 void scene_read_file(struct scene *s, const char *path);
 void scene_draw(const struct scene *s, const f32 subtick);
 void scene_destroy(struct scene *s);
+struct node *node_from_mesh_ind(struct node *n, const u16 mid);
 
 /*
  * Animations

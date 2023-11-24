@@ -36,7 +36,8 @@ static void _scene_draw_node(const struct scene *s,
 	else
 		glMultMatrixf((f32 *)n->trans);
 
-	mesh_draw(m);
+	if (m->flags & MESH_IS_ACTIVE)
+		mesh_draw(m);
 
 	for (u16 i = 0; i < n->num_children; i++)
 		_scene_draw_node(s, n->children + i, subtick);
@@ -65,4 +66,21 @@ void scene_destroy(struct scene *s)
 
 	s->num_meshes = 0;
 	s->num_anims = 0;
+}
+
+struct node *node_from_mesh_ind(struct node *n, const u16 mid)
+{
+	if (mid == n->mesh_ind)
+		return (n);
+
+	struct node *nf;
+
+	for (u16 i = 0; i < n->num_children; i++)
+	{
+		nf = node_from_mesh_ind(n->children + i, mid);
+		if (nf)
+			return (nf);
+	}
+
+	return (NULL);
 }

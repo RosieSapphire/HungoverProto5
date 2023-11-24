@@ -9,6 +9,8 @@ enum scene_index scene_index = SCENE_TESTROOM;
 static void _scene_draw_node(const struct scene *s,
 			     const struct node *n, const f32 subtick)
 {
+	static f32 spin_timer;
+
 	if (n->mesh_ind == 0xFFFF)
 	{
 		for (int i = 0; i < n->num_children; i++)
@@ -29,18 +31,39 @@ static void _scene_draw_node(const struct scene *s,
 		}
 	}
 
+	if (!(m->flags & MESH_IS_ACTIVE))
+	{
+		for (u16 i = 0; i < n->num_children; i++)
+			_scene_draw_node(s, n->children + i, subtick);
+		return;
+	}
+
 	glPushMatrix();
 
-	if (anim_ind != 0xFFFF)
-		animation_matrix_multiply(s->anims + anim_ind, subtick);
-	else
-		glMultMatrixf((f32 *)n->trans);
+	/*
+	 * Pickups Spinning
+	 */
+	if (!strncmp("PU.", m->name, 3))
+	{
+		spin_timer += subtick;
 
-	if (m->flags & MESH_IS_ACTIVE)
+		glMultMatrixf((f32 *)n->trans);
+		glTranslatef(0, sinf(spin_timer * 0.2f) * 0.2f, 0);
+		glRotatef(spin_timer * 8, 0, 1, 0);
+		mesh_draw(m);
+	}
+	else
+	{
+		if (anim_ind != 0xFFFF)
+			animation_matrix_multiply(s->anims + anim_ind, subtick);
+		else
+			glMultMatrixf((f32 *)n->trans);
+
 		mesh_draw(m);
 
-	for (u16 i = 0; i < n->num_children; i++)
-		_scene_draw_node(s, n->children + i, subtick);
+		for (u16 i = 0; i < n->num_children; i++)
+			_scene_draw_node(s, n->children + i, subtick);
+	}
 
 	glPopMatrix();
 }

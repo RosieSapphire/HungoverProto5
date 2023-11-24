@@ -62,8 +62,6 @@ void player_check_pickup(struct scene *s, struct player *p)
 			m->flags &= ~(MESH_IS_ACTIVE);
 
 		}
-
-		debugf("Found Pickup: %s (%f)\n", s->meshes[i].name, dist);
 	}
 }
 

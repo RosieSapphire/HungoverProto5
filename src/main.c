@@ -120,6 +120,8 @@ int main(void)
 				(*unload_funcs[scene_ind_last])();
 			}
 
+			scene_global_spin_timer_update();
+
 			ticks_accum -= CONF_DELTATICKS;
 		}
 

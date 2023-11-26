@@ -89,5 +89,6 @@ void testroom_draw(f32 subtick)
 	glDisable(GL_DEPTH_TEST);
 	gl_context_end();
 
-	crosshair_draw(crosshair_block);
+	if (player.item_selected == ITEM_SELECT_PISTOL)
+		crosshair_draw(crosshair_block);
 }

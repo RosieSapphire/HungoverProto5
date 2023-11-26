@@ -38,6 +38,7 @@ struct scene
 /*
  * Main
  */
+void scene_global_spin_timer_update(void);
 void scene_read_file(struct scene *s, const char *path);
 void scene_draw(const struct scene *s, const f32 subtick);
 void scene_destroy(struct scene *s);

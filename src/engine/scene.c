@@ -5,18 +5,23 @@
 #include "engine/scene.h"
 
 enum scene_index scene_index = SCENE_TESTROOM;
+static f32 spin_timer_last, spin_timer;
+
+void scene_global_spin_timer_update(void)
+{
+	spin_timer_last = spin_timer;
+	spin_timer += 1.2f;
+}
 
 static void _scene_draw_node_pickup(const struct scene *s,
 				    const struct node *n, const struct mesh *m,
 				    const f32 subtick)
 {
-	static f32 spin_timer;
-
-	spin_timer += subtick;
-
 	glMultMatrixf((f32 *)n->trans);
 	glTranslatef(0, sinf(spin_timer * 0.2f) * 0.2f, 0);
-	glRotatef(spin_timer * 8, 0, 1, 0);
+	const f32 spin_timer_lerp = lerpf(spin_timer_last, spin_timer, subtick);
+
+	glRotatef(spin_timer_lerp * 8, 0, 1, 0);
 	mesh_draw(m);
 
 	for (u16 i = 0; i < n->num_children; i++)
@@ -93,6 +98,13 @@ void scene_destroy(struct scene *s)
 	s->num_anims = 0;
 }
 
+/**
+ * node_from_mesh_ind - Gets Pointer to Node from Mesh Index
+ * @n: Node to start searching through
+ * @mid: Mesh Index
+ *
+ * Return: Node Found (or NULL)
+ */
 struct node *node_from_mesh_ind(struct node *n, const u16 mid)
 {
 	if (mid == n->mesh_ind)

@@ -5,6 +5,10 @@
 #include "engine/vector.h"
 #include "engine/player.h"
 
+/**
+ * player_item_load - Loads player's Item
+ * @p: Player whos item needs to be loaded
+ */
 void player_item_load(struct player *p)
 {
 	s8 item_has_flags[ITEM_COUNT] = {
@@ -22,10 +26,11 @@ void player_item_load(struct player *p)
 		"rom:/Bong.scn",
 	};
 
+	if (p->item_flags == ITEM_HAS_NONE)
+		return;
+
 	for (u8 i = 0; i < ITEM_COUNT; i++)
 	{
-		if (p->item_flags == ITEM_HAS_NONE)
-			continue;
 
 		if (!(p->item_flags & item_has_flags[i]))
 			continue;
@@ -47,16 +52,25 @@ void player_check_pickup(struct scene *s, struct player *p)
 			continue;
 
 		f32 vec[3];
-		f32 dist;
 		const struct node *n = node_from_mesh_ind(&s->root_node, i);
+		const f32 dist_touch = 2.4f;
 
 		vector_sub(p->pos, n->trans[3], vec, 3);
-		dist = vector_magnitude_sqr(vec, 3);
-
-		if (dist < 3.5f)
+		if (vector_magnitude_sqr(vec, 3) < dist_touch * dist_touch)
 		{
-			p->item_flags |= ITEM_HAS_PISTOL;
-			p->item_selected = ITEM_SELECT_PISTOL;
+			if (!strcmp(m->name + 3, "Pistol"))
+			{
+				p->item_flags |= ITEM_HAS_PISTOL;
+				mixer_ch_set_vol(SFXC_ITEM, 0.3f, 0.4f);
+				wav64_play(&pistol_pullout_sfx, SFXC_ITEM);
+      			}
+			else if (!strcmp(m->name + 3, "Bong"))
+			{
+				p->item_flags |= ITEM_HAS_BONG;
+				mixer_ch_set_vol(SFXC_ITEM, 0.6f, 0.7f);
+				wav64_play(&bong_pullout_sfx, SFXC_ITEM);
+			}
+
 			player_item_load(p);
 			m->flags &= ~(MESH_IS_ACTIVE);
 		}
@@ -74,6 +88,7 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 		{
 			scene_anims_set_flags(&p->items[0].s, ANIM_IS_PLAYING);
 			scene_anims_set_frame(&p->items[0].s, 0);
+			mixer_ch_set_vol(SFXC_ITEM, 0.8f, 0.8f);
 			wav64_play(&pistol_fire_sfx, SFXC_ITEM);
 			p->recoil_amnt += 0.2f;
 			vector_copy(p->recoil_dir, (f32[2]) {
@@ -81,18 +96,44 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 				(f32)((rand() % 255) - 127) / 128.0f}, 2);
 		}
 
-		if (p->recoil_amnt > 0.0f)
-		{
-			p->recoil_amnt -= 0.35f * p->recoil_amnt;
-			if (p->recoil_amnt < 0.001f)
-				p->recoil_amnt = 0.0f;
-		}
-
 		scene_anims_update(&p->items[0].s);
+		break;
 
 	default:
 		break;
 	}
+
+	/*
+	 * Changing Weapons
+	 */
+	const u8 num_items = __builtin_popcount(p->item_flags);
+	const s8 item_selected_last = p->item_selected;
+
+	p->item_selected += iparms.press.a - iparms.press.b;
+	if (p->item_selected != item_selected_last)
+	{
+		if (p->item_selected >= num_items)
+			p->item_selected = num_items - 1;
+		if (p->item_selected < -1)
+			p->item_selected = -1;
+
+		/*
+		 * Can't switch if there's a gap between slots
+		 */
+		if (!(p->item_flags & (1 << p->item_selected))
+			&& p->item_selected != -1)
+			p->item_selected = item_selected_last;
+	}
+
+	/*
+	 * Handling Recoil
+	 */
+	if (p->recoil_amnt <= 0.0f)
+		return;
+
+	p->recoil_amnt -= 0.35f * p->recoil_amnt;
+	if (p->recoil_amnt < 0.001f)
+		p->recoil_amnt = 0.0f;
 }
 
 void player_item_draw(const struct player *p, const f32 subtick)
@@ -124,17 +165,5 @@ void player_item_draw(const struct player *p, const f32 subtick)
 	glRotatef(-90, 0, 1, 0);
 	glRotatef(turn_offset_lerp[0] * 30, 0, 1, 0);
 	glRotatef(turn_offset_lerp[1] * 30, 0, 0, 1);
-
-	switch (p->item_selected)
-	{
-	case ITEM_SELECT_PISTOL:
-		scene_draw(&p->items[0].s, subtick);
-		return;
-
-	case ITEM_SELECT_BONG:
-		return;
-
-	default:
-		return;
-	}
+	scene_draw(&p->items[p->item_selected].s, subtick);
 }

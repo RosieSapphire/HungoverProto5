@@ -71,7 +71,9 @@ static void _scene_read_mesh(struct scene *s, u16 i)
 }
 
 /**
- * _scene_read_animation - Reads an Animation from a Scene Struct
+ * _scene_read_animation - Reads an Animation from a Scene File
+ * @a: Animation to Read to
+ * @f: File to Read from
  */
 static void _scene_read_animation(struct animation *a, FILE *f)
 {

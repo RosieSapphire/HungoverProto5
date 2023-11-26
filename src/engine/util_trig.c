@@ -36,6 +36,12 @@ void quat_lerp(const f32 *a, const f32 *b, f32 *c, const f32 t)
 	vector_normalize(c, 4);
 }
 
+/**
+ * matrix_mult - Matrix Multiply
+ * @a: Matrix A
+ * @b: Matrix B
+ * @o: Matrix Out
+ */
 void matrix_mult(const f32 a[4][4], const f32 b[4][4], f32 o[4][4])
 {
 	f32 a_tmp[4][4];
@@ -48,6 +54,10 @@ void matrix_mult(const f32 a[4][4], const f32 b[4][4], f32 o[4][4])
 				o[col][row] += a_tmp[ind][row] * b[col][ind];
 }
 
+/**
+ * matrix_debug - Matrix Debugging
+ * @m: Matrix to Debug
+ */
 void matrix_debug(const f32 m[4][4])
 {
 	for (int row = 0; row < 4; row++)

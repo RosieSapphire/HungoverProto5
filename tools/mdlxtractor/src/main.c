@@ -38,6 +38,11 @@ static void _scene_debug_node(const struct node *n, const u8 depth)
 		_scene_debug_node(n->children + i, depth + 1);
 }
 
+static void _scene_debug_texture(const char *tpath, const u16 ind)
+{
+	printf("[TEXTURE %d] '%s'\n", ind, tpath);
+}
+
 /**
  * _scene_debug_assimp - Debugs everything for Scene Structure
  * @s: Scene to Debug
@@ -102,6 +107,9 @@ static void _scene_debug_assimp(const struct scene *s)
 				j, sca[0], sca[1], sca[2]);
 		}
 	}
+
+	for (u16 i = 0; i < s->num_tex_paths; i++)
+		_scene_debug_texture(s->tex_paths[i], i);
 }
 
 static void _mesh_path_from_scene_path(char *out, const char *mname,
@@ -150,6 +158,17 @@ static void _scene_convert_assimp(const struct aiScene *si, struct scene *so,
 {
 	_scene_convert_node(so, scnpath, si->mRootNode, &so->root_node);
 
+	assert(si->mNumMaterials - 1 < MAX_SCENE_TEXS);
+	so->num_tex_paths = si->mNumMaterials - 1;
+	for (int i = 0; i < so->num_tex_paths; i++)
+	{
+		struct aiString tex_path;
+
+		aiGetMaterialString(si->mMaterials[i],
+		      AI_MATKEY_NAME, &tex_path);
+		strncpy(so->tex_paths[i], tex_path.data, tex_path.length + 1);
+	}
+
 	assert(si->mNumMeshes);
 	so->num_meshes = si->mNumMeshes;
 	so->meshes = malloc(sizeof(struct mesh) * so->num_meshes);
@@ -185,6 +204,10 @@ static void _scene_convert_assimp(const struct aiScene *si, struct scene *so,
 			for (u16 k = 0; k < 3; k++)
 				mesh->indis[j * 3 + k] =
 						aimesh->mFaces[j].mIndices[k];
+
+		mesh->tind = aimesh->mMaterialIndex;
+		if (mesh->tind >= so->num_tex_paths)
+			mesh->tind = 0xFFFF;
 	}
 
 	so->num_anims = si->mNumAnimations;
@@ -281,6 +304,8 @@ static void _scene_write_mesh_file(const struct mesh *m, const char *scnpath)
 	for (u16 j = 0; j < m->num_indis; j++)
 		fwriteflipu16(m->indis + j, f);
 
+	fwriteflipu16(&m->tind, f);
+
 	fclose(f);
 }
 
@@ -352,6 +377,10 @@ static void _scene_write_file(const struct scene *s, const char *outpath)
 
 	_scene_write_node(s, &s->root_node, outpath, f);
 
+	fwriteflipu16(&s->num_tex_paths, f);
+	for (u16 i = 0; i < s->num_tex_paths; i++)
+		fwrite(s->tex_paths[i], sizeof(char), TEX_PATH_MAX_LEN, f);
+
 	fwriteflipu16(&s->num_meshes, f);
 	for (u16 i = 0; i < s->num_meshes; i++)
 		_scene_write_mesh_file(s->meshes + i, outpath);
@@ -395,6 +424,7 @@ static void _scene_read_mesh(struct mesh *m, const char *mpath)
 	for (u16 j = 0; j < m->num_indis; j++)
 		freadflipu16(m->indis + j, mf);
 
+	freadflipu16(&m->tind, mf);
 	fclose(mf);
 }
 
@@ -485,6 +515,10 @@ static void _scene_read_file(struct scene *s, const char *path)
 
 	_scene_read_node(s, &s->root_node, sf);
 
+	freadflipu16(&s->num_tex_paths, sf);
+	for (u16 i = 0; i < s->num_tex_paths; i++)
+		fread(s->tex_paths[i], sizeof(char), TEX_PATH_MAX_LEN, sf);
+
 	freadflipu16(&s->num_meshes, sf);
 	s->meshes = malloc(sizeof(struct mesh) * s->num_meshes);
 	/**
@@ -530,7 +564,9 @@ int main(int argc, char **argv)
 	const char *pathin = argv[1];
 	const char *pathout = argv[2];
 	const u32 flags = aiProcess_Triangulate | aiProcess_FlipUVs
-		| aiProcess_JoinIdenticalVertices;
+		| aiProcess_JoinIdenticalVertices
+		| aiProcess_RemoveRedundantMaterials
+		| aiProcess_ImproveCacheLocality;
 	const struct aiScene *aiscene = aiImportFile(pathin, flags);
 
 	if (!aiscene)

@@ -4,6 +4,7 @@
 #include <libdragon.h>
 
 #include "engine/types.h"
+#include "engine/config.h"
 
 /**
  * struct texture - Texture Struct
@@ -16,7 +17,12 @@ struct texture
 	sprite_t *spr;
 };
 
-struct texture texture_create_file(const char *path);
+extern u16 num_texs_loaded;
+extern char tex_paths_loaded[MAX_TOTAL_TEXS][TEX_PATH_MAX_LEN];
+extern struct texture *tex_objs_loaded;
+
+void textures_init(void);
+u32 texture_create_file(const char *path);
 void texture_destroy(struct texture *t);
 
 #endif /* _ENGINE_TEXTURE_H_ */

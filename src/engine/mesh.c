@@ -54,7 +54,7 @@ void mesh_draw(const struct mesh *m)
 	rspq_block_run(m->block);
 }
 
-void mesh_gen_rspqblock(struct mesh *m)
+void mesh_gen_rspqblock(struct mesh *m, const u32 tid)
 {
 	rspq_block_begin();
 	glEnableClientState(GL_VERTEX_ARRAY);
@@ -66,7 +66,7 @@ void mesh_gen_rspqblock(struct mesh *m)
 		sizeof(struct vertex), m->verts->col);
 
 	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindTexture(GL_TEXTURE_2D, tid);
 
 	glDrawElements(GL_TRIANGLES, m->num_indis,
 		GL_UNSIGNED_SHORT, m->indis);

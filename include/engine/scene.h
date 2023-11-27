@@ -4,6 +4,7 @@
 #include "engine/mesh.h"
 #include "engine/node.h"
 #include "engine/animation.h"
+#include "engine/config.h"
 
 /**
  * enum scene_index - Scene Index
@@ -28,8 +29,10 @@ extern enum scene_index scene_index;
  */
 struct scene
 {
-	u16 num_meshes;
 	struct node root_node;
+	u16 num_tex_ids;
+	u32 *tex_ids;
+	u16 num_meshes;
 	struct mesh *meshes;
 	u16 num_anims;
 	struct animation *anims;

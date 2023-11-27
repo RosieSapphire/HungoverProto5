@@ -4,6 +4,7 @@
 #include "mesh.h"
 #include "node.h"
 #include "animation.h"
+#include "../../../include/engine/config.h"
 
 /**
  * struct scene - Scene Structure
@@ -17,6 +18,8 @@ struct scene
 	struct mesh *meshes;
 	u16 num_anims;
 	struct animation *anims;
+	u16 num_tex_paths;
+	char tex_paths[MAX_SCENE_TEXS][TEX_PATH_MAX_LEN];
 };
 
 #endif /* _SCENE_H_ */

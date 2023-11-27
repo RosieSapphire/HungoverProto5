@@ -19,6 +19,8 @@ enum mesh_flags : u8
  * @num_indis: Number of Indices
  * @verts: Vertices Array
  * @indis: Indices Array
+ * @flags: Flags
+ * @tind: Texture Index
  */
 struct mesh
 {
@@ -28,6 +30,7 @@ struct mesh
 	u16 *indis;
 	rspq_block_t *block;
 	u8 flags;
+	u16 tind;
 };
 
 void mesh_create_data(struct mesh *m, const char *name, const u16 num_verts,
@@ -35,6 +38,6 @@ void mesh_create_data(struct mesh *m, const char *name, const u16 num_verts,
 		      const u16 *indis);
 void mesh_destroy(struct mesh *m);
 void mesh_draw(const struct mesh *m);
-void mesh_gen_rspqblock(struct mesh *m);
+void mesh_gen_rspqblock(struct mesh *m, const u32 tid);
 
 #endif /* _ENGINE_MESH_H_ */

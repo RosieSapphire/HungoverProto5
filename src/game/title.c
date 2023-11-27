@@ -8,8 +8,8 @@
 
 #include "game/title.h"
 
-static struct texture title_text;
-static struct texture proto_text;
+static u32 title_text_id;
+static u32 proto_text_id;
 static struct scene scene;
 static f32 timer_last, timer;
 
@@ -27,8 +27,8 @@ void title_load(void)
 
 	const u16 indis[] = {0, 1, 2, 2, 1, 3};
 
-	title_text = texture_create_file("rom:/title_text.ia8.sprite");
-	proto_text = texture_create_file("rom:/proto5.ia8.sprite");
+	title_text_id = texture_create_file("rom:/title_text.ia8.sprite");
+	proto_text_id = texture_create_file("rom:/proto5.ia8.sprite");
 
 	scene.num_meshes = 1;
 	scene.meshes = malloc(sizeof(struct mesh));
@@ -49,7 +49,6 @@ void title_unload(void)
 {
 	timer_last = timer = 0.0f;
 	scene_destroy(&scene);
-	texture_destroy(&title_text);
 }
 
 /**

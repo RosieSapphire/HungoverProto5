@@ -4,6 +4,7 @@
 #include <libdragon.h>
 #include <GL/gl.h>
 
+#include "engine/texture.h"
 #include "engine/scene.h"
 
 /**
@@ -64,9 +65,11 @@ static void _scene_read_mesh(struct scene *s, u16 i)
 	}
 
 	fread(m->indis, sizeof(u16), m->num_indis, mf);
+	fread(&m->tind, sizeof(u16), 1, mf);
 	fclose(mf);
 
-	mesh_gen_rspqblock(m);
+	mesh_gen_rspqblock(m,
+		    m->tind == 0xFFFF ? 0 : tex_objs_loaded[m->tind].id);
 	m->flags = MESH_IS_ACTIVE;
 }
 
@@ -115,6 +118,16 @@ void scene_read_file(struct scene *s, const char *path)
 	}
 
 	_scene_read_node(&s->root_node, sf);
+
+	fread(&s->num_tex_ids, sizeof(u16), 1, sf);
+	s->tex_ids = malloc(sizeof(u32) * s->num_tex_ids);
+	for (u16 i = 0; i < s->num_tex_ids; i++)
+	{
+		char tpath[TEX_PATH_MAX_LEN];
+
+		fread(tpath, sizeof(char), TEX_PATH_MAX_LEN, sf);
+		s->tex_ids[i] = texture_create_file(tpath);
+	}
 
 	fread(&s->num_meshes, sizeof(u16), 1, sf);
 	s->meshes = malloc(sizeof(struct mesh) * s->num_meshes);

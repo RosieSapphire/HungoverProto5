@@ -11,6 +11,7 @@
  * @num_indis: Number of Indices
  * @verts: Vertices Array
  * @indis: Indices Array
+ * @tind: Texture Index for Scene
  */
 struct mesh
 {
@@ -18,6 +19,7 @@ struct mesh
 	u16 num_verts, num_indis;
 	struct vertex *verts;
 	u16 *indis;
+	u16 tind;
 };
 
 #endif /* _MESH_H_ */

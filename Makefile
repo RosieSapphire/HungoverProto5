@@ -15,7 +15,7 @@ assets_conv = $(addprefix filesystem/,$(notdir $(assets_wav:%.wav=%.wav64))) \
 	      $(addprefix filesystem/,$(notdir $(assets_glb:%.glb=%.scn)))
 
 AUDIOCONV_FLAGS=--ym-compress true
-MKSPRITE_FLAGS=--compress 2
+MKSPRITE_FLAGS=--compress 1
 
 MDLXTRACTOR=./tools/mdlxtractor/mdlxtractor
 

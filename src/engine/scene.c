@@ -45,11 +45,16 @@ static void _scene_draw_node(const struct scene *s,
 
 	for (u16 i = 0; i < s->num_anims; i++)
 	{
-		if (s->anims[i].mesh_ind == n->mesh_ind)
-		{
-			anim_ind = i;
-			break;
-		}
+		if (s->anims[i].mesh_ind != n->mesh_ind)
+			continue;
+
+		anim_ind = i;
+		break;
+	}
+
+	if (!strcmp("Pistol", s->anims[anim_ind].name + 2))
+	{
+		debugf("%d\n", anim_ind);
 	}
 	if (!(m->flags & MESH_IS_ACTIVE))
 	{

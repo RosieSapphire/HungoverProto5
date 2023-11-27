@@ -3,6 +3,7 @@
 #include "engine/sfx.h"
 #include "engine/util.h"
 #include "engine/vector.h"
+#include "engine/item.h"
 #include "engine/player.h"
 
 /**
@@ -36,7 +37,7 @@ void player_item_load(struct player *p)
 			continue;
 
 		scene_read_file(&p->items[i].s, item_paths[i]);
-		scene_anims_set_flags(&p->items[i].s, ANIM_LOOPS);
+		scene_anims_set_flags(&p->items[i].s, ANIM_IS_PLAYING);
 		scene_anims_set_frame(&p->items[i].s, 0);
 		p->item_selected = item_select[i];
 	}
@@ -81,28 +82,6 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 {
 	p->recoil_amnt_last = p->recoil_amnt;
 
-	switch (p->item_selected)
-	{
-	case ITEM_SELECT_PISTOL:
-		if (iparms.press.z)
-		{
-			scene_anims_set_flags(&p->items[0].s, ANIM_IS_PLAYING);
-			scene_anims_set_frame(&p->items[0].s, 0);
-			mixer_ch_set_vol(SFXC_ITEM, 0.8f, 0.8f);
-			wav64_play(&pistol_fire_sfx, SFXC_ITEM);
-			p->recoil_amnt += 0.2f;
-			vector_copy(p->recoil_dir, (f32[2]) {
-				(f32)((rand() % 255) - 127) / 128.0f,
-				(f32)((rand() % 255) - 127) / 128.0f}, 2);
-		}
-
-		scene_anims_update(&p->items[0].s);
-		break;
-
-	default:
-		break;
-	}
-
 	/*
 	 * Changing Weapons
 	 */
@@ -123,6 +102,58 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 		if (!(p->item_flags & (1 << p->item_selected))
 			&& p->item_selected != -1)
 			p->item_selected = item_selected_last;
+
+	}
+
+	/*
+	 * Play Switching Sound
+	 */
+	if (p->item_selected != item_selected_last)
+	{
+		switch (p->item_selected)
+		{
+		case ITEM_SELECT_PISTOL:
+			mixer_ch_set_vol(SFXC_ITEM, 0.3f, 0.4f);
+			p->items[0].anim_index = 0;
+			scene_anims_set_frame(&p->items[0].s, 0);
+			scene_anims_set_flags(&p->items[0].s, ANIM_IS_PLAYING);
+			wav64_play(&pistol_pullout_sfx, SFXC_ITEM);
+			break;
+
+		case ITEM_SELECT_BONG:
+			mixer_ch_set_vol(SFXC_ITEM, 0.6f, 0.7f);
+			wav64_play(&bong_pullout_sfx, SFXC_ITEM);
+			break;
+
+		default:
+			break;
+		}
+	}
+
+	/*
+	 * Checking for Use
+	 */
+	switch (p->item_selected)
+	{
+	case ITEM_SELECT_PISTOL:
+		if (iparms.press.z)
+		{
+			p->items[0].anim_index = 1;
+			scene_anims_set_flags(&p->items[0].s, ANIM_IS_PLAYING);
+			scene_anims_set_frame(&p->items[0].s, 0);
+			mixer_ch_set_vol(SFXC_ITEM, 0.8f, 0.8f);
+			wav64_play(&pistol_fire_sfx, SFXC_ITEM);
+			p->recoil_amnt += 0.2f;
+			vector_copy(p->recoil_dir, (f32[2]) {
+				(f32)((rand() % 255) - 127) / 128.0f,
+				(f32)((rand() % 255) - 127) / 128.0f}, 2);
+		}
+
+		item_scene_anim_update(p->items + 0);
+		break;
+
+	default:
+		break;
 	}
 
 	/*
@@ -165,5 +196,7 @@ void player_item_draw(const struct player *p, const f32 subtick)
 	glRotatef(-90, 0, 1, 0);
 	glRotatef(turn_offset_lerp[0] * 30, 0, 1, 0);
 	glRotatef(turn_offset_lerp[1] * 30, 0, 0, 1);
-	scene_draw(&p->items[p->item_selected].s, subtick);
+	const struct item *item = p->items + p->item_selected;
+
+	item_scene_node_draw(item, &item->s.root_node, subtick);
 }

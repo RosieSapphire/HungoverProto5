@@ -25,6 +25,9 @@ void textures_init(void)
  */
 u32 texture_create_file(const char *path)
 {
+	if (!strncmp(path, "None", 4))
+		return (0);
+
 	struct texture t;
 
 	for (u16 i = 0; i < num_texs_loaded; i++)

@@ -15,6 +15,7 @@ void sfx_load(void)
 	mixer_ch_set_vol(SFXC_MUSIC, 0.8f, 0.8f);
 	mixer_ch_set_vol(SFXC_ITEM, 0.8f, 0.8f);
 	mixer_ch_set_vol(SFXC_PLAYER, 0.8f, 0.8f);
+	mixer_ch_set_vol(SFXC_GUNSHOT, 0.8f, 0.8f);
 
 	wav64_open(&title_music, "rom:/title_main.wav64");
 	wav64_open(&pistol_fire_sfx, "rom:/pistol_fire.wav64");

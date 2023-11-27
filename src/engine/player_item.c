@@ -113,14 +113,17 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 		switch (p->item_selected)
 		{
 		case ITEM_SELECT_PISTOL:
-			mixer_ch_set_vol(SFXC_ITEM, 0.3f, 0.4f);
 			p->items[0].anim_index = 0;
 			scene_anims_set_frame(&p->items[0].s, 0);
 			scene_anims_set_flags(&p->items[0].s, ANIM_IS_PLAYING);
+			mixer_ch_set_vol(SFXC_ITEM, 0.3f, 0.4f);
 			wav64_play(&pistol_pullout_sfx, SFXC_ITEM);
 			break;
 
 		case ITEM_SELECT_BONG:
+			p->items[1].anim_index = 0;
+			scene_anims_set_frame(&p->items[1].s, 0);
+			scene_anims_set_flags(&p->items[1].s, ANIM_IS_PLAYING);
 			mixer_ch_set_vol(SFXC_ITEM, 0.6f, 0.7f);
 			wav64_play(&bong_pullout_sfx, SFXC_ITEM);
 			break;
@@ -141,8 +144,8 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 			p->items[0].anim_index = 1;
 			scene_anims_set_flags(&p->items[0].s, ANIM_IS_PLAYING);
 			scene_anims_set_frame(&p->items[0].s, 0);
-			mixer_ch_set_vol(SFXC_ITEM, 0.8f, 0.8f);
-			wav64_play(&pistol_fire_sfx, SFXC_ITEM);
+			mixer_ch_set_vol(SFXC_GUNSHOT, 0.8f, 0.8f);
+			wav64_play(&pistol_fire_sfx, SFXC_GUNSHOT);
 			p->recoil_amnt += 0.2f;
 			vector_copy(p->recoil_dir, (f32[2]) {
 				(f32)((rand() % 255) - 127) / 128.0f,
@@ -150,6 +153,10 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 		}
 
 		item_scene_anim_update(p->items + 0);
+		break;
+
+	case ITEM_SELECT_BONG:
+		item_scene_anim_update(p->items + 1);
 		break;
 
 	default:

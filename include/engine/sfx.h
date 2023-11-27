@@ -13,6 +13,7 @@ enum sfx_channels
 	SFXC_MUSIC,
 	SFXC_ITEM,
 	SFXC_PLAYER,
+	SFXC_GUNSHOT,
 	NUM_SFXC,
 };
 

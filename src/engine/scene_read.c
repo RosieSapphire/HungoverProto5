@@ -67,9 +67,9 @@ static void _scene_read_mesh(struct scene *s, u16 i)
 	fread(m->indis, sizeof(u16), m->num_indis, mf);
 	fread(&m->tind, sizeof(u16), 1, mf);
 	fclose(mf);
+	const u32 id = m->tind == 0xFFFF ? 0 : s->tex_ids[m->tind];
 
-	mesh_gen_rspqblock(m,
-		    m->tind == 0xFFFF ? 0 : tex_objs_loaded[m->tind].id);
+	mesh_gen_rspqblock(m, id);
 	m->flags = MESH_IS_ACTIVE;
 }
 

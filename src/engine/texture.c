@@ -28,10 +28,8 @@ u32 texture_create_file(const char *path)
 	struct texture t;
 
 	for (u16 i = 0; i < num_texs_loaded; i++)
-	{
 		if (!strcmp(path, tex_paths_loaded[i]))
 			return (tex_objs_loaded[i].id);
-	}
 
 	num_texs_loaded++;
 	tex_objs_loaded = realloc(tex_objs_loaded,

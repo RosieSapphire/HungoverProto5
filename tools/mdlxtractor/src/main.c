@@ -158,8 +158,8 @@ static void _scene_convert_assimp(const struct aiScene *si, struct scene *so,
 {
 	_scene_convert_node(so, scnpath, si->mRootNode, &so->root_node);
 
-	assert(si->mNumMaterials - 1 < MAX_SCENE_TEXS);
-	so->num_tex_paths = si->mNumMaterials - 1;
+	assert(si->mNumMaterials < MAX_SCENE_TEXS);
+	so->num_tex_paths = si->mNumMaterials;
 	for (int i = 0; i < so->num_tex_paths; i++)
 	{
 		struct aiString tex_path;

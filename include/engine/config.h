@@ -16,7 +16,7 @@
 #define CONF_FAR  512
 
 #define CONF_AUDIO_FREQ 32000
-#define CONF_NUM_AUDIO_BUF 4
+#define CONF_NUM_AUDIO_BUF 1
 
 #define MAX_SCENE_TEXS 16 
 #define MAX_TOTAL_TEXS 128

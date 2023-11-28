@@ -17,8 +17,8 @@ enum sfx_channels
 	NUM_SFXC,
 };
 
-extern wav64_t title_music, pistol_fire_sfx, pistol_pullout_sfx,
-		footstep2_sfx, bong_pullout_sfx;
+extern wav64_t title_music_intro, title_music_init, title_music_main,
+	pistol_fire_sfx, pistol_pullout_sfx, footstep2_sfx, bong_pullout_sfx;
 
 void sfx_load(void);
 

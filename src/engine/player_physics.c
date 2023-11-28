@@ -96,7 +96,7 @@ void player_floor_collision(const struct collision_mesh *m,
 			continue;
 
 		f32 push_vec[3];
-		float push = fmaxf(HEIGHT - dist + 0.5f, 0);
+		float push = fmaxf(2.1f - dist + 0.5f, 0);
 
 		vector_copy(push_vec, n, 3);
 		vector_scale(push_vec, push, 3);

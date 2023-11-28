@@ -17,10 +17,10 @@ static void _scene_draw_node_pickup(const struct scene *s,
 				    const struct node *n, const struct mesh *m,
 				    const f32 subtick)
 {
-	glMultMatrixf((f32 *)n->trans);
-	glTranslatef(0, sinf(spin_timer * 0.2f) * 0.2f, 0);
 	const f32 spin_timer_lerp = lerpf(spin_timer_last, spin_timer, subtick);
 
+	glMultMatrixf((f32 *)n->trans);
+	glTranslatef(0, sinf(spin_timer_lerp * 0.2f) * 0.2f, 0);
 	glRotatef(spin_timer_lerp * 8, 0, 1, 0);
 	mesh_draw(m);
 

@@ -9,8 +9,9 @@
 /**
  * player_item_load - Loads player's Item
  * @p: Player whos item needs to be loaded
+ * @flags_last: Last state of Player Has Flags
  */
-void player_item_load(struct player *p)
+void player_item_load(struct player *p, const u8 flags_last)
 {
 	s8 item_has_flags[ITEM_COUNT] = {
 		ITEM_HAS_PISTOL,
@@ -33,12 +34,14 @@ void player_item_load(struct player *p)
 	for (u8 i = 0; i < ITEM_COUNT; i++)
 	{
 
-		if (!(p->item_flags & item_has_flags[i]))
+		if ((p->item_flags ^ flags_last) != item_has_flags[i])
 			continue;
 
-		scene_read_file(&p->items[i].s, item_paths[i]);
-		scene_anims_set_flags(&p->items[i].s, ANIM_IS_PLAYING);
-		scene_anims_set_frame(&p->items[i].s, 0);
+		struct scene *s = &p->items[i].s;
+
+		scene_read_file(s, item_paths[i]);
+		scene_anims_set_flags(s, ANIM_IS_PLAYING);
+		scene_anims_set_frame(s, 0);
 		p->item_selected = item_select[i];
 	}
 }
@@ -55,6 +58,7 @@ void player_check_pickup(struct scene *s, struct player *p)
 		f32 vec[3];
 		const struct node *n = node_from_mesh_ind(&s->root_node, i);
 		const f32 dist_touch = 2.4f;
+		const u8 item_flags_last = p->item_flags;
 
 		vector_sub(p->pos, n->trans[3], vec, 3);
 		if (vector_magnitude_sqr(vec, 3) < dist_touch * dist_touch)
@@ -72,7 +76,7 @@ void player_check_pickup(struct scene *s, struct player *p)
 				wav64_play(&bong_pullout_sfx, SFXC_ITEM);
 			}
 
-			player_item_load(p);
+			player_item_load(p, item_flags_last);
 			m->flags &= ~(MESH_IS_ACTIVE);
 		}
 	}

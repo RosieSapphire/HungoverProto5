@@ -19,7 +19,7 @@ void player_init(const struct scene *s, struct player *p,
 	p->item_flags = items_equipped_flags;
 	p->headbob_timer = p->headbob_timer_last = 0;
 	p->item_selected = ITEM_SELECT_NONE;
-	player_item_load(p);
+	player_item_load(p, ITEM_HAS_NONE);
 	collision_mesh_gen(&floormesh, s->meshes + 3);
 }
 

@@ -23,7 +23,8 @@ void ui_timer_update(void)
 
 void ui_prototype_draw(void)
 {
-	rdpq_text_printf(NULL, 1, 32, 32, "PROTOTYPE BUILD 5");
+	if ((frame_counter >> 4) & 1)
+		rdpq_text_printf(NULL, 1, 32, 32, "PROTOTYPE BUILD 5");
 }
 
 void ui_item_qty_draw(const struct item *i, const u8 uses_2nd)

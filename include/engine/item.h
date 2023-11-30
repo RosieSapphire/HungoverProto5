@@ -15,7 +15,7 @@ struct item
 {
 	struct scene s;
 	u16 anim_index, qty1, qty2;
-	u32 usage_timer;
+	u32 usage_timer, usage_timer_last;
 };
 
 void item_anim_update(struct item *item);

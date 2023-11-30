@@ -204,7 +204,7 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 
 	case ITEM_SELECT_BONG:
 		item = p->items + 1;
-		const s16 usage_timer_last = item->usage_timer;
+		item->usage_timer_last = item->usage_timer;
 
 		if (iparms.press.z && item_anim_at_end(item, 0))
 		{
@@ -214,8 +214,6 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 			mixer_ch_set_vol(SFXC_ITEM1, 0.6f, 0.6f);
 			wav64_play(&lighter_flick_sfx, SFXC_ITEM1);
 		}
-
-		debugf("%ld\n", item->usage_timer);
 
 		if (item->anim_index == 1)
 		{
@@ -239,7 +237,7 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 			}
 		}
 
-		if (usage_timer_last == 17 && item->usage_timer == 18)
+		if (item->usage_timer_last == 17 && item->usage_timer == 18)
 		{
 			mixer_ch_set_vol(SFXC_ITEM0, 0.4f, 0.4f);
 			wav64_play(&bong_bubbling_sfx, SFXC_ITEM0);

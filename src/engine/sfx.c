@@ -39,6 +39,6 @@ void sfx_load(void)
 	wav64_set_loop(&pistol_pullout_sfx, 0);
 	wav64_set_loop(&footstep2_sfx, 0);
 	wav64_set_loop(&bong_pullout_sfx, 0);
-	wav64_set_loop(&bong_bubbling_sfx, 1);
+	wav64_set_loop(&bong_bubbling_sfx, 0);
 	wav64_set_loop(&lighter_flick_sfx, 0);
 }

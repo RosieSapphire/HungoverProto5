@@ -104,5 +104,9 @@ void testroom_draw(f32 subtick)
 	if (player.item_selected != ITEM_SELECT_NONE)
 		ui_item_qty_draw(item, is_weapon);
 
+	if (player.item_selected == ITEM_SELECT_BONG &&
+			player.items[1].usage_timer > 0)
+		ui_bongometer_draw(item, subtick);
+
 	ui_prototype_draw();
 }

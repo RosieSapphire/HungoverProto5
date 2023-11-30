@@ -16,9 +16,10 @@ struct vec4_key
 
 enum animation_flags : u8
 {
-	ANIM_FLAGS_NONE = 0x0,
-	ANIM_IS_PLAYING = 0x1,
-	ANIM_LOOPS      = 0x2,
+	ANIM_FLAGS_NONE  = 0x0,
+	ANIM_IS_PLAYING  = 0x1,
+	ANIM_IS_BACKWARD = 0x2,
+	ANIM_LOOPS       = 0x4,
 };
 
 struct animation
@@ -28,7 +29,8 @@ struct animation
 	struct vec3_key *pos_keys;
 	struct vec4_key *rot_keys;
 	struct vec3_key *sca_keys;
-	u16 frame_last, frame, length, mesh_ind;
+	s16 frame_last, frame;
+	u16 mesh_ind, length;
 	enum animation_flags flags;
 };
 

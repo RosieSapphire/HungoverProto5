@@ -10,7 +10,11 @@ void animation_update(struct animation *a)
 		return;
 
 	a->frame_last = a->frame;
-	a->frame++;
+
+	if (a->flags & ANIM_IS_BACKWARD)
+		a->frame--;
+	else
+		a->frame++;
 
 	if (a->flags & ANIM_LOOPS)
 		a->frame %= a->length;

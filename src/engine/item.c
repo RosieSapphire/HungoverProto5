@@ -23,6 +23,18 @@ u8 item_anim_is_playing(const struct item *item, const u16 anim_index)
 	return (a->flags & ANIM_IS_PLAYING);
 }
 
+u8 item_anim_at_end(const struct item *item, const u16 anim_index)
+{
+	const struct animation *a = item->s.anims + anim_index;
+
+	return (a->frame == a->length - 1);
+}
+
+u8 item_anim_is_index(const struct item *item, const u16 anim_index)
+{
+	return (anim_index == item->anim_index);
+}
+
 void item_node_draw(const struct item *item,
 		    const struct node *n, const f32 subtick)
 {
@@ -67,4 +79,16 @@ void item_node_draw(const struct item *item,
 	for (u16 i = 0; i < n->num_children; i++)
 		item_node_draw(item, n->children + i, subtick);
 	glPopMatrix();
+}
+
+void item_anim_set_flags(struct item *item,
+			 const u16 anim_index, const u8 flags)
+{
+	item->s.anims[anim_index].flags = flags;
+}
+
+void item_anim_set_frame(struct item *item,
+			 const u16 anim_index, const u16 frame)
+{
+	item->s.anims[anim_index].frame = frame;
 }

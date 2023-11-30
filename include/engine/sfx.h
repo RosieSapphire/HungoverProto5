@@ -13,15 +13,15 @@ enum sfx_channels
 	SFXC_MUSIC0,
 	SFXC_MUSIC1,
 	SFXC_MUSIC2,
-	SFXC_ITEM,
+	SFXC_ITEM0,
+	SFXC_ITEM1,
 	SFXC_PLAYER,
-	SFXC_GUNSHOT,
 	NUM_SFXC,
 };
 
 extern wav64_t title_music_intro, title_music_init, title_music_main,
 	pistol_fire_sfx, pistol_click_sfx, pistol_pullout_sfx,
-	footstep2_sfx, bong_pullout_sfx;
+	footstep2_sfx, bong_pullout_sfx, bong_bubbling_sfx, lighter_flick_sfx;
 
 void sfx_load(void);
 

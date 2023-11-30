@@ -46,16 +46,18 @@ void player_item_load(struct player *p, const u8 flags_last)
 
 	}
 
+	struct item *item = p->items + p->item_selected;
+
 	switch (p->item_selected)
 	{
 	case ITEM_SELECT_PISTOL:
-		p->items[0].qty1 = 17;
-		p->items[0].qty2 = 17 * 2;
+		item->qty1 = 17;
+		item->qty2 = 17 * 2;
 		break;
 
 	case ITEM_SELECT_BONG:
-		p->items[1].qty1 = 3;
-		p->items[1].qty2 = 0;
+		item->qty1 = 3;
+		item->qty2 = 0;
 		break;
 
 	default:
@@ -83,14 +85,14 @@ void player_check_pickup(struct scene *s, struct player *p)
 			if (!strcmp(m->name + 3, "Pistol"))
 			{
 				p->item_flags |= ITEM_HAS_PISTOL;
-				mixer_ch_set_vol(SFXC_ITEM, 0.3f, 0.4f);
-				wav64_play(&pistol_pullout_sfx, SFXC_ITEM);
+				mixer_ch_set_vol(SFXC_ITEM0, 0.3f, 0.4f);
+				wav64_play(&pistol_pullout_sfx, SFXC_ITEM0);
       			}
 			else if (!strcmp(m->name + 3, "Bong"))
 			{
 				p->item_flags |= ITEM_HAS_BONG;
-				mixer_ch_set_vol(SFXC_ITEM, 0.6f, 0.7f);
-				wav64_play(&bong_pullout_sfx, SFXC_ITEM);
+				mixer_ch_set_vol(SFXC_ITEM0, 0.6f, 0.7f);
+				wav64_play(&bong_pullout_sfx, SFXC_ITEM0);
 			}
 
 			player_item_load(p, item_flags_last);
@@ -126,6 +128,8 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 
 	}
 
+	struct item *item;
+
 	/*
 	 * Play Switching Sound
 	 */
@@ -134,19 +138,21 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 		switch (p->item_selected)
 		{
 		case ITEM_SELECT_PISTOL:
-			p->items[0].anim_index = 0;
-			scene_anims_set_frame(&p->items[0].s, 0);
-			scene_anims_set_flags(&p->items[0].s, ANIM_IS_PLAYING);
-			mixer_ch_set_vol(SFXC_ITEM, 0.3f, 0.4f);
-			wav64_play(&pistol_pullout_sfx, SFXC_ITEM);
+			item = p->items + 0;
+			item->anim_index = 0;
+			scene_anims_set_frame(&item->s, 0);
+			scene_anims_set_flags(&item->s, ANIM_IS_PLAYING);
+			mixer_ch_set_vol(SFXC_ITEM0, 0.3f, 0.4f);
+			wav64_play(&pistol_pullout_sfx, SFXC_ITEM0);
 			break;
 
 		case ITEM_SELECT_BONG:
-			p->items[1].anim_index = 0;
-			scene_anims_set_frame(&p->items[1].s, 0);
-			scene_anims_set_flags(&p->items[1].s, ANIM_IS_PLAYING);
-			mixer_ch_set_vol(SFXC_ITEM, 0.6f, 0.7f);
-			wav64_play(&bong_pullout_sfx, SFXC_ITEM);
+			item = p->items + 1;
+			item->anim_index = 0;
+			scene_anims_set_frame(&item->s, 0);
+			scene_anims_set_flags(&item->s, ANIM_IS_PLAYING);
+			mixer_ch_set_vol(SFXC_ITEM0, 0.6f, 0.7f);
+			wav64_play(&bong_pullout_sfx, SFXC_ITEM0);
 			break;
 
 		default:
@@ -160,20 +166,21 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 	switch (p->item_selected)
 	{
 	case ITEM_SELECT_PISTOL:
-		if (iparms.press.z && item_anim_is_playing(p->items + 0, 1))
+		item = p->items + 0;
+		if (iparms.press.z && !item_anim_at_end(item, 0))
 		{
-			u8 has_loaded = p->items[0].qty1 > 0;
-			u8 has_reserve = p->items[0].qty2 > 0;
+			u8 has_loaded = item->qty1 > 0;
+			u8 has_reserve = item->qty2 > 0;
 
 			if (has_reserve && has_loaded)
 			{
-				p->items[0].anim_index = 1;
-				p->items[0].qty1--;
-				scene_anims_set_flags(&p->items[0].s,
+				item->anim_index = 1;
+				item->qty1--;
+				scene_anims_set_flags(&item->s,
 					ANIM_IS_PLAYING);
-				scene_anims_set_frame(&p->items[0].s, 0);
-				mixer_ch_set_vol(SFXC_GUNSHOT, 0.8f, 0.8f);
-				wav64_play(&pistol_fire_sfx, SFXC_GUNSHOT);
+				scene_anims_set_frame(&item->s, 0);
+				mixer_ch_set_vol(SFXC_ITEM1, 0.8f, 0.8f);
+				wav64_play(&pistol_fire_sfx, SFXC_ITEM1);
 				p->recoil_amnt += 0.2f;
 				vector_copy(p->recoil_dir, (f32[2]) {
 					(f32)((rand() % 255) - 127) / 128.0f,
@@ -183,19 +190,61 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 			}
 			else if (has_reserve && !has_loaded)
 			{
-				p->items[0].qty2 -= 17;
-				p->items[0].qty1 += 17;
+				item->qty2 -= 17;
+				item->qty1 += 17;
 			}
 			else if (!has_reserve && !has_loaded)
 			{
-				mixer_ch_set_vol(SFXC_ITEM, 0.5f, 0.5f);
-				wav64_play(&pistol_click_sfx, SFXC_ITEM);
+				mixer_ch_set_vol(SFXC_ITEM0, 0.5f, 0.5f);
+				wav64_play(&pistol_click_sfx, SFXC_ITEM0);
 			}
 		}
 
 		break;
 
 	case ITEM_SELECT_BONG:
+		item = p->items + 1;
+		const s16 usage_timer_last = item->usage_timer;
+
+		if (iparms.press.z && item_anim_at_end(item, 0))
+		{
+			item->usage_timer = 1;
+			item->anim_index = 1;
+			item_anim_set_frame(item, 1, 0);
+			mixer_ch_set_vol(SFXC_ITEM1, 0.6f, 0.6f);
+			wav64_play(&lighter_flick_sfx, SFXC_ITEM1);
+		}
+
+		debugf("%ld\n", item->usage_timer);
+
+		if (item->anim_index == 1)
+		{
+			if (iparms.held.z || iparms.press.z)
+			{
+				item_anim_set_flags(item, 1,
+					ANIM_IS_PLAYING);
+				mixer_ch_set_freq(SFXC_ITEM0,
+					32000 + (item->usage_timer * 100));
+				if (item->usage_timer > 0)
+					item->usage_timer++;
+
+			}
+			else
+			{
+				mixer_ch_set_freq(SFXC_ITEM0, 32000);
+				item_anim_set_flags(item, 1,
+					ANIM_IS_PLAYING | ANIM_IS_BACKWARD);
+				item->usage_timer = 0;
+				mixer_ch_stop(SFXC_ITEM0);
+			}
+		}
+
+		if (usage_timer_last == 17 && item->usage_timer == 18)
+		{
+			mixer_ch_set_vol(SFXC_ITEM0, 0.4f, 0.4f);
+			wav64_play(&bong_bubbling_sfx, SFXC_ITEM0);
+		}
+
 		break;
 
 	default:

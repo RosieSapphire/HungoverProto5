@@ -217,12 +217,15 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 
 		if (item->anim_index == 1)
 		{
-			if (iparms.held.z || iparms.press.z)
+			debugf("%ld\n", item->usage_timer);
+			if ((iparms.held.z || iparms.press.z) && 
+					item->usage_timer < 56 &&
+					item->usage_timer != 0)
 			{
 				item_anim_set_flags(item, 1,
 					ANIM_IS_PLAYING);
 				mixer_ch_set_freq(SFXC_ITEM0,
-					32000 + (item->usage_timer * 100));
+					32000 + (item->usage_timer * 200));
 				if (item->usage_timer > 0)
 					item->usage_timer++;
 
@@ -230,10 +233,10 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 			else
 			{
 				mixer_ch_set_freq(SFXC_ITEM0, 32000);
+				mixer_ch_stop(SFXC_ITEM0);
 				item_anim_set_flags(item, 1,
 					ANIM_IS_PLAYING | ANIM_IS_BACKWARD);
 				item->usage_timer = 0;
-				mixer_ch_stop(SFXC_ITEM0);
 			}
 		}
 

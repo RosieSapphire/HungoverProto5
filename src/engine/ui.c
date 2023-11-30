@@ -44,7 +44,7 @@ void ui_bongometer_draw(const struct item *item, const f32 subtick)
 {
 	const f32 usage_timer_lerp =
 		clampf(lerpf(item->usage_timer_last,
-	       item->usage_timer, subtick), 0, 128);
+	       item->usage_timer, subtick), 0, 56);
 	const f32 lerpt = clampf(usage_timer_lerp, 0, 8) / 8.0f;
 	const f32 y_pos = smoothf((CONF_HEIGHT >> 1) - 256,
 		   (CONF_HEIGHT >> 1) - 96, lerpt);
@@ -52,12 +52,15 @@ void ui_bongometer_draw(const struct item *item, const f32 subtick)
 	rdpq_set_mode_standard();
 	rdpq_mode_alphacompare(1);
 	rdpq_sprite_blit(bongometer_spr, (CONF_WIDTH >> 1) - 64, y_pos, NULL);
+	const f32 theta = ((-usage_timer_lerp * usage_timer_lerp *
+		usage_timer_lerp * usage_timer_lerp) * 0.0000001875f) + 1.04f;
+
 	rdpq_sprite_blit(bongometer_arrow_spr,
 		  (CONF_WIDTH >> 1), y_pos + 100, &(const rdpq_blitparms_t){
 				    .scale_x = 0.5f,
 				    .scale_y = 0.5f,
 		  		    .cx = 8,
 		  		    .cy = 128,
-		  		    .theta = (-usage_timer_lerp * 0.015f) + 1,
+		  		    .theta = theta,
 	});
 }

@@ -31,6 +31,11 @@ filesystem/%.sprite: assets/%.png
 	@echo "    [SPRITE] $@"
 	@$(N64_MKSPRITE) $(MKSPRITE_FLAGS) -o filesystem "$<"
 
+filesystem/%.font64: assets/%.ttf
+	@mkdir -p $(dir $@)
+	@echo "    [FONT] $@"
+	@$(N64_MKFONT) --size 18 -o filesystem "$<"
+
 filesystem/%.scn: assets/%.glb
 	@mkdir -p $(dir $@)
 	@echo "    [SCENE] $@"

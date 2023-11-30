@@ -160,6 +160,7 @@ static void _scene_convert_assimp(const struct aiScene *si, struct scene *so,
 
 	assert(si->mNumMaterials < MAX_SCENE_TEXS);
 	so->num_tex_paths = si->mNumMaterials;
+	printf("%d\n", so->num_tex_paths);
 	for (int i = 0; i < so->num_tex_paths; i++)
 	{
 		struct aiString tex_path;
@@ -167,6 +168,7 @@ static void _scene_convert_assimp(const struct aiScene *si, struct scene *so,
 		aiGetMaterialString(si->mMaterials[i],
 		      AI_MATKEY_NAME, &tex_path);
 		strncpy(so->tex_paths[i], tex_path.data, tex_path.length + 1);
+		printf("%s\n", so->tex_paths[i]);
 	}
 
 	assert(si->mNumMeshes);
@@ -565,7 +567,6 @@ int main(int argc, char **argv)
 	const char *pathout = argv[2];
 	const u32 flags = aiProcess_Triangulate | aiProcess_FlipUVs
 		| aiProcess_JoinIdenticalVertices
-		| aiProcess_RemoveRedundantMaterials
 		| aiProcess_ImproveCacheLocality;
 	const struct aiScene *aiscene = aiImportFile(pathin, flags);
 

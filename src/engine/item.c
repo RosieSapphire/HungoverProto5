@@ -1,8 +1,9 @@
 #include <GL/gl.h>
 
+#include "engine/profiler.h"
 #include "engine/item.h"
 
-void item_scene_anim_update(struct item *item)
+void item_anim_update(struct item *item)
 {
 	for (u16 i = 0; i < item->s.num_anims; i++)
 	{
@@ -15,13 +16,20 @@ void item_scene_anim_update(struct item *item)
 	}
 }
 
-void item_scene_node_draw(const struct item *item, const struct node *n,
-		     const f32 subtick)
+u8 item_anim_is_playing(const struct item *item, const u16 anim_index)
+{
+	const struct animation *a = item->s.anims + anim_index;
+
+	return (a->flags & ANIM_IS_PLAYING);
+}
+
+void item_node_draw(const struct item *item,
+		    const struct node *n, const f32 subtick)
 {
 	if (n->mesh_ind == 0xFFFF)
 	{
 		for (u16 i = 0; i < n->num_children; i++)
-			item_scene_node_draw(item, n->children + i, subtick);
+			item_node_draw(item, n->children + i, subtick);
 
 		return;
 	}
@@ -45,7 +53,7 @@ void item_scene_node_draw(const struct item *item, const struct node *n,
 	if (!(m->flags & MESH_IS_ACTIVE))
 	{
 		for (u16 i = 0; i < n->num_children; i++)
-			item_scene_node_draw(item, n->children + i, subtick);
+			item_node_draw(item, n->children + i, subtick);
 		return;
 	}
 
@@ -57,6 +65,6 @@ void item_scene_node_draw(const struct item *item, const struct node *n,
 
 	mesh_draw(m);
 	for (u16 i = 0; i < n->num_children; i++)
-		item_scene_node_draw(item, n->children + i, subtick);
+		item_node_draw(item, n->children + i, subtick);
 	glPopMatrix();
 }

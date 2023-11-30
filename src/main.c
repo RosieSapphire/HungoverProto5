@@ -7,6 +7,7 @@
 #include "engine/sfx.h"
 #include "engine/scene.h"
 #include "engine/texture.h"
+#include "engine/ui.h"
 
 #include "game/title.h"
 #include "game/testroom.h"
@@ -42,6 +43,7 @@ static void _init(void)
 	dfs_init(DFS_DEFAULT_LOCATION);
 	joypad_init();
 	textures_init();
+	ui_font_init();
 
 	debug_init_isviewer();
 	debug_init_usblog();

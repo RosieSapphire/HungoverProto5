@@ -43,7 +43,24 @@ void player_item_load(struct player *p, const u8 flags_last)
 		scene_anims_set_flags(s, ANIM_IS_PLAYING);
 		scene_anims_set_frame(s, 0);
 		p->item_selected = item_select[i];
+
 	}
+
+	switch (p->item_selected)
+	{
+	case ITEM_SELECT_PISTOL:
+		p->items[0].qty1 = 17;
+		p->items[0].qty2 = 17 * 2;
+		break;
+
+	case ITEM_SELECT_BONG:
+		p->items[1].qty1 = 3;
+		p->items[1].qty2 = 0;
+		break;
+
+	default:
+		break;
+	};
 }
 
 void player_check_pickup(struct scene *s, struct player *p)
@@ -143,29 +160,50 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 	switch (p->item_selected)
 	{
 	case ITEM_SELECT_PISTOL:
-		if (iparms.press.z)
+		if (iparms.press.z && item_anim_is_playing(p->items + 0, 1))
 		{
-			p->items[0].anim_index = 1;
-			scene_anims_set_flags(&p->items[0].s, ANIM_IS_PLAYING);
-			scene_anims_set_frame(&p->items[0].s, 0);
-			mixer_ch_set_vol(SFXC_GUNSHOT, 0.8f, 0.8f);
-			wav64_play(&pistol_fire_sfx, SFXC_GUNSHOT);
-			p->recoil_amnt += 0.2f;
-			vector_copy(p->recoil_dir, (f32[2]) {
-				(f32)((rand() % 255) - 127) / 128.0f,
-				(f32)((rand() % 255) - 127) / 128.0f}, 2);
+			u8 has_loaded = p->items[0].qty1 > 0;
+			u8 has_reserve = p->items[0].qty2 > 0;
+
+			if (has_reserve && has_loaded)
+			{
+				p->items[0].anim_index = 1;
+				p->items[0].qty1--;
+				scene_anims_set_flags(&p->items[0].s,
+					ANIM_IS_PLAYING);
+				scene_anims_set_frame(&p->items[0].s, 0);
+				mixer_ch_set_vol(SFXC_GUNSHOT, 0.8f, 0.8f);
+				wav64_play(&pistol_fire_sfx, SFXC_GUNSHOT);
+				p->recoil_amnt += 0.2f;
+				vector_copy(p->recoil_dir, (f32[2]) {
+					(f32)((rand() % 255) - 127) / 128.0f,
+					(f32)((rand() % 255) - 127) / 128.0f},
+					2);
+
+			}
+			else if (has_reserve && !has_loaded)
+			{
+				p->items[0].qty2 -= 17;
+				p->items[0].qty1 += 17;
+			}
+			else if (!has_reserve && !has_loaded)
+			{
+				mixer_ch_set_vol(SFXC_ITEM, 0.5f, 0.5f);
+				wav64_play(&pistol_click_sfx, SFXC_ITEM);
+			}
 		}
 
-		item_scene_anim_update(p->items + 0);
 		break;
 
 	case ITEM_SELECT_BONG:
-		item_scene_anim_update(p->items + 1);
 		break;
 
 	default:
 		break;
 	}
+
+	if (p->item_selected != ITEM_SELECT_NONE)
+		item_anim_update(p->items + p->item_selected);
 
 	/*
 	 * Handling Recoil
@@ -209,5 +247,5 @@ void player_item_draw(const struct player *p, const f32 subtick)
 	glRotatef(turn_offset_lerp[1] * 30, 0, 0, 1);
 	const struct item *item = p->items + p->item_selected;
 
-	item_scene_node_draw(item, &item->s.root_node, subtick);
+	item_node_draw(item, &item->s.root_node, subtick);
 }

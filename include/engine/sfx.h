@@ -10,7 +10,9 @@
  */
 enum sfx_channels
 {
-	SFXC_MUSIC,
+	SFXC_MUSIC0,
+	SFXC_MUSIC1,
+	SFXC_MUSIC2,
 	SFXC_ITEM,
 	SFXC_PLAYER,
 	SFXC_GUNSHOT,
@@ -18,7 +20,8 @@ enum sfx_channels
 };
 
 extern wav64_t title_music_intro, title_music_init, title_music_main,
-	pistol_fire_sfx, pistol_pullout_sfx, footstep2_sfx, bong_pullout_sfx;
+	pistol_fire_sfx, pistol_click_sfx, pistol_pullout_sfx,
+	footstep2_sfx, bong_pullout_sfx;
 
 void sfx_load(void);
 

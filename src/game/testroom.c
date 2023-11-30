@@ -5,6 +5,7 @@
 #include "engine/util.h"
 #include "engine/camera.h"
 #include "engine/crosshair.h"
+#include "engine/ui.h"
 #include "engine/player.h"
 
 #include "game/testroom.h"
@@ -55,6 +56,8 @@ enum scene_index testroom_update(struct input_parms iparms)
 	scene_anims_update(&scene);
 	player_items_update(&player, iparms);
 
+	ui_timer_update();
+
 	return (SCENE_TESTROOM);
 }
 
@@ -67,6 +70,9 @@ void testroom_draw(f32 subtick)
 	gl_context_begin();
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+	glFrontFace(GL_CCW);
 	glClear(GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 
@@ -89,6 +95,14 @@ void testroom_draw(f32 subtick)
 	glDisable(GL_DEPTH_TEST);
 	gl_context_end();
 
-	if (player.item_selected == ITEM_SELECT_PISTOL)
+	const u8 is_weapon = player.item_selected == ITEM_SELECT_PISTOL;
+	const struct item *item = player.items + player.item_selected;
+
+	if (is_weapon)
 		crosshair_draw(crosshair_block);
+
+	if (player.item_selected != ITEM_SELECT_NONE)
+		ui_item_qty_draw(item, is_weapon);
+
+	ui_prototype_draw();
 }

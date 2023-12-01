@@ -94,10 +94,9 @@ static void _audio(void)
  */
 int main(void)
 {
-	u32 ticks_last, ticks_now, ticks_accum, ticks_delta;
+	u32 ticks_last = get_ticks(), ticks_now, ticks_accum = 0, ticks_delta;
 
 	_init();
-	ticks_last = ticks_accum = 0;
 	while (1)
 	{
 		ticks_now = get_ticks();

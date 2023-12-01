@@ -83,7 +83,6 @@ void testroom_draw(f32 subtick)
 		player_camera_view_matrix_setup(&player, subtick);
 
 	scene_draw(&scene, subtick);
-
 	if (testroom_flags & TR_FREECAM_ENABLED)
 	{
 		glDisable(GL_DEPTH_TEST);
@@ -94,7 +93,6 @@ void testroom_draw(f32 subtick)
 
 	glDisable(GL_DEPTH_TEST);
 	gl_context_end();
-
 	const u8 is_weapon = player.item_selected == ITEM_SELECT_PISTOL;
 	const struct item *item = player.items + player.item_selected;
 

@@ -37,7 +37,6 @@ static void _scene_read_mesh(struct scene *s, u16 i)
 
 	strcpy(mfpath_conv, prefix);
 	strcat(mfpath_conv, mfpath + strlen("assets/"));
-
 	FILE *mf = fopen(mfpath_conv, "rb");
 
 	if (!mf)
@@ -47,7 +46,6 @@ static void _scene_read_mesh(struct scene *s, u16 i)
 	}
 
 	free(mfpath_conv);
-
 	struct mesh *m = s->meshes + i;
 
 	fread(m->name, sizeof(char), CONF_NAME_MAX, mf);
@@ -63,7 +61,6 @@ static void _scene_read_mesh(struct scene *s, u16 i)
 		fread(v->uv, sizeof(f32), 2, mf);
 		fread(v->col, sizeof(u32), 1, mf);
 	}
-
 	fread(m->indis, sizeof(u16), m->num_indis, mf);
 	fread(&m->tind, sizeof(u16), 1, mf);
 	fclose(mf);

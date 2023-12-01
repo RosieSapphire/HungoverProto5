@@ -57,10 +57,7 @@ void ui_bongometer_draw(const struct item *item, const f32 subtick)
 
 	rdpq_sprite_blit(bongometer_arrow_spr,
 		  (CONF_WIDTH >> 1), y_pos + 100, &(const rdpq_blitparms_t){
-				    .scale_x = 0.5f,
-				    .scale_y = 0.5f,
-		  		    .cx = 8,
-		  		    .cy = 128,
-		  		    .theta = theta,
+				    .scale_x = 0.5f, .scale_y = 0.5f,
+					.cx = 8, .cy = 128, .theta = theta,
 	});
 }

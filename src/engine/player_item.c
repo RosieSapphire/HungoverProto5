@@ -231,26 +231,23 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 		f32 cough_percent = 0.0f;
 
 		if (num_coughs_max)
-		{
 			cough_percent = (f32)item->qty2 / (f32)num_coughs_max;
-				/*
-			debugf("%d, %d, %f\n", cough_timer, item->qty2,
-				cough_percent);
-				*/
-		}
 
 		if (cough_timer)
 			cough_timer--;
 
 		if (item->qty2 && !cough_timer)
 		{
-			const u16 cough_freq = 32000 + (rand() % 128);
+			const u16 cough_freq = 38000;// + (rand() % 256) - 128;
 			const u16 cough = rand() % 3;
 
 			mixer_ch_set_vol(SFXC_PLAYER, 0.5f, 0.5f);
 			mixer_ch_set_freq(SFXC_PLAYER, cough_freq);
-			debugf("%d\n", cough_freq);
 
+			p->recoil_dir[0] = ((f32)(rand() % 512) / 512) - 0.5f;
+			p->recoil_dir[1] = -1;
+			vector_scale(p->recoil_dir, cough_percent, 2);
+			p->recoil_amnt = (f32)(rand() % 256) * 0.01f;
 			if (cough_percent > 0.666f)
 			{
 				switch (cough)

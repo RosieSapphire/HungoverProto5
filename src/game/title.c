@@ -8,16 +8,8 @@
 
 #include "game/title.h"
 
-enum title_music_state : u8
-{
-	TM_INTRO = 0,
-	TM_INIT,
-	TM_MAIN,
-	TM_COUNT,
-};
-
 static struct scene scene;
-static f32 beat_counter_last, beat_counter;//, time_since_load;
+static f32 beat_counter_last, beat_counter;
 static u8 title_music_state;
 
 /**

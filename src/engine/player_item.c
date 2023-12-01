@@ -215,113 +215,6 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 			wav64_play(&lighter_flick_sfx, SFXC_ITEM1);
 		}
 
-		static u16 cough_timer;
-		static u16 num_coughs_max;
-		const u8 is_coughing = item->qty2 > 0;
-
-		if (item->usage_timer >= 56 && !is_coughing)
-		{
-			item->qty1--;
-			const u16 cough_rand = 6 + (rand() % item->usage_timer);
-
-			item->qty2 = cough_rand;
-			num_coughs_max = item->qty2;
-		}
-
-		f32 cough_percent = 0.0f;
-
-		if (num_coughs_max)
-			cough_percent = (f32)item->qty2 / (f32)num_coughs_max;
-
-		if (cough_timer)
-			cough_timer--;
-
-		if (item->qty2 && !cough_timer)
-		{
-			const u16 cough_freq = 38000;// + (rand() % 256) - 128;
-			const u16 cough = rand() % 3;
-
-			mixer_ch_set_vol(SFXC_PLAYER, 0.5f, 0.5f);
-			mixer_ch_set_freq(SFXC_PLAYER, cough_freq);
-
-			p->recoil_dir[0] = ((f32)(rand() % 512) / 512) - 0.5f;
-			p->recoil_dir[1] = -1;
-			vector_scale(p->recoil_dir, cough_percent, 2);
-			p->recoil_amnt = (f32)(rand() % 256) * 0.01f;
-			if (cough_percent > 0.666f)
-			{
-				switch (cough)
-				{
-				case 0:
-					wav64_play(&cough_heavy0_sfx,
-						SFXC_PLAYER);
-					break;
-
-				case 1:
-					wav64_play(&cough_heavy1_sfx,
-						SFXC_PLAYER);
-					break;
-
-				case 2:
-					wav64_play(&cough_heavy2_sfx,
-						SFXC_PLAYER);
-					break;
-
-				default:
-					exit(1);
-				}
-			}
-			else if (cough_percent > 0.333f &&
-					cough_percent < 0.666f)
-			{
-				switch (cough)
-				{
-				case 0:
-					wav64_play(&cough_medium0_sfx,
-						SFXC_PLAYER);
-					break;
-
-				case 1:
-					wav64_play(&cough_medium1_sfx,
-						SFXC_PLAYER);
-					break;
-
-				case 2:
-					wav64_play(&cough_medium2_sfx,
-						SFXC_PLAYER);
-					break;
-
-				default:
-					exit(1);
-				}
-			}
-			else
-			{
-				switch (cough)
-				{
-				case 0:
-					wav64_play(&cough_small0_sfx,
-						SFXC_PLAYER);
-					break;
-
-				case 1:
-					wav64_play(&cough_small1_sfx,
-						SFXC_PLAYER);
-					break;
-
-				case 2:
-					wav64_play(&cough_small2_sfx,
-						SFXC_PLAYER);
-					break;
-
-				default:
-					exit(1);
-				}
-			}
-			item->qty2--;
-			cough_timer = 12 + (rand() % 16);
-		}
-
 		if (item->anim_index == 1)
 		{
 			if ((iparms.held.z || iparms.press.z) && 
@@ -356,6 +249,119 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 	default:
 		break;
 	}
+
+	/*
+	 * Handling Coughing
+	 */
+	struct item *bong = p->items + 1;
+	static u16 cough_timer;
+	static u16 num_coughs_max;
+	const u8 is_coughing = bong->qty2 > 0;
+
+	if (bong->usage_timer >= 56 && !is_coughing)
+	{
+		bong->qty1--;
+		const u16 cough_rand = 6 + (rand() % bong->usage_timer);
+
+		bong->qty2 = cough_rand;
+		num_coughs_max = bong->qty2;
+	}
+
+	f32 cough_percent = 0.0f;
+
+	if (num_coughs_max)
+		cough_percent = (f32)bong->qty2 / (f32)num_coughs_max;
+
+	if (cough_timer)
+		cough_timer--;
+
+	if (bong->qty2 && !cough_timer)
+	{
+		const u16 cough_freq =
+				CONF_AUDIO_FREQ + (rand() & 0xFFF);
+		const u16 cough = rand() % 3;
+
+		mixer_ch_set_vol(SFXC_PLAYER, 0.5f, 0.5f);
+		mixer_ch_set_freq(SFXC_PLAYER, cough_freq);
+
+		p->recoil_dir[0] = ((f32)(rand() % 512) / 512) - 0.5f;
+		p->recoil_dir[1] = -1;
+		vector_scale(p->recoil_dir, cough_percent, 2);
+		p->recoil_amnt = (f32)(rand() % 256) * 0.01f;
+		if (cough_percent > 0.666f)
+		{
+			switch (cough)
+			{
+			case 0:
+				wav64_play(&cough_heavy0_sfx,
+					SFXC_PLAYER);
+				break;
+
+			case 1:
+				wav64_play(&cough_heavy1_sfx,
+					SFXC_PLAYER);
+				break;
+
+			case 2:
+				wav64_play(&cough_heavy2_sfx,
+					SFXC_PLAYER);
+				break;
+
+			default:
+				exit(1);
+			}
+		}
+		else if (cough_percent > 0.333f &&
+				cough_percent < 0.666f)
+		{
+			switch (cough)
+			{
+			case 0:
+				wav64_play(&cough_medium0_sfx,
+					SFXC_PLAYER);
+				break;
+
+			case 1:
+				wav64_play(&cough_medium1_sfx,
+					SFXC_PLAYER);
+				break;
+
+			case 2:
+				wav64_play(&cough_medium2_sfx,
+					SFXC_PLAYER);
+				break;
+
+			default:
+				exit(1);
+			}
+		}
+		else
+		{
+			switch (cough)
+			{
+			case 0:
+				wav64_play(&cough_small0_sfx,
+					SFXC_PLAYER);
+				break;
+
+			case 1:
+				wav64_play(&cough_small1_sfx,
+					SFXC_PLAYER);
+				break;
+
+			case 2:
+				wav64_play(&cough_small2_sfx,
+					SFXC_PLAYER);
+				break;
+
+			default:
+				exit(1);
+			}
+		}
+		bong->qty2--;
+		cough_timer = 12 + (rand() % 16);
+	}
+
 
 	if (p->item_selected != ITEM_SELECT_NONE)
 		item_anim_update(p->items + p->item_selected);

@@ -62,9 +62,9 @@ void player_accelerate(struct player *p, const struct input_parms iparms)
 		const f32 vol = sqrtf(velmagsqr) * 2;
 		const u16 freq = CONF_AUDIO_FREQ + (rand() & 0xFFF);
 
-		mixer_ch_set_freq(SFXC_PLAYER, freq);
-		mixer_ch_set_vol(SFXC_PLAYER, vol, vol);
-		wav64_play(&footstep2_sfx, SFXC_PLAYER);
+		mixer_ch_set_freq(SFXC_FOOTSTEPS, freq);
+		mixer_ch_set_vol(SFXC_FOOTSTEPS, vol, vol);
+		wav64_play(&footstep2_sfx, SFXC_FOOTSTEPS);
 	}
 }
 

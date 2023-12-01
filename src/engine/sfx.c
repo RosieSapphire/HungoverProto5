@@ -16,6 +16,7 @@ static void _sfx_set_mixer_ch_vols(void)
 	mixer_ch_set_vol(SFXC_ITEM0, 0.8f, 0.8f);
 	mixer_ch_set_vol(SFXC_ITEM1, 0.8f, 0.8f);
 	mixer_ch_set_vol(SFXC_PLAYER, 0.8f, 0.8f);
+	mixer_ch_set_vol(SFXC_FOOTSTEPS, 0.8f, 0.8f);
 }
 
 static void _sfx_samples_open(void)

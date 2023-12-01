@@ -16,6 +16,7 @@ enum sfx_channels
 	SFXC_ITEM0,
 	SFXC_ITEM1,
 	SFXC_PLAYER,
+	SFXC_FOOTSTEPS,
 	NUM_SFXC,
 };
 

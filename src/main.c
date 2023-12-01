@@ -12,8 +12,10 @@
 #include "game/title.h"
 #include "game/testroom.h"
 
+/*
 static surface_t off;
 static rspq_block_t *off_block;
+*/
 static surface_t *color_buffer;
 static surface_t depth_buffer;
 
@@ -61,15 +63,17 @@ static void _init(void)
 	projection_setup();
 
 	depth_buffer = surface_alloc(FMT_RGBA16, CONF_WIDTH, CONF_HEIGHT);
-	off = surface_alloc(FMT_RGBA16, CONF_WIDTH, CONF_HEIGHT);
+	// off = surface_alloc(FMT_RGBA16, CONF_WIDTH, CONF_HEIGHT);
 
 	(*load_funcs[scene_index])();
 
+	/*
 	rspq_block_begin();
 	rdpq_set_mode_standard();
 	rdpq_mode_blender(RDPQ_BLENDER_ADDITIVE);
 	rdpq_tex_blit(&off, 0, 0, NULL);
 	off_block = rspq_block_end();
+	*/
 }
 
 /**
@@ -81,7 +85,7 @@ static void _draw(f32 subtick)
 	color_buffer = display_get();
 	rdpq_attach(color_buffer, &depth_buffer);
 	(*draw_funcs[scene_index])(subtick);
-	rspq_block_run(off_block);
+	// rspq_block_run(off_block);
 	rdpq_detach_show();
 }
 
@@ -115,6 +119,7 @@ int main(void)
 		ticks_delta = TICKS_DISTANCE(ticks_last, ticks_now);
 		ticks_last = ticks_now;
 
+		/*
 		rdpq_attach(&off, &depth_buffer);
 		rdpq_set_mode_standard();
 		rdpq_mode_blender(RDPQ_BLENDER_MULTIPLY);
@@ -123,6 +128,7 @@ int main(void)
 		rdpq_fill_rectangle(0, 0, CONF_WIDTH, CONF_HEIGHT);
 		(*draw_funcs[scene_index])(subtick);
 		rdpq_detach();
+		*/
 
 		ticks_accum += ticks_delta;
 		while (ticks_accum >= CONF_DELTATICKS)

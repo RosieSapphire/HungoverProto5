@@ -12,9 +12,6 @@
 #include "game/title.h"
 #include "game/testroom.h"
 
-static surface_t *color_buffer;
-static surface_t depth_buffer;
-
 static void (*load_funcs[NUM_SCENES])(void) = {
 	title_load, testroom_load,
 };
@@ -58,21 +55,7 @@ static void _init(void)
 
 	projection_setup();
 
-	depth_buffer = surface_alloc(FMT_RGBA16, CONF_WIDTH, CONF_HEIGHT);
-
 	(*load_funcs[scene_index])();
-}
-
-/**
- * _draw - Drawing Function
- * @subtick: Delta Value Between Frames
- */
-static void _draw(f32 subtick)
-{
-	color_buffer = display_get();
-	rdpq_attach(color_buffer, &depth_buffer);
-	(*draw_funcs[scene_index])(subtick);
-	rdpq_detach_show();
 }
 
 /**
@@ -130,7 +113,7 @@ int main(void)
 
 		const f32 subtick = (f32)ticks_accum / (f32)CONF_DELTATICKS;
 
-		_draw(subtick);
+		(*draw_funcs[scene_index])(subtick);
 		_audio();
 	}
 	return (0);

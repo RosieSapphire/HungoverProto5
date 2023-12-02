@@ -8,6 +8,8 @@
 
 #include "game/title.h"
 
+static surface_t *color_buffer, depth_buffer;
+
 static struct scene scene;
 static f32 beat_counter_last, beat_counter;
 static u8 title_music_state;
@@ -22,7 +24,7 @@ void title_load(void)
 	scene_read_file(&scene, "rom:/Title.scn");
 	scene_anims_set_flags(&scene, ANIM_IS_PLAYING);
 	scene_anims_set_frame(&scene, 0);
-
+	depth_buffer = surface_alloc(FMT_RGBA16, CONF_WIDTH, CONF_HEIGHT);
 
 	title_music_state = TM_INTRO;
 	mixer_ch_set_vol(SFXC_MUSIC0, 0.5f, 0.5f);
@@ -43,6 +45,7 @@ void title_unload(void)
 {
 	beat_counter_last = beat_counter = 0.0f;
 	scene_destroy(&scene);
+	surface_free(&depth_buffer);
 }
 
 /**
@@ -111,6 +114,8 @@ static void _title_setup_wiggle(f32 beat_counter_lerp, u8 offset)
  */
 void title_draw(f32 subtick)
 {
+	color_buffer = display_get();
+	rdpq_attach(color_buffer, &depth_buffer);
 	gl_context_begin();
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -129,4 +134,5 @@ void title_draw(f32 subtick)
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
 	gl_context_end();
+	rdpq_detach_show();
 }

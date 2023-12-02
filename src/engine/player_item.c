@@ -272,7 +272,6 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 			usage_timer_exp *= usage_timer_exp * usage_timer_exp;
 			usage_timer_exp *= 56;
 			
-			debugf("%f\n", usage_timer_exp);
 			if ((u16)usage_timer_exp)
 				cough_rand = (rand() % (u16)usage_timer_exp);
 
@@ -309,8 +308,6 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 		const f32 t = ((f32)p->weed_progress / (f32)p->weed_duration) *
 			p->weed_high_amnt;
 		f32 trip_vol = lerpf(0.0f, 0.5f, fminf(t, 1.0f));
-
-		debugf("%f\n", trip_vol);
 
 		mixer_ch_set_vol(SFXC_MUSIC0, trip_vol, trip_vol);
 		p->weed_progress++;

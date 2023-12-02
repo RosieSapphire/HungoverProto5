@@ -7,11 +7,12 @@
  * struct input_parms - Input Parameters
  * @press: Buttons Just Pressed
  * @held: Buttons Held Down
+ * @up: Buttons Released
  * @stick: Stick Inputs
  */
 struct input_parms
 {
-	joypad_buttons_t press, held;
+	joypad_buttons_t press, held, up;
 	joypad_inputs_t stick;
 };
 

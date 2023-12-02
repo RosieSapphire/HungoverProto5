@@ -109,6 +109,7 @@ int main(void)
 			struct input_parms iparms = {
 				joypad_get_buttons_pressed(JOYPAD_PORT_1),
 				joypad_get_buttons_held(JOYPAD_PORT_1),
+				joypad_get_buttons_released(JOYPAD_PORT_1),
 				joypad_get_inputs(JOYPAD_PORT_1),
 			};
 

@@ -33,6 +33,8 @@ struct player
 	f32 recoil_dir[2];
 	f32 turn_offset[2], turn_offset_last[2];
 	f32 headbob_timer, headbob_timer_last;
+	f32 weed_high_amnt;
+	u16 weed_progress, weed_duration;
 };
 
 /*

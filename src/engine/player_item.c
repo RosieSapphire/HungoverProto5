@@ -206,7 +206,8 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 		item = p->items + 1;
 		item->usage_timer_last = item->usage_timer;
 
-		if (iparms.press.z && item_anim_at_end(item, 0))
+		if (iparms.press.z && item_anim_at_end(item, 0) &&
+			item->qty2 == 0)
 		{
 			item->usage_timer = 1;
 			item->anim_index = 1;
@@ -254,17 +255,65 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 	 * Handling Coughing
 	 */
 	struct item *bong = p->items + 1;
-	static u16 cough_timer;
 	static u16 num_coughs_max;
+	static u16 cough_timer;
 	const u8 is_coughing = bong->qty2 > 0;
+	const u8 must_stop_smoking = (bong->usage_timer >= 56) || iparms.up.z;
 
-	if (bong->usage_timer >= 56 && !is_coughing)
+	if (must_stop_smoking && !is_coughing)
 	{
-		bong->qty1--;
-		const u16 cough_rand = 6 + (rand() % bong->usage_timer);
+		u16 cough_rand = 0;
+
+		if (bong->usage_timer_last)
+		{
+			f32 usage_timer_exp =
+				((f32)bong->usage_timer_last / 56.0f);
+
+			usage_timer_exp *= usage_timer_exp * usage_timer_exp;
+			usage_timer_exp *= 56;
+			
+			debugf("%f\n", usage_timer_exp);
+			if ((u16)usage_timer_exp)
+				cough_rand = (rand() % (u16)usage_timer_exp);
+
+			if (bong->usage_timer_last >= 48 &&
+			    bong->usage_timer_last <= 50)
+			{
+				mixer_ch_set_vol(SFXC_ITEM1, 0.3f, 0.3f);
+				wav64_play(&bong_hit_good_sfx, SFXC_ITEM1);
+				cough_rand = 0;
+			}
+			else
+			{
+				mixer_ch_set_vol(SFXC_ITEM1, 0.3f, 0.3f);
+				wav64_play(&bong_hit_bad_sfx, SFXC_ITEM1);
+			}
+
+			p->weed_high_amnt = 1.0f;
+			p->weed_progress = 0;
+			p->weed_duration = 600;
+			mixer_ch_set_vol(SFXC_MUSIC0, 0, 0);
+			mixer_ch_set_freq(SFXC_MUSIC0, 22050);
+			wav64_play(&trip_music, SFXC_MUSIC0);
+		}
 
 		bong->qty2 = cough_rand;
 		num_coughs_max = bong->qty2;
+	}
+
+	if (p->weed_duration)
+	{
+		/*
+		 * TODO: Make this fade out at end
+		 */
+		const f32 t = ((f32)p->weed_progress / (f32)p->weed_duration) *
+			p->weed_high_amnt;
+		f32 trip_vol = lerpf(0.0f, 0.5f, fminf(t, 1.0f));
+
+		debugf("%f\n", trip_vol);
+
+		mixer_ch_set_vol(SFXC_MUSIC0, trip_vol, trip_vol);
+		p->weed_progress++;
 	}
 
 	f32 cough_percent = 0.0f;

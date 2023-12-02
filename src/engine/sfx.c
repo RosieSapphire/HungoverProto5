@@ -4,9 +4,11 @@
 wav64_t title_music_intro, title_music_init, title_music_main,
 	pistol_fire_sfx, pistol_click_sfx, pistol_pullout_sfx,
 	footstep2_sfx, bong_pullout_sfx, bong_bubbling_sfx, lighter_flick_sfx,
+	bong_hit_good_sfx, bong_hit_bad_sfx,
 	cough_heavy0_sfx, cough_heavy1_sfx, cough_heavy2_sfx,
 	cough_medium0_sfx, cough_medium1_sfx, cough_medium2_sfx,
-	cough_small0_sfx, cough_small1_sfx, cough_small2_sfx;
+	cough_small0_sfx, cough_small1_sfx, cough_small2_sfx,
+	trip_music;
 
 static void _sfx_set_mixer_ch_vols(void)
 {
@@ -31,6 +33,8 @@ static void _sfx_samples_open(void)
 	wav64_open(&bong_pullout_sfx, "rom:/bong_pullout.wav64");
 	wav64_open(&bong_bubbling_sfx, "rom:/bong_bubbling.wav64");
 	wav64_open(&lighter_flick_sfx, "rom:/lighter_flick.wav64");
+	wav64_open(&bong_hit_good_sfx, "rom:/bong_hit_good.wav64");
+	wav64_open(&bong_hit_bad_sfx, "rom:/bong_hit_bad.wav64");
 	wav64_open(&cough_heavy0_sfx, "rom:/cough_heavy0.wav64");
 	wav64_open(&cough_heavy1_sfx, "rom:/cough_heavy1.wav64");
 	wav64_open(&cough_heavy2_sfx, "rom:/cough_heavy2.wav64");
@@ -40,6 +44,7 @@ static void _sfx_samples_open(void)
 	wav64_open(&cough_small0_sfx, "rom:/cough_small0.wav64");
 	wav64_open(&cough_small1_sfx, "rom:/cough_small1.wav64");
 	wav64_open(&cough_small2_sfx, "rom:/cough_small2.wav64");
+	wav64_open(&trip_music, "rom:/tripmusic.wav64");
 }
 
 static void _sfx_set_looping(void)
@@ -54,6 +59,8 @@ static void _sfx_set_looping(void)
 	wav64_set_loop(&bong_pullout_sfx, 0);
 	wav64_set_loop(&bong_bubbling_sfx, 0);
 	wav64_set_loop(&lighter_flick_sfx, 0);
+	wav64_set_loop(&bong_hit_good_sfx, 0);
+	wav64_set_loop(&bong_hit_bad_sfx, 0);
 	wav64_set_loop(&cough_heavy0_sfx, 0);
 	wav64_set_loop(&cough_heavy1_sfx, 0);
 	wav64_set_loop(&cough_heavy2_sfx, 0);
@@ -63,6 +70,7 @@ static void _sfx_set_looping(void)
 	wav64_set_loop(&cough_small0_sfx, 0);
 	wav64_set_loop(&cough_small1_sfx, 0);
 	wav64_set_loop(&cough_small2_sfx, 0);
+	wav64_set_loop(&trip_music, 0);
 }
 
 /**

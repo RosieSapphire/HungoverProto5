@@ -122,7 +122,7 @@ static void _testroom_render(const f32 subtick)
 void testroom_draw(f32 subtick)
 {
 	color_buffer = display_get();
-	rdpq_attach_clear(color_buffer, &depth_buffer);
+	rdpq_attach(color_buffer, &depth_buffer);
 	_testroom_render(subtick);
 	if (player.weed_high_amnt > 0)
 	{
@@ -133,6 +133,7 @@ void testroom_draw(f32 subtick)
 			((f32)player.weed_duration * 0.25f), 0, 1);
 		const f32 scale = lerpf(1.0f, 1.04f, intensity);
 
+		rdpq_set_mode_standard();
 		rdpq_set_fog_color(RGBA32(0, 0, 0, intensity * 255));
 		rdpq_mode_blender(RDPQ_BLENDER_ADDITIVE);
 		rdpq_tex_blit(color_buffer, (CONF_WIDTH >> 1) +

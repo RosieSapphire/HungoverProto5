@@ -49,4 +49,3 @@ u8 raycast_triangle(vec3 eye, vec3 dir, vec3 positions[3], f32 *distance)
 
 	return (dist > epsilon);
 }
-

@@ -1,6 +1,8 @@
 #ifndef _ENGINE_CONFIG_H_
 #define _ENGINE_CONFIG_H_
 
+// #define CONF_DEBUG
+
 #define CONF_WIDTH 320
 #define CONF_HEIGHT 240
 #define CONF_ASPECT ((float)CONF_WIDTH / (float)CONF_HEIGHT)

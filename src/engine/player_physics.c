@@ -7,7 +7,7 @@
 #define ACCEL_RATE 0.1f
 #define MAX_VEL    0.8f
 #define FRICTION   4.0f
-#define HEIGHT     2.48f
+#define HEIGHT     2.1f
 
 void player_friction(struct player *p)
 {
@@ -88,43 +88,39 @@ void player_collision(const struct collision_mesh *m, struct player *p,
 		vector_sub(v[2], v[0], b, 3);
 		vector3_cross(a, b, n);
 		vector_normalize(n, 3);
-
 		vector_copy(eye, p->pos, 3);
-
-		f32 push_vec[3], push;
 
 		/*
 		 * Determining Collision Type
                  */
+		f32 push_vec[3], push;
+		const f32 upward[3] = {0, 1, 0}, downward[3] = {0, -1, 0};
+		const f32 floor_check_extra[3] = {0, 0.5f, 0};
+
 		switch (coltype)
 		{
 		case COLTYPE_FLOOR:
-			vector_add(eye, (f32[3]) {0, 0.5f, 0}, eye, 3);
-			if (vector_dot(n, (f32[3]) {0, 1, 0}, 3) < 0.0f)
+			vector_add(eye, floor_check_extra, eye, 3);
+			if (vector_dot(n, upward, 3) < 0.0f)
 				break;
 
 			vector_copy(dir, n, 3);
 			vector_scale(dir, -1, 3);
-
 			if (!raycast_triangle(eye, dir, v, &dist))
 				continue;
 
+			const f32 push_amnt = HEIGHT - dist + 0.5f;
 
-			if (vector_dot(dir, (f32[3]) {0, -1, 0}, 3) == 1.0f)
-			{
-				push = fmaxf(2.1f - dist + 0.5f, 0);
-				vector_copy(push_vec, n, 3);
-				vector_scale(push_vec, push, 3);
-				vector_add(p->pos, push_vec, p->pos, 3);
-			}
-			else
-			{
-				push = 2.1f - dist + 0.5f;
-				vector_copy(push_vec, n, 3);
-				vector_scale(push_vec, push, 3);
-				vector_add(p->pos, push_vec, p->pos, 3);
-			}
-			debugf("eye[1]=%f\n", eye[1]);
+			/*
+			 * If you're on a slope, it will snap you to it
+      			 */
+			push = push_amnt;
+			if (vector_dot(dir, downward, 3) == 1.0f)
+				push = fmaxf(push, 0);
+
+			vector_copy(push_vec, n, 3);
+			vector_scale(push_vec, push, 3);
+			vector_add(p->pos, push_vec, p->pos, 3);
 			break;
 
 		case COLTYPE_WALLS:

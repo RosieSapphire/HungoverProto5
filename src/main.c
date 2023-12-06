@@ -7,6 +7,7 @@
 #include "engine/sfx.h"
 #include "engine/scene.h"
 #include "engine/texture.h"
+#include "engine/profiler.h"
 #include "engine/ui.h"
 
 #include "game/title.h"
@@ -42,8 +43,10 @@ static void _init(void)
 	textures_init();
 	ui_font_init();
 
+#ifdef CONF_DEBUG
 	debug_init_isviewer();
 	debug_init_usblog();
+#endif /* CONF_DEBUG */
 
 	sfx_load();
 
@@ -79,9 +82,12 @@ int main(void)
 {
 	u32 ticks_last = get_ticks(), ticks_now, ticks_accum = 0, ticks_delta;
 
+	profiler_begin("init()");
 	_init();
+	profiler_end_print();
 	while (1)
 	{
+		profiler_begin("main_loop()");
 		ticks_now = get_ticks();
 		ticks_delta = TICKS_DISTANCE(ticks_last, ticks_now);
 		ticks_last = ticks_now;
@@ -115,6 +121,7 @@ int main(void)
 
 		(*draw_funcs[scene_index])(subtick);
 		_audio();
+		profiler_end_print();
 	}
 	return (0);
 }

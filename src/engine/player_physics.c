@@ -68,13 +68,16 @@ void player_accelerate(struct player *p, const struct input_parms iparms)
 	}
 }
 
-void player_floor_collision(const struct collision_mesh *m,
-			    struct player *p)
+void player_collision(const struct collision_mesh *m, struct player *p,
+		      enum collision_type coltype)
 {
 	f32 dir[3], eye[3], dist;
 
 	for (u16 i = 0; i < m->num_verts / 3; i++)
 	{
+		/*
+		 * Generating the normals
+      		 */
 		vec3 v[3], a, b, n;
 
 		vector_copy(v[0], m->verts[i * 3 + 0], 3);
@@ -87,19 +90,48 @@ void player_floor_collision(const struct collision_mesh *m,
 		vector_normalize(n, 3);
 
 		vector_copy(eye, p->pos, 3);
-		vector_add(eye, (f32[3]) {0, 0.5f, 0}, eye, 3);
 
-		vector_copy(dir, n, 3);
-		vector_scale(dir, -1, 3);
+		f32 push_vec[3], push;
 
-		if (!raycast_triangle(eye, dir, v, &dist))
-			continue;
+		/*
+		 * Determining Collision Type
+                 */
+		switch (coltype)
+		{
+		case COLTYPE_FLOOR:
+			vector_add(eye, (f32[3]) {0, 0.5f, 0}, eye, 3);
+			if (vector_dot(n, (f32[3]) {0, 1, 0}, 3) < 0.0f)
+				break;
 
-		f32 push_vec[3];
-		float push = fmaxf(2.1f - dist + 0.5f, 0);
+			vector_copy(dir, n, 3);
+			vector_scale(dir, -1, 3);
 
-		vector_copy(push_vec, n, 3);
-		vector_scale(push_vec, push, 3);
-		vector_add(p->pos, push_vec, p->pos, 3);
+			if (!raycast_triangle(eye, dir, v, &dist))
+				continue;
+
+
+			if (vector_dot(dir, (f32[3]) {0, -1, 0}, 3) == 1.0f)
+			{
+				push = fmaxf(2.1f - dist + 0.5f, 0);
+				vector_copy(push_vec, n, 3);
+				vector_scale(push_vec, push, 3);
+				vector_add(p->pos, push_vec, p->pos, 3);
+			}
+			else
+			{
+				push = 2.1f - dist + 0.5f;
+				vector_copy(push_vec, n, 3);
+				vector_scale(push_vec, push, 3);
+				vector_add(p->pos, push_vec, p->pos, 3);
+			}
+			debugf("eye[1]=%f\n", eye[1]);
+			break;
+
+		case COLTYPE_WALLS:
+			break;
+
+		default:
+			break;
+		}
 	}
 }

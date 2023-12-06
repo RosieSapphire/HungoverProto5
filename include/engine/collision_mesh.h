@@ -5,6 +5,13 @@
 
 typedef f32 vec3[3];
 
+enum collision_type
+{
+	COLTYPE_FLOOR,
+	COLTYPE_WALLS,
+	COLTYPE_COUNT,
+};
+
 struct collision_mesh
 {
 	u16 num_verts;

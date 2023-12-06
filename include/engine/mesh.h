@@ -39,5 +39,7 @@ void mesh_create_data(struct mesh *m, const char *name, const u16 num_verts,
 void mesh_destroy(struct mesh *m);
 void mesh_draw(const struct mesh *m);
 void mesh_gen_rspqblock(struct mesh *m, const u32 tid);
+struct mesh *mesh_get_name(struct mesh *array,
+			   const char *name, const u16 num_elem);
 
 #endif /* _ENGINE_MESH_H_ */

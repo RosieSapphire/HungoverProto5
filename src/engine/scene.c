@@ -52,10 +52,6 @@ static void _scene_draw_node(const struct scene *s,
 		break;
 	}
 
-	if (!strcmp("Pistol", s->anims[anim_ind].name + 2))
-	{
-		debugf("%d\n", anim_ind);
-	}
 	if (!(m->flags & MESH_IS_ACTIVE))
 	{
 		for (u16 i = 0; i < n->num_children; i++)

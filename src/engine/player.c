@@ -1,11 +1,13 @@
 #include <GL/gl.h>
 
 #include "engine/sfx.h"
+#include "engine/mesh.h"
 #include "engine/util.h"
 #include "engine/vector.h"
 #include "engine/player.h"
 
 static struct collision_mesh floormesh;
+static struct collision_mesh wallsmesh;
 
 void player_init(const struct scene *s, struct player *p,
 		 u8 items_equipped_flags)
@@ -20,7 +22,15 @@ void player_init(const struct scene *s, struct player *p,
 	p->headbob_timer = p->headbob_timer_last = 0;
 	p->item_selected = ITEM_SELECT_NONE;
 	player_item_load(p, ITEM_HAS_NONE);
-	collision_mesh_gen(&floormesh, s->meshes + 3);
+	const struct mesh *floor_mesh =
+		mesh_get_name(s->meshes, "Ground", s->num_meshes);
+	const struct mesh *walls_mesh =
+		mesh_get_name(s->meshes, "Walls", s->num_meshes);
+	assertf(floor_mesh != NULL, "Floor Mesh not found\n");
+	assertf(walls_mesh != NULL, "Wall Mesh not found\n");
+
+	collision_mesh_gen(&floormesh, floor_mesh);
+	collision_mesh_gen(&wallsmesh, walls_mesh);
 }
 
 void player_terminate(struct player *p)
@@ -43,7 +53,8 @@ void player_update(struct scene *s, struct player *p,
 	player_accelerate(p, iparms);
 	vector_add(p->pos, p->vel, p->pos, 3);
 
-	player_floor_collision(&floormesh, p);
+	player_collision(&floormesh, p, COLTYPE_FLOOR);
+	player_collision(&wallsmesh, p, COLTYPE_WALLS);
 	vector_copy(p->view.eye, p->pos, 3);
 
 	player_check_pickup(s, p);

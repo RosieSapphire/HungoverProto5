@@ -167,7 +167,7 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 	{
 	case ITEM_SELECT_PISTOL:
 		item = p->items + 0;
-		if (iparms.press.z && !item_anim_at_end(item, 0))
+		if (iparms.press.z && item_anim_at_end(item, 0))
 		{
 			u8 has_loaded = item->qty1 > 0;
 			u8 has_reserve = item->qty2 > 0;
@@ -239,7 +239,11 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 			}
 		}
 
-		if (item->usage_timer_last == 17 && item->usage_timer == 18)
+		const u8 bong_bubbling_start =
+				item->usage_timer_last == 17 &&
+				item->usage_timer == 18;
+
+		if (bong_bubbling_start)
 		{
 			mixer_ch_set_vol(SFXC_ITEM0, 0.4f, 0.4f);
 			wav64_play(&bong_bubbling_sfx, SFXC_ITEM0);
@@ -323,14 +327,13 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 
 	if (bong->qty2 && !cough_timer)
 	{
-		const u16 cough_freq =
-				CONF_AUDIO_FREQ + (rand() & 0xFFF);
+		const u16 cough_freq = CONF_AUDIO_FREQ + (rand() & 0xFFF);
 		const u16 cough = rand() % 3;
 
 		mixer_ch_set_vol(SFXC_PLAYER, 0.5f, 0.5f);
 		mixer_ch_set_freq(SFXC_PLAYER, cough_freq);
 
-		p->recoil_dir[0] = ((f32)(rand() % 512) / 512) - 0.5f;
+		p->recoil_dir[0] = ((f32)(rand() % 512) / 512.0f) - 0.5f;
 		p->recoil_dir[1] = -1;
 		vector_scale(p->recoil_dir, cough_percent, 2);
 		p->recoil_amnt = (f32)(rand() % 256) * 0.01f;
@@ -438,12 +441,10 @@ void player_item_draw(const struct player *p, const f32 subtick)
 		sqrtf(lerpf(velmag_a, velmag_b, subtick)) * 0.5f;
 	const f32 headbob_timer_lerp = lerpf(p->headbob_timer_last,
 				p->headbob_timer, subtick);
+	f32 turn_offset_lerp[2];
 
 	glTranslatef(sinf(headbob_timer_lerp) * velmag_lerp,
 	      fabsf(cosf(headbob_timer_lerp) * velmag_lerp * 0.5f), 0);
-
-	f32 turn_offset_lerp[2];
-
 	vector_lerp(p->turn_offset_last, p->turn_offset,
 	     subtick, turn_offset_lerp, 2);
 	vector_scale(turn_offset_lerp, 0.35f, 2);

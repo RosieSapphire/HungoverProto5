@@ -11,7 +11,6 @@
 #include "game/testroom.h"
 
 static surface_t *color_buffer, depth_buffer;
-static surface_t off_buffer;
 
 static struct scene scene;
 static struct camera cam;
@@ -33,25 +32,6 @@ void testroom_load(void)
 	player_init(&scene, &player, ITEM_HAS_NONE);
 	crosshair_block = crosshair_rspq_block_gen(7);
 	tick_cnt_last = tick_cnt = 0;
-
-	off_buffer = surface_alloc(FMT_RGBA16, CONF_WIDTH, CONF_HEIGHT);
-	rspq_block_begin();
-	rdpq_set_mode_standard();
-	rdpq_mode_blender(RDPQ_BLENDER_MULTIPLY);
-	rdpq_tex_blit(&off_buffer, (CONF_WIDTH >> 1), (CONF_HEIGHT >> 1),
-	       &(const rdpq_blitparms_t) {
-	       .cx = CONF_WIDTH >> 1,
-	       .cy = CONF_HEIGHT >> 1,
-	       .nx = 2,
-	       .ny = 2,
-	       .scale_x = 1.2f,
-	       .scale_y = 1.2f,
-	       .theta = sinf(lerpf(tick_cnt_last, tick_cnt, 0.5f)),
-	});
-	rdpq_set_prim_color(RGBA32(0, 0, 0, 20));
-	rdpq_mode_combiner(RDPQ_COMBINER_FLAT);
-	rdpq_fill_rectangle(0, 0, CONF_WIDTH, CONF_HEIGHT);
-	weed_high_block = rspq_block_end();
 }
 
 /**
@@ -141,20 +121,9 @@ static void _testroom_render(const f32 subtick)
  */
 void testroom_draw(f32 subtick)
 {
-	rdpq_attach(&off_buffer, &depth_buffer);
-	rdpq_set_mode_standard();
-	rdpq_mode_blender(RDPQ_BLENDER_MULTIPLY);
-	rdpq_set_prim_color(RGBA32(0, 0, 0, 20));
-	rdpq_mode_combiner(RDPQ_COMBINER_FLAT);
-	rdpq_fill_rectangle(0, 0, CONF_WIDTH, CONF_HEIGHT);
-	_testroom_render(subtick);
-	rdpq_detach();
-
 	color_buffer = display_get();
 	rdpq_attach_clear(color_buffer, &depth_buffer);
-	rdpq_set_mode_standard();
-	rdpq_tex_blit(&off_buffer, 0, 0, NULL);
-
+	_testroom_render(subtick);
 	if (player.weed_high_amnt > 0)
 	{
 		const f32 tick_cnt_lerp = lerpf(tick_cnt_last,
@@ -162,15 +131,14 @@ void testroom_draw(f32 subtick)
 		const f32 intensity =
 			clampf((f32)player.weed_progress /
 			((f32)player.weed_duration * 0.25f), 0, 1);
-		const f32 scale = lerpf(1.0f, 1.2f, intensity);
+		const f32 scale = lerpf(1.0f, 1.04f, intensity);
 
 		rdpq_set_fog_color(RGBA32(0, 0, 0, intensity * 255));
 		rdpq_mode_blender(RDPQ_BLENDER_ADDITIVE);
-		rdpq_tex_blit(&off_buffer,
-		       (CONF_WIDTH >> 1) +
-		sinf(tick_cnt_lerp * 0.1f) * 8 * intensity,
+		rdpq_tex_blit(color_buffer, (CONF_WIDTH >> 1) +
+		sinf(tick_cnt_lerp * 0.1f) * intensity * 2,
 		       (CONF_HEIGHT >> 1) +
-		cosf(tick_cnt_lerp * 0.1f) * 4 * intensity,
+		cosf(tick_cnt_lerp * 0.1f) * intensity * 1,
 		       &(const rdpq_blitparms_t) {
 			.cx = (CONF_WIDTH >> 1),
 			.cy = (CONF_HEIGHT >> 1),

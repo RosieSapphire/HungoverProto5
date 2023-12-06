@@ -79,3 +79,17 @@ void mesh_gen_rspqblock(struct mesh *m, const u32 tid)
 	glDisableClientState(GL_VERTEX_ARRAY);
 	m->block = rspq_block_end();
 }
+
+struct mesh *mesh_get_name(struct mesh *array,
+			   const char *name, const u16 num_elem)
+{
+	for (u16 i = 0; i < num_elem; i++)
+	{
+		struct mesh *m = array + i;
+
+		if (!strcmp(m->name, name))
+			return (m);
+	}
+
+	return (NULL);
+}

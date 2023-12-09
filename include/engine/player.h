@@ -58,6 +58,10 @@ void player_camera_look_update(struct player *p,
  */
 void player_friction(struct player *p);
 void player_accelerate(struct player *p, const struct input_parms iparms);
+
+/*
+ * Collision
+ */
 void player_collision(const struct collision_mesh *m, struct player *p,
 		      enum collision_type coltype);
 

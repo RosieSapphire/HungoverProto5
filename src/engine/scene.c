@@ -51,14 +51,12 @@ static void _scene_draw_node(const struct scene *s,
 		anim_ind = i;
 		break;
 	}
-
 	if (!(m->flags & MESH_IS_ACTIVE))
 	{
 		for (u16 i = 0; i < n->num_children; i++)
 			_scene_draw_node(s, n->children + i, subtick);
 		return;
 	}
-
 	glPushMatrix();
 	if (!strncmp("PU.", m->name, 3))
 	{
@@ -97,28 +95,4 @@ void scene_destroy(struct scene *s)
 
 	s->num_meshes = 0;
 	s->num_anims = 0;
-}
-
-/**
- * node_from_mesh_ind - Gets Pointer to Node from Mesh Index
- * @n: Node to start searching through
- * @mid: Mesh Index
- *
- * Return: Node Found (or NULL)
- */
-struct node *node_from_mesh_ind(struct node *n, const u16 mid)
-{
-	if (mid == n->mesh_ind)
-		return (n);
-
-	struct node *nf;
-
-	for (u16 i = 0; i < n->num_children; i++)
-	{
-		nf = node_from_mesh_ind(n->children + i, mid);
-		if (nf)
-			return (nf);
-	}
-
-	return (NULL);
 }

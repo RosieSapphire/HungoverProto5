@@ -137,9 +137,9 @@ void testroom_draw(f32 subtick)
 		rdpq_set_fog_color(RGBA32(0, 0, 0, intensity * 255));
 		rdpq_mode_blender(RDPQ_BLENDER_ADDITIVE);
 		rdpq_tex_blit(color_buffer, (CONF_WIDTH >> 1) +
-		sinf(tick_cnt_lerp * 0.1f) * intensity * 2,
+		sinf(tick_cnt_lerp * 0.1f) * intensity * 4,
 		       (CONF_HEIGHT >> 1) +
-		cosf(tick_cnt_lerp * 0.1f) * intensity * 1,
+		cosf(tick_cnt_lerp * 0.1f) * intensity * 2,
 		       &(const rdpq_blitparms_t) {
 			.cx = (CONF_WIDTH >> 1),
 			.cy = (CONF_HEIGHT >> 1),

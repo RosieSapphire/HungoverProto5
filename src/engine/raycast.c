@@ -11,7 +11,7 @@
  *
  * Return: Whether or not the ray hit the triangle
  */
-u8 raycast_triangle(vec3 eye, vec3 dir, vec3 positions[3], f32 *distance)
+u8 raycast_triangle(vec3 eye, vec3 dir, vec3 *positions, f32 *distance)
 {
 	f32 edge1[3], edge2[3], p[3], t[3], q[3];
 

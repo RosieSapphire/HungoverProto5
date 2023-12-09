@@ -20,4 +20,6 @@ struct node
 	struct node *children;
 };
 
+struct node *node_from_mesh_ind(struct node *n, const u16 mid);
+
 #endif /* _ENGINE_NODE_H_ */

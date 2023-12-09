@@ -6,6 +6,21 @@
 #include "engine/item.h"
 #include "engine/player.h"
 
+static const s8 item_has_flags[ITEM_COUNT] = {
+	ITEM_HAS_PISTOL,
+	ITEM_HAS_BONG,
+};
+
+static const s8 item_select[ITEM_COUNT] = {
+	ITEM_SELECT_PISTOL,
+	ITEM_SELECT_BONG,
+};
+
+static const char *item_paths[ITEM_COUNT] = {
+	"rom:/Pistol.scn",
+	"rom:/Bong.scn",
+};
+
 /**
  * player_item_load - Loads player's Item
  * @p: Player whos item needs to be loaded
@@ -13,27 +28,11 @@
  */
 void player_item_load(struct player *p, const u8 flags_last)
 {
-	s8 item_has_flags[ITEM_COUNT] = {
-		ITEM_HAS_PISTOL,
-		ITEM_HAS_BONG,
-	};
-
-	s8 item_select[ITEM_COUNT] = {
-		ITEM_SELECT_PISTOL,
-		ITEM_SELECT_BONG,
-	};
-
-	const char *item_paths[ITEM_COUNT] = {
-		"rom:/Pistol.scn",
-		"rom:/Bong.scn",
-	};
-
 	if (p->item_flags == ITEM_HAS_NONE)
 		return;
 
 	for (u8 i = 0; i < ITEM_COUNT; i++)
 	{
-
 		if ((p->item_flags ^ flags_last) != item_has_flags[i])
 			continue;
 
@@ -87,7 +86,7 @@ void player_check_pickup(struct scene *s, struct player *p)
 				p->item_flags |= ITEM_HAS_PISTOL;
 				mixer_ch_set_vol(SFXC_ITEM0, 0.3f, 0.4f);
 				wav64_play(&pistol_pullout_sfx, SFXC_ITEM0);
-      			}
+			}
 			else if (!strcmp(m->name + 3, "Bong"))
 			{
 				p->item_flags |= ITEM_HAS_BONG;
@@ -101,13 +100,9 @@ void player_check_pickup(struct scene *s, struct player *p)
 	}
 }
 
-void player_items_update(struct player *p, const struct input_parms iparms)
+static void _player_item_switching(struct player *p,
+				   const struct input_parms iparms)
 {
-	p->recoil_amnt_last = p->recoil_amnt;
-
-	/*
-	 * Changing Weapons
-	 */
 	const u8 num_items = __builtin_popcount(p->item_flags);
 	const s8 item_selected_last = p->item_selected;
 
@@ -119,9 +114,6 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 		if (p->item_selected < -1)
 			p->item_selected = -1;
 
-		/*
-		 * Can't switch if there's a gap between slots
-		 */
 		if (!(p->item_flags & (1 << p->item_selected))
 			&& p->item_selected != -1)
 			p->item_selected = item_selected_last;
@@ -130,9 +122,6 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 
 	struct item *item;
 
-	/*
-	 * Play Switching Sound
-	 */
 	if (p->item_selected != item_selected_last)
 	{
 		switch (p->item_selected)
@@ -159,15 +148,29 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 			break;
 		}
 	}
+}
+
+void player_items_update(struct player *p, const struct input_parms iparms)
+{
+	p->recoil_amnt_last = p->recoil_amnt;
+
+	/*
+	 * Changing Weapons
+	 */
+
+	_player_item_switching(p, iparms);
 
 	/*
 	 * Checking for Use
 	 */
+	struct item *item;
+
 	switch (p->item_selected)
 	{
 	case ITEM_SELECT_PISTOL:
 		item = p->items + 0;
-		if (iparms.press.z && item_anim_at_end(item, 0))
+		if (iparms.press.z && (item_anim_at_end(item, 0)
+				|| item_anim_is_index(item, 1)))
 		{
 			u8 has_loaded = item->qty1 > 0;
 			u8 has_reserve = item->qty2 > 0;
@@ -218,7 +221,7 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 
 		if (item->anim_index == 1)
 		{
-			if ((iparms.held.z || iparms.press.z) && 
+			if ((iparms.held.z || iparms.press.z) &&
 					item->usage_timer < 56 &&
 					item->usage_timer != 0)
 			{
@@ -275,7 +278,7 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 
 			usage_timer_exp *= usage_timer_exp * usage_timer_exp;
 			usage_timer_exp *= 56;
-			
+
 			if ((u16)usage_timer_exp)
 				cough_rand = (rand() % (u16)usage_timer_exp);
 

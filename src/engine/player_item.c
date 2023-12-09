@@ -100,11 +100,12 @@ void player_check_pickup(struct scene *s, struct player *p)
 	}
 }
 
-static void _player_item_switching(struct player *p,
-				   const struct input_parms iparms)
+static void _player_item_check_switching(struct player *p,
+					 const struct input_parms iparms)
 {
 	const u8 num_items = __builtin_popcount(p->item_flags);
 	const s8 item_selected_last = p->item_selected;
+	struct item *item;
 
 	p->item_selected += iparms.press.a - iparms.press.b;
 	if (p->item_selected != item_selected_last)
@@ -113,15 +114,11 @@ static void _player_item_switching(struct player *p,
 			p->item_selected = num_items - 1;
 		if (p->item_selected < -1)
 			p->item_selected = -1;
-
 		if (!(p->item_flags & (1 << p->item_selected))
-			&& p->item_selected != -1)
+				&& p->item_selected != -1)
 			p->item_selected = item_selected_last;
 
 	}
-
-	struct item *item;
-
 	if (p->item_selected != item_selected_last)
 	{
 		switch (p->item_selected)
@@ -134,7 +131,6 @@ static void _player_item_switching(struct player *p,
 			mixer_ch_set_vol(SFXC_ITEM0, 0.3f, 0.4f);
 			wav64_play(&pistol_pullout_sfx, SFXC_ITEM0);
 			break;
-
 		case ITEM_SELECT_BONG:
 			item = p->items + 1;
 			item->anim_index = 0;
@@ -143,26 +139,15 @@ static void _player_item_switching(struct player *p,
 			mixer_ch_set_vol(SFXC_ITEM0, 0.6f, 0.7f);
 			wav64_play(&bong_pullout_sfx, SFXC_ITEM0);
 			break;
-
 		default:
 			break;
 		}
 	}
 }
 
-void player_items_update(struct player *p, const struct input_parms iparms)
+static void _player_item_check_use(struct player *p,
+				   const struct input_parms iparms)
 {
-	p->recoil_amnt_last = p->recoil_amnt;
-
-	/*
-	 * Changing Weapons
-	 */
-
-	_player_item_switching(p, iparms);
-
-	/*
-	 * Checking for Use
-	 */
 	struct item *item;
 
 	switch (p->item_selected)
@@ -175,7 +160,7 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 			u8 has_loaded = item->qty1 > 0;
 			u8 has_reserve = item->qty2 > 0;
 
-			if (has_reserve && has_loaded)
+			if (has_loaded)
 			{
 				item->anim_index = 1;
 				item->qty1--;
@@ -257,6 +242,15 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 	default:
 		break;
 	}
+
+}
+
+void player_items_update(struct player *p, const struct input_parms iparms)
+{
+	p->recoil_amnt_last = p->recoil_amnt;
+
+	_player_item_check_switching(p, iparms);
+	_player_item_check_use(p, iparms);
 
 	/*
 	 * Handling Coughing

@@ -148,12 +148,11 @@ static void _player_item_check_switching(struct player *p,
 static void _player_item_check_use(struct player *p,
 				   const struct input_parms iparms)
 {
-	struct item *item;
+	struct item *item = p->items + p->item_selected;
 
 	switch (p->item_selected)
 	{
 	case ITEM_SELECT_PISTOL:
-		item = p->items + 0;
 		if (iparms.press.z && (item_anim_at_end(item, 0)
 				|| item_anim_is_index(item, 1)))
 		{
@@ -174,7 +173,6 @@ static void _player_item_check_use(struct player *p,
 					(f32)((rand() % 255) - 127) / 128.0f,
 					(f32)((rand() % 255) - 127) / 128.0f},
 					2);
-
 			}
 			else if (has_reserve && !has_loaded)
 			{
@@ -191,7 +189,6 @@ static void _player_item_check_use(struct player *p,
 		break;
 
 	case ITEM_SELECT_BONG:
-		item = p->items + 1;
 		item->usage_timer_last = item->usage_timer;
 
 		if (iparms.press.z && item_anim_at_end(item, 0) &&
@@ -291,10 +288,10 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 
 			p->weed_high_amnt = 1.0f;
 			p->weed_progress = 0;
-			p->weed_duration = 600;
+			p->weed_duration = 240;
 			mixer_ch_set_vol(SFXC_MUSIC0, 0, 0);
 			mixer_ch_set_freq(SFXC_MUSIC0, 22050);
-			wav64_play(&trip_music, SFXC_MUSIC0);
+			wav64_play(&nitrous_whine, SFXC_MUSIC0);
 		}
 
 		bong->qty2 = cough_rand;

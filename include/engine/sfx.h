@@ -27,7 +27,7 @@ extern wav64_t title_music_intro, title_music_init, title_music_main,
 	cough_heavy0_sfx, cough_heavy1_sfx, cough_heavy2_sfx,
 	cough_medium0_sfx, cough_medium1_sfx, cough_medium2_sfx,
 	cough_small0_sfx, cough_small1_sfx, cough_small2_sfx,
-	trip_music;
+	trip_music, nitrous_whine;
 
 void sfx_load(void);
 

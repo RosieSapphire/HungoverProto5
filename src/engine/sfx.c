@@ -8,7 +8,7 @@ wav64_t title_music_intro, title_music_init, title_music_main,
 	cough_heavy0_sfx, cough_heavy1_sfx, cough_heavy2_sfx,
 	cough_medium0_sfx, cough_medium1_sfx, cough_medium2_sfx,
 	cough_small0_sfx, cough_small1_sfx, cough_small2_sfx,
-	trip_music;
+	trip_music, nitrous_whine;
 
 static void _sfx_set_mixer_ch_vols(void)
 {
@@ -45,6 +45,7 @@ static void _sfx_samples_open(void)
 	wav64_open(&cough_small1_sfx, "rom:/cough_small1.wav64");
 	wav64_open(&cough_small2_sfx, "rom:/cough_small2.wav64");
 	wav64_open(&trip_music, "rom:/tripmusic.wav64");
+	wav64_open(&nitrous_whine, "rom:/nitrous_whine.wav64");
 }
 
 static void _sfx_set_looping(void)
@@ -71,6 +72,7 @@ static void _sfx_set_looping(void)
 	wav64_set_loop(&cough_small1_sfx, 0);
 	wav64_set_loop(&cough_small2_sfx, 0);
 	wav64_set_loop(&trip_music, 0);
+	wav64_set_loop(&nitrous_whine, 1);
 }
 
 /**

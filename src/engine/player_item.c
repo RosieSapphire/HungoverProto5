@@ -185,69 +185,49 @@ static void _player_pistol_check_use(struct player *p,
 	}
 }
 
-static void _player_item_check_use(struct player *p,
+static void _player_bong_check_use(struct player *p,
 				   const struct input_parms iparms)
 {
-	struct item *item = p->items + p->item_selected;
+	struct item *bong = p->items + 1;
 
-	switch (p->item_selected)
+	bong->usage_timer_last = bong->usage_timer;
+
+	if (iparms.press.z && item_anim_at_end(bong, 0) &&
+		bong->qty2 == 0)
 	{
-	case ITEM_SELECT_PISTOL:
-		_player_pistol_check_use(p, iparms);
-		break;
-
-	case ITEM_SELECT_BONG:
-		item->usage_timer_last = item->usage_timer;
-
-		if (iparms.press.z && item_anim_at_end(item, 0) &&
-			item->qty2 == 0)
-		{
-			item->usage_timer = 1;
-			item->anim_index = 1;
-			item_anim_set_frame(item, 1, 0);
-			mixer_ch_set_vol(SFXC_ITEM1, 0.6f, 0.6f);
-			wav64_play(&lighter_flick_sfx, SFXC_ITEM1);
-		}
-
-		if (item->anim_index == 1)
-		{
-			if ((iparms.held.z || iparms.press.z) &&
-					item->usage_timer < 56 &&
-					item->usage_timer != 0)
-			{
-				item_anim_set_flags(item, 1,
-					ANIM_IS_PLAYING);
-				mixer_ch_set_freq(SFXC_ITEM0,
-					32000 + (item->usage_timer * 200));
-				if (item->usage_timer > 0)
-					item->usage_timer++;
-			}
-			else
-			{
-				mixer_ch_set_freq(SFXC_ITEM0, 32000);
-				mixer_ch_stop(SFXC_ITEM0);
-				item_anim_set_flags(item, 1,
-					ANIM_IS_PLAYING | ANIM_IS_BACKWARD);
-				item->usage_timer = 0;
-			}
-		}
-
-		const u8 bong_bubbling_start =
-				item->usage_timer_last == 17 &&
-				item->usage_timer == 18;
-
-		if (bong_bubbling_start)
-		{
-			mixer_ch_set_vol(SFXC_ITEM0, 0.4f, 0.4f);
-			wav64_play(&bong_bubbling_sfx, SFXC_ITEM0);
-		}
-
-		break;
-
-	default:
-		break;
+		bong->usage_timer = 1;
+		bong->anim_index = 1;
+		item_anim_set_frame(bong, 1, 0);
+		mixer_ch_set_vol(SFXC_ITEM1, 0.6f, 0.6f);
+		wav64_play(&lighter_flick_sfx, SFXC_ITEM1);
 	}
 
+	if (bong->anim_index == 1)
+	{
+		if ((iparms.held.z || iparms.press.z) &&
+				bong->usage_timer < 56 &&
+				bong->usage_timer != 0)
+		{
+			item_anim_set_flags(bong, 1, ANIM_IS_PLAYING);
+			mixer_ch_set_freq(SFXC_ITEM0,
+		     		32000 + (bong->usage_timer * 200));
+			bong->usage_timer += bong->usage_timer > 0;
+		}
+		else
+		{
+			mixer_ch_set_freq(SFXC_ITEM0, 32000);
+			mixer_ch_stop(SFXC_ITEM0);
+			item_anim_set_flags(bong, 1,
+				ANIM_IS_PLAYING | ANIM_IS_BACKWARD);
+			bong->usage_timer = 0;
+		}
+	}
+
+	if (bong->usage_timer_last == 17 && bong->usage_timer == 18)
+	{
+		mixer_ch_set_vol(SFXC_ITEM0, 0.4f, 0.4f);
+		wav64_play(&bong_bubbling_sfx, SFXC_ITEM0);
+	}
 }
 
 void player_items_update(struct player *p, const struct input_parms iparms)
@@ -255,7 +235,18 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 	p->recoil_amnt_last = p->recoil_amnt;
 
 	_player_item_check_switching(p, iparms);
-	_player_item_check_use(p, iparms);
+
+	/*
+	 * Check item Usage
+	 */
+	static void (*item_use_funcs[ITEM_COUNT])(struct player *,
+			      const struct input_parms) = {
+		_player_pistol_check_use,
+		_player_bong_check_use,
+	};
+
+	if (p->item_selected != ITEM_SELECT_NONE)
+		(*item_use_funcs[p->item_selected])(p, iparms);
 
 	/*
 	 * Handling Coughing

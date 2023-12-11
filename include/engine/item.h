@@ -18,13 +18,18 @@ struct item
 	u32 usage_timer, usage_timer_last;
 };
 
-void item_anim_update(struct item *item);
+/*
+ * Main
+ */
 void item_node_draw(const struct item *item,
 		    const struct node *n, const f32 subtick);
-u8 item_anim_is_playing(const struct item *item, const u16 anim_index);
+
+/*
+ * Animations
+ */
+void item_anim_update(struct item *item);
 u8 item_anim_at_end(const struct item *item, const u16 anim_index);
 u8 item_anim_is_index(const struct item *item, const u16 anim_index);
-
 void item_anim_set_flags(struct item *item,
 			 const u16 anim_index, const u8 flags);
 void item_anim_set_frame(struct item *item,

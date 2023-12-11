@@ -44,8 +44,11 @@ struct player
  */
 void player_init(const struct scene *s, struct player *p,
 		 u8 items_equipped_flags);
+void player_terminate(struct player *p);
 void player_update(struct scene *s, struct player *p,
 		   const struct input_parms iparms);
+void player_update_coughing(struct player *p, const struct input_parms iparms,
+			    u16 *num_coughs_max);
 
 /*
  * Camera
@@ -71,7 +74,7 @@ void player_collision(const struct collision_mesh *m, struct player *p,
  * Items
  */
 void player_item_load(struct player *p, const u8 flags_last);
-void player_check_pickup(struct scene *s, struct player *p);
+void player_item_check_pickup(struct scene *s, struct player *p);
 void player_items_update(struct player *p, const struct input_parms iparms);
 void player_item_draw(const struct player *p, const f32 subtick);
 

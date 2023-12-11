@@ -69,7 +69,7 @@ void player_item_load(struct player *p, const u8 flags_last)
 	};
 }
 
-void player_check_pickup(struct scene *s, struct player *p)
+void player_item_check_pickup(struct scene *s, struct player *p)
 {
 	for (u16 i = 0; i < s->num_meshes; i++)
 	{
@@ -165,51 +165,9 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 	/*
 	 * Handling Coughing
 	 */
-	struct item *bong = p->items + 1;
-	static u16 num_coughs_max;
-	static u16 cough_timer;
-	const u8 is_coughing = bong->qty2 > 0;
-	const u8 must_stop_smoking = (bong->usage_timer >= 56) || iparms.up.z;
+	static u16 num_coughs_max, cough_timer;
 
-	if (must_stop_smoking && !is_coughing)
-	{
-		u16 cough_rand = 0;
-
-		if (bong->usage_timer_last)
-		{
-			f32 usage_timer_exp =
-				((f32)bong->usage_timer_last / 56.0f);
-
-			usage_timer_exp *= usage_timer_exp * usage_timer_exp;
-			usage_timer_exp *= 56;
-
-			if ((u16)usage_timer_exp)
-				cough_rand = (rand() % (u16)usage_timer_exp);
-
-			if (bong->usage_timer_last >= 48 &&
-			    bong->usage_timer_last <= 50)
-			{
-				mixer_ch_set_vol(SFXC_ITEM1, 0.3f, 0.3f);
-				wav64_play(&bong_hit_good_sfx, SFXC_ITEM1);
-				cough_rand = 0;
-			}
-			else
-			{
-				mixer_ch_set_vol(SFXC_ITEM1, 0.3f, 0.3f);
-				wav64_play(&bong_hit_bad_sfx, SFXC_ITEM1);
-			}
-
-			p->weed_high_amnt = 1.0f;
-			p->weed_progress = 0;
-			p->weed_duration = 240;
-			mixer_ch_set_vol(SFXC_MUSIC0, 0, 0);
-			mixer_ch_set_freq(SFXC_MUSIC0, 22050);
-			wav64_play(&nitrous_whine, SFXC_MUSIC0);
-		}
-
-		bong->qty2 = cough_rand;
-		num_coughs_max = bong->qty2;
-	}
+	player_update_coughing(p, iparms, &num_coughs_max);
 
 	if (p->weed_duration)
 	{
@@ -225,6 +183,7 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 	}
 
 	f32 cough_percent = 0.0f;
+	struct item *bong = p->items + 1;
 
 	if (num_coughs_max)
 		cough_percent = (f32)bong->qty2 / (f32)num_coughs_max;

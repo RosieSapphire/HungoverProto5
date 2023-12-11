@@ -12,14 +12,16 @@ enum item_selected
 	ITEM_SELECT_NONE = -1,
 	ITEM_SELECT_PISTOL,
 	ITEM_SELECT_BONG,
+	ITEM_SELECT_NITROUS,
 	ITEM_COUNT,
 };
 
 enum item_equipped_flags
 {
-	ITEM_HAS_NONE   = 0x0,
-	ITEM_HAS_PISTOL = 0x1,
-	ITEM_HAS_BONG   = 0x2,
+	ITEM_HAS_NONE    = 0x0,
+	ITEM_HAS_PISTOL  = 0x1,
+	ITEM_HAS_BONG    = 0x2,
+	ITEM_HAS_NITROUS = 0x4,
 };
 
 struct player

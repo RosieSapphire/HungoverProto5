@@ -125,27 +125,7 @@ void testroom_draw(f32 subtick)
 	rdpq_attach(color_buffer, &depth_buffer);
 	_testroom_render(subtick);
 	if (player.weed_high_amnt > 0)
-	{
-		const f32 tick_cnt_lerp = lerpf(tick_cnt_last,
-				  tick_cnt, subtick);
-		const f32 intensity =
-			clampf((f32)player.weed_progress /
-			((f32)player.weed_duration * 0.25f), 0, 1);
-		const f32 scale = lerpf(1.0f, 1.04f, intensity);
-
-		rdpq_set_mode_standard();
-		rdpq_set_fog_color(RGBA32(0, 0, 0, intensity * 255));
-		rdpq_mode_blender(RDPQ_BLENDER_ADDITIVE);
-		rdpq_tex_blit(color_buffer, (CONF_WIDTH >> 1) +
-		sinf(tick_cnt_lerp * 0.1f) * intensity * 4,
-		       (CONF_HEIGHT >> 1) +
-		cosf(tick_cnt_lerp * 0.1f) * intensity * 2,
-		       &(const rdpq_blitparms_t) {
-			.cx = (CONF_WIDTH >> 1),
-			.cy = (CONF_HEIGHT >> 1),
-			.scale_x = scale,
-			.scale_y = scale,
-		});
-	}
+		player_weed_effect_draw(&player, color_buffer,
+			  tick_cnt, tick_cnt_last, subtick);
 	rdpq_detach_show();
 }

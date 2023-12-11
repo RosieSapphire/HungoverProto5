@@ -1,6 +1,8 @@
 #ifndef _ENGINE_PLAYER_H_
 #define _ENGINE_PLAYER_H_
 
+#include <libdragon.h>
+
 #include "engine/types.h"
 #include "engine/input.h"
 #include "engine/camera.h"
@@ -47,9 +49,6 @@ void player_init(const struct scene *s, struct player *p,
 void player_terminate(struct player *p);
 void player_update(struct scene *s, struct player *p,
 		   const struct input_parms iparms);
-void player_update_coughing(struct player *p, const struct input_parms iparms,
-			    u16 *num_coughs_max);
-
 /*
  * Camera
  */
@@ -84,5 +83,16 @@ void player_item_draw(const struct player *p, const f32 subtick);
 void player_pistol_check_use(struct player *p,
 			     const struct input_parms iparms);
 void player_bong_check_use(struct player *p, const struct input_parms iparms);
+
+/*
+ * Weed
+ */
+void player_weed_update(struct player *p, const u16 num_coughs_max);
+void player_weed_cough_update(struct player *p,
+			      const struct input_parms iparms,
+			      u16 *num_coughs_max);
+void player_weed_effect_draw(const struct player *p, const surface_t *surf,
+			     const u32 tick_cnt, const u32 tick_cnt_last,
+			     const f32 subtick);
 
 #endif /* _ENGINE_PLAYER_H_ */

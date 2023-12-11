@@ -2,3 +2,4 @@ build/
 *.json
 filesystem/
 *.z64
+*.blend1

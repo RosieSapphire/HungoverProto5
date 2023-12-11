@@ -1,7 +1,7 @@
 #ifndef _ENGINE_CONFIG_H_
 #define _ENGINE_CONFIG_H_
 
-// #define CONF_DEBUG
+#define CONF_DEBUG
 
 #define CONF_WIDTH 320
 #define CONF_HEIGHT 240
@@ -20,7 +20,7 @@
 #define CONF_AUDIO_FREQ 32000
 #define CONF_NUM_AUDIO_BUF 1
 
-#define MAX_SCENE_TEXS 16 
+#define MAX_SCENE_TEXS 16
 #define MAX_TOTAL_TEXS 128
 #define TEX_PATH_MAX_LEN 128
 

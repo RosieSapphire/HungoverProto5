@@ -8,8 +8,8 @@
 static const f32 upward[3] = {0, 1, 0}, downward[3] = {0, -1, 0};
 static const f32 floor_check_extra[3] = {0, 0.5f, 0};
 
-static void _player_collision_floor(struct player *p, vec3 *v, vec3 n, vec3 eye,
-				    vec3 dir, f32 *dist)
+static void _player_collision_floor(struct player *p, vec3 *v, vec3 n,
+				    vec3 eye, vec3 dir, f32 *dist)
 {
 	f32 push_vec[3], push;
 
@@ -36,8 +36,8 @@ static void _player_collision_floor(struct player *p, vec3 *v, vec3 n, vec3 eye,
 	vector_add(p->pos, push_vec, p->pos, 3);
 }
 
-static void _player_collision_walls(struct player *p, vec3 *v, vec3 n, vec3 eye,
-				    vec3 dir, f32 *dist)
+static void _player_collision_walls(struct player *p, vec3 *v, vec3 n,
+				    vec3 eye, vec3 dir, f32 *dist)
 {
 	f32 push_vec[3], push;
 
@@ -57,7 +57,8 @@ static void _player_collision_walls(struct player *p, vec3 *v, vec3 n, vec3 eye,
 	vector_add(p->pos, push_vec, p->pos, 3);
 }
 
-static void (*colfuncs[2])(struct player *, vec3 *, vec3, vec3, vec3, f32 *) = {
+static void (*colfuncs[2])(struct player *, vec3 *,
+			   vec3, vec3, vec3, f32 *) = {
 	_player_collision_floor, _player_collision_walls,
 };
 

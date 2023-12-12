@@ -113,21 +113,20 @@ void player_items_update(struct player *p, const struct input_parms iparms);
 void player_item_draw(const struct player *p, const f32 subtick);
 
 /*
- * Item Usage
+ * Pistol
  */
 void player_pistol_check_use(struct player *p,
 			     const struct input_parms iparms);
-void player_bong_check_use(struct player *p, const struct input_parms iparms);
 
 /*
- * Weed
+ * Bong
  */
-void player_weed_update(struct player *p, const u16 num_coughs_max);
-void player_weed_cough_update(struct player *p,
-			      const struct input_parms iparms,
-			      u16 *num_coughs_max);
-void player_weed_effect_draw(const struct player *p, const surface_t *surf,
-			     const u32 tick_cnt, const u32 tick_cnt_last,
-			     const f32 subtick);
+void player_bong_check_use(struct player *p, const struct input_parms iparms);
+void player_bong_weed_effect_update(struct player *p,
+				    const u16 num_coughs_max);
+void player_bong_cough_setup(struct player *p, u16 *num_coughs_max);
+void player_bong_weed_effect_draw(const struct player *p,
+				  const surface_t *surf, const u32 tick_cnt,
+				  const u32 tick_cnt_last, const f32 subtick);
 
 #endif /* _ENGINE_PLAYER_H_ */

@@ -60,6 +60,12 @@ void player_update(struct scene *s, struct player *p,
 	vector_copy(p->view.eye, p->pos, 3);
 
 	player_item_check_pickup(s, p);
-	player_weed_update(p, num_coughs_max);
-	player_weed_cough_update(p, iparms, &num_coughs_max);
+	struct item *bong = p->items + 1;
+	const u8 is_coughing = bong->qty2 > 0;
+	const u8 must_stop_smoking = (bong->usage_timer >= 56) || iparms.up.z;
+
+	if (must_stop_smoking && !is_coughing)
+		player_bong_cough_setup(p, &num_coughs_max);
+
+	player_bong_weed_effect_update(p, num_coughs_max);
 }

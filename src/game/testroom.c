@@ -129,7 +129,7 @@ void testroom_draw(f32 subtick)
 	rdpq_attach(color_buffer, &depth_buffer);
 	_testroom_render(subtick);
 	if (player.weed_high_amnt > 0)
-		player_weed_effect_draw(&player, color_buffer,
-			  tick_cnt, tick_cnt_last, subtick);
+		player_bong_weed_effect_draw(&player, color_buffer,
+			       tick_cnt, tick_cnt_last, subtick);
 	rdpq_detach_show();
 }

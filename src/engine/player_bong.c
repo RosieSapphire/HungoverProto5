@@ -9,7 +9,52 @@ static wav64_t *cough_sfx[9] = {
 	&cough_heavy0_sfx, &cough_heavy1_sfx, &cough_heavy2_sfx,
 };
 
-void player_weed_update(struct player *p, const u16 num_coughs_max)
+void player_bong_check_use(struct player *p, const struct input_parms iparms)
+{
+	struct item *bong = p->items + 1;
+
+	bong->usage_timer_last = bong->usage_timer;
+
+	if (iparms.press.z && item_anim_at_end(bong, 0) &&
+		bong->qty2 == 0)
+	{
+		bong->usage_timer = 1;
+		bong->anim_index = 1;
+		item_anim_set_frame(bong, 1, 0);
+		mixer_ch_set_vol(SFXC_ITEM1, 0.6f, 0.6f);
+		wav64_play(&lighter_flick_sfx, SFXC_ITEM1);
+	}
+
+	if (bong->anim_index == 1)
+	{
+		if ((iparms.held.z || iparms.press.z) &&
+				bong->usage_timer < 56 &&
+				bong->usage_timer != 0)
+		{
+			item_anim_set_flags(bong, 1, ANIM_IS_PLAYING);
+			mixer_ch_set_freq(SFXC_ITEM0,
+				32000 + (bong->usage_timer * 200));
+			bong->usage_timer += bong->usage_timer > 0;
+		}
+		else
+		{
+			mixer_ch_set_freq(SFXC_ITEM0, 32000);
+			mixer_ch_stop(SFXC_ITEM0);
+			item_anim_set_flags(bong, 1,
+				ANIM_IS_PLAYING | ANIM_IS_BACKWARD);
+			bong->usage_timer = 0;
+		}
+	}
+
+	if (bong->usage_timer_last == 17 && bong->usage_timer == 18)
+	{
+		mixer_ch_set_vol(SFXC_ITEM0, 0.4f, 0.4f);
+		wav64_play(&bong_bubbling_sfx, SFXC_ITEM0);
+	}
+}
+
+void player_bong_weed_effect_update(struct player *p,
+				    const u16 num_coughs_max)
 {
 	static u16 cough_timer;
 	f32 cough_percent = 0.0f;
@@ -53,17 +98,10 @@ void player_weed_update(struct player *p, const u16 num_coughs_max)
 	}
 }
 
-void player_weed_cough_update(struct player *p,
-			      const struct input_parms iparms,
-			      u16 *num_coughs_max)
+void player_bong_cough_setup(struct player *p, u16 *num_coughs_max)
 {
 	struct item *bong = p->items + 1;
-	const u8 is_coughing = bong->qty2 > 0;
-	const u8 must_stop_smoking = (bong->usage_timer >= 56) || iparms.up.z;
 	u16 cough_rand = 0;
-
-	if (!must_stop_smoking || is_coughing)
-		return;
 
 	if (bong->usage_timer_last)
 	{
@@ -99,9 +137,9 @@ void player_weed_cough_update(struct player *p,
 	*num_coughs_max = bong->qty2;
 }
 
-void player_weed_effect_draw(const struct player *p, const surface_t *surf,
-			     const u32 tick_cnt, const u32 tick_cnt_last,
-			     const f32 subtick)
+void player_bong_weed_effect_draw(const struct player *p,
+				  const surface_t *surf, const u32 tick_cnt,
+				  const u32 tick_cnt_last, const f32 subtick)
 {
 	const f32 tick_cnt_lerp = lerpf(tick_cnt_last, tick_cnt, subtick);
 	const f32 intensity = clampf((f32)p->weed_progress /

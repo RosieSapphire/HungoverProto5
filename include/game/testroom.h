@@ -5,6 +5,10 @@
 #include "engine/input.h"
 #include "engine/scene.h"
 
+/**
+ * enum testroom_flags - Testroom Flags
+ * @TR_FREECAM_ENABLED: Whether Freecam is Enabled (Toggled by Start)
+ */
 enum testroom_flags
 {
 	TR_FREECAM_ENABLED = 0x1,

@@ -4,6 +4,13 @@
 #include "engine/input.h"
 #include "engine/types.h"
 
+/**
+ * enum title_music_state - Music State of Title
+ * @TM_INTRO: Intro State
+ * @TM_INIT: Initial State
+ * @TM_MAIN: Main State
+ * @TM_COUNT: Number of Title Music States
+ */
 enum title_music_state
 {
 	TM_INTRO = 0,

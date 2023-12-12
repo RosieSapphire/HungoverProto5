@@ -71,6 +71,10 @@ enum scene_index testroom_update(struct input_parms iparms)
 	return (SCENE_TESTROOM);
 }
 
+/**
+ * _testroom_render - Renders everything for Testroom
+ * @subtick: Subtick between Frames
+ */
 static void _testroom_render(const f32 subtick)
 {
 	gl_context_begin();

@@ -7,9 +7,10 @@
  * struct item - Item Structure
  * @s: Scene for Mesh and Stuff
  * @anim_index: Animation currently playing
- * @qty1: Quantity of whatever it may be (bullets, drugs, etc.)
+ * @qty1: Quantity of whatever it may be (bullets loaded, drugs, etc.)
  * @qty2: 2nd Quantity (Only used for Weapons as a denominator)
  * @usage_timer: Mainly used for stuff that requires holding the button
+ * @usage_timer_last: Usage Timer Last (Used for Lerping)
  */
 struct item
 {

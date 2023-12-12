@@ -10,6 +10,9 @@ wav64_t title_music_intro, title_music_init, title_music_main,
 	cough_small0_sfx, cough_small1_sfx, cough_small2_sfx,
 	trip_music, nitrous_whine;
 
+/**
+ * _sfx_set_mixer_ch_vols - Sets the Volumes for all the Mixer Channels
+ */
 static void _sfx_set_mixer_ch_vols(void)
 {
 	mixer_ch_set_vol(SFXC_MUSIC0, 0.8f, 0.8f);
@@ -21,6 +24,9 @@ static void _sfx_set_mixer_ch_vols(void)
 	mixer_ch_set_vol(SFXC_FOOTSTEPS, 0.8f, 0.8f);
 }
 
+/**
+ * _sfx_samples_open - Opens up all the Samples for the SFX
+ */
 static void _sfx_samples_open(void)
 {
 	wav64_open(&title_music_intro, "rom:/title_intro.wav64");
@@ -48,6 +54,9 @@ static void _sfx_samples_open(void)
 	wav64_open(&nitrous_whine, "rom:/nitrous_whine.wav64");
 }
 
+/**
+ * _sfx_set_looping - Sets the Loop Boolean for each Sample
+ */
 static void _sfx_set_looping(void)
 {
 	wav64_set_loop(&title_music_intro, 0);
@@ -81,7 +90,7 @@ static void _sfx_set_looping(void)
 void sfx_load(void)
 {
 	audio_init(CONF_AUDIO_FREQ, CONF_NUM_AUDIO_BUF);
-	mixer_init(NUM_SFXC);
+	mixer_init(SFXC_COUNT);
 
 	_sfx_set_mixer_ch_vols();
 	_sfx_samples_open();

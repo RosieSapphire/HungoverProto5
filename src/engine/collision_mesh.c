@@ -4,6 +4,11 @@
 #include "engine/vector.h"
 #include "engine/collision_mesh.h"
 
+/**
+ * collision_mesh_gen - Generates a Collision Mesh from a Normal Mesh
+ * @out: Collision Mesh Out
+ * @in: Normal Mesh In
+ */
 void collision_mesh_gen(struct collision_mesh *out,
 			 const struct mesh *in)
 {

@@ -7,7 +7,11 @@
 #include "engine/types.h"
 #include "engine/vertex.h"
 
-enum mesh_flags : u8
+/**
+ * enum mesh_flags - Mesh Flags
+ * @MESH_IS_ACTIVE: Whether Mesh is Active
+ */
+enum mesh_flags
 {
 	MESH_IS_ACTIVE = 0x1,
 };
@@ -19,6 +23,7 @@ enum mesh_flags : u8
  * @num_indis: Number of Indices
  * @verts: Vertices Array
  * @indis: Indices Array
+ * @block: RSPQ Block for Faster Rendering of Static Meshes
  * @flags: Flags
  * @tind: Texture Index
  */

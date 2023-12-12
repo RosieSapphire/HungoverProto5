@@ -5,8 +5,14 @@
 
 /**
  * enum sfx_channels - Sound Effect Channels
- * @SFXC_MUSIC: Music Channel
- * @NUM_SFXC: Number of Channels
+ * @SFXC_MUSIC0: Music Channel 0
+ * @SFXC_MUSIC1: Music Channel 1
+ * @SFXC_MUSIC2: Music Channel 2
+ * @SFXC_ITEM0: Item Channel 0
+ * @SFXC_ITEM1: Item Channel 1
+ * @SFXC_PLAYER: Player Channel
+ * @SFXC_FOOTSTEPS: Footsteps Channel
+ * @SFXC_COUNT: Number of Channels
  */
 enum sfx_channels
 {
@@ -17,7 +23,7 @@ enum sfx_channels
 	SFXC_ITEM1,
 	SFXC_PLAYER,
 	SFXC_FOOTSTEPS,
-	NUM_SFXC,
+	SFXC_COUNT,
 };
 
 extern wav64_t title_music_intro, title_music_init, title_music_main,

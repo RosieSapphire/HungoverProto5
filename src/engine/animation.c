@@ -4,6 +4,10 @@
 #include "engine/util.h"
 #include "engine/animation.h"
 
+/**
+ * animation_update - Updates an Animation
+ * @a: Animation to Update
+ */
 void animation_update(struct animation *a)
 {
 	if (!(a->flags & ANIM_IS_PLAYING))
@@ -55,6 +59,11 @@ static void _animation_setup_values_lerp(const struct animation *a,
 	vector_lerp(sca_last, sca_cur, subtick, sca_out, 3);
 }
 
+/**
+ * animation_matrix_multiply - Multiplies an Animation's Matrix by GL Matrix
+ * @a: Animation to Multiply its Matrix
+ * @subtick: Subtick between Frames
+ */
 void animation_matrix_multiply(const struct animation *a, const f32 subtick)
 {
 	f32 pos_lerp[3] = {0, 0, 0};

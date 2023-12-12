@@ -5,6 +5,12 @@
 
 typedef f32 vec3[3];
 
+/**
+ * enum collision_type - Collision Type
+ * @COLTYPE_FLOOR: Floor Collision Type
+ * @COLTYPE_WALLS: Walls Collision Type
+ * @COLTYPE_COUNT: Number of Collision Types
+ */
 enum collision_type
 {
 	COLTYPE_FLOOR,
@@ -12,6 +18,11 @@ enum collision_type
 	COLTYPE_COUNT,
 };
 
+/**
+ * struct collision_mesh - Collision Mesh Structure
+ * @num_verts: Number of Vertices
+ * @verts: Vertices
+ */
 struct collision_mesh
 {
 	u16 num_verts;

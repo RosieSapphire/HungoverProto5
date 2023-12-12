@@ -54,6 +54,11 @@ void mesh_draw(const struct mesh *m)
 	rspq_block_run(m->block);
 }
 
+/**
+ * mesh_gen_rspqblock - Generates RSPQ Block for Mesh (Good for Static Meshes)
+ * @m: Mesh to have Block generated for
+ * @tid: Texture ID to generate with
+ */
 void mesh_gen_rspqblock(struct mesh *m, const u32 tid)
 {
 	rspq_block_begin();
@@ -80,6 +85,14 @@ void mesh_gen_rspqblock(struct mesh *m, const u32 tid)
 	m->block = rspq_block_end();
 }
 
+/**
+ * mesh_get_name - Get a Mesh by Name
+ * @array: Array of Meshes to search through
+ * @name: Name you are looking for
+ * @num_elem: Count of Array Elements
+ *
+ * Return: Desired Mesh or NULL
+ */
 struct mesh *mesh_get_name(struct mesh *array,
 			   const char *name, const u16 num_elem)
 {

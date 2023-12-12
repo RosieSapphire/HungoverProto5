@@ -9,6 +9,14 @@
 #include "engine/item.h"
 #include "engine/collision_mesh.h"
 
+/**
+ * enum item_selected - Item Currently Selected
+ * @ITEM_SELECT_NONE: No Item
+ * @ITEM_SELECT_PISTOL: Pistol Selected
+ * @ITEM_SELECT_BONG: Bong Selected
+ * @ITEM_SELECT_NITROUS: Nitrous Canister Selected
+ * @ITEM_COUNT: Max Number of Items
+ */
 enum item_selected
 {
 	ITEM_SELECT_NONE = -1,
@@ -18,6 +26,13 @@ enum item_selected
 	ITEM_COUNT,
 };
 
+/**
+ * enum item_equipped_flags - Flags for Which Items Player Has
+ * @ITEM_HAS_NONE: Empty Flag
+ * @ITEM_HAS_PISTOL: Pistol Flag
+ * @ITEM_HAS_BONG: Bong Flag
+ * @ITEM_HAS_NITROUS: Nitrous Flag
+ */
 enum item_equipped_flags
 {
 	ITEM_HAS_NONE    = 0x0,
@@ -26,6 +41,26 @@ enum item_equipped_flags
 	ITEM_HAS_NITROUS = 0x4,
 };
 
+/**
+ * struct player - Player Structure
+ * @view: Camera for View Matrix
+ * @pos: Position
+ * @vel: Velocity
+ * @vel_last: Previous Velocity
+ * @item_flags: Which Items Player Has
+ * @item_selected: Currently Selected Item
+ * @items: Items Array
+ * @recoil_amnt: Current Amount of Recoil
+ * @recoil_amnt_last: Previous Amount of Recoil
+ * @recoil_dir: Recoil Direction
+ * @turn_offset: Current Turn Offset (Coughing, Recoil, etc.)
+ * @turn_offset_last: Previous Turn Offset
+ * @headbob_timer: Current Headbob Timer
+ * @headbob_timer_last: Previous Headbob Timer
+ * @weed_high_amnt: Weed High Amount
+ * @weed_progress: Weed Progress
+ * @weed_duration: Used as a percentage for `weed_progress`
+ */
 struct player
 {
 	struct camera view;

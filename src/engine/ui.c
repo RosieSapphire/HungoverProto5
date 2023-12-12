@@ -9,6 +9,9 @@ static sprite_t *bongometer_spr;
 static sprite_t *bongometer_arrow_spr;
 static u32 frame_counter;
 
+/**
+ * ui_font_init - Initializes the UI Font
+ */
 void ui_font_init(void)
 {
 	ui_font = rdpq_font_load("rom:/font.font64");
@@ -21,17 +24,28 @@ void ui_font_init(void)
 	frame_counter = 0;
 }
 
+/**
+ * ui_timer_update - Updates the UI Timer
+ */
 void ui_timer_update(void)
 {
 	frame_counter++;
 }
 
+/**
+ * ui_prototype_draw - Draws the PROTOTYPE BUILD 5 Text in the topleft corner
+ */
 void ui_prototype_draw(void)
 {
 	if ((frame_counter >> 4) & 1)
 		rdpq_text_printf(NULL, 1, 32, 32, "PROTOTYPE BUILD 5");
 }
 
+/**
+ * ui_item_qty_draw - Draws the Quantity of an Item
+ * @i: Item whose quantity is to be displayed
+ * @uses_2nd: Whether or not it uses the 2nd Quantity available (Like weapons)
+ */
 void ui_item_qty_draw(const struct item *i, const u8 uses_2nd)
 {
 	const char *fmt = uses_2nd ? "Ammo: %d/%d" : "Qty: %d";
@@ -40,6 +54,11 @@ void ui_item_qty_draw(const struct item *i, const u8 uses_2nd)
 		  fmt, i->qty1, uses_2nd ? i->qty2 : 0);
 }
 
+/**
+ * ui_bongometer_draw - Draws the Bong-O-Meter for Smoking Weed
+ * @item: Pretty much only the Bong (p->items + 1)
+ * @subtick: Subtick between Frames
+ */
 void ui_bongometer_draw(const struct item *item, const f32 subtick)
 {
 	const f32 usage_timer_lerp =

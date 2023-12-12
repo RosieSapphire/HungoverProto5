@@ -1,6 +1,12 @@
 #include "engine/config.h"
 #include "engine/crosshair.h"
 
+/**
+ * crosshair_rspq_block_gen - Generates RSPQ Block for Crosshair
+ * @dim: Dimensions for the Crosshair
+ *
+ * Return: Generated RSPQ Block for Crosshair
+ */
 rspq_block_t *crosshair_rspq_block_gen(const u16 dim)
 {
 	rspq_block_begin();
@@ -13,6 +19,10 @@ rspq_block_t *crosshair_rspq_block_gen(const u16 dim)
 	return (rspq_block_end());
 }
 
+/**
+ * crosshair_draw - Draws Crosshair
+ * @crosshair_block: Crosshair RSPQ Block to Run (draw effectively)
+ */
 void crosshair_draw(rspq_block_t *crosshair_block)
 {
 	rspq_block_run(crosshair_block);

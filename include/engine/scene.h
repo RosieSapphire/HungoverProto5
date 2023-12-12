@@ -23,9 +23,13 @@ extern enum scene_index scene_index;
 
 /**
  * struct scene - Scene Structure
+ * @root_node: Root Node for Scene
+ * @num_tex_ids: Number of OpenGL Texture IDs
+ * @tex_ids: OpenGL Texture IDs Array
  * @num_meshes: Number of Meshes
- * @root_node: Root Node for the Scene
  * @meshes: Meshes Array
+ * @num_anims: Number of Animations
+ * @anims: Animations Array
  */
 struct scene
 {

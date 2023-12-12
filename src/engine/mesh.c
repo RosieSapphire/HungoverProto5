@@ -45,9 +45,8 @@ void mesh_destroy(struct mesh *m)
 }
 
 /**
- * mesh_draw - Draws a Mesh
- * @m: Mesh to be Drawn
- * @tid: OpenGL Texture ID
+ * mesh_draw - Draws a Mesh via its RSPQ Block
+ * @m: Mesh to be Rendered
  */
 void mesh_draw(const struct mesh *m)
 {

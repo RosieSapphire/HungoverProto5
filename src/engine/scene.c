@@ -7,29 +7,43 @@
 enum scene_index scene_index = SCENE_TESTROOM;
 static f32 spin_timer_last, spin_timer;
 
+/**
+ * scene_global_spin_timer_update - Updates the Spin Timer for all Scenes
+ */
 void scene_global_spin_timer_update(void)
 {
 	spin_timer_last = spin_timer;
 	spin_timer += 1.2f;
 }
 
+/**
+ * _scene_draw_node_pickup - Draws the Nodes for Item Pickups
+ * @s: Scene
+ * @n: Node to Draw
+ * @subtick: Subtick Between Frames
+ */
 static void _scene_draw_node_pickup(const struct scene *s,
-				    const struct node *n, const struct mesh *m,
-				    const f32 subtick)
+				    const struct node *n, const f32 subtick)
 {
 	const f32 spin_timer_lerp = lerpf(spin_timer_last, spin_timer, subtick);
 
 	glMultMatrixf((f32 *)n->trans);
 	glTranslatef(0, sinf(spin_timer_lerp * 0.2f) * 0.2f, 0);
 	glRotatef(spin_timer_lerp * 8, 0, 1, 0);
-	mesh_draw(m);
+	mesh_draw(s->meshes + n->mesh_ind);
 
 	for (u16 i = 0; i < n->num_children; i++)
-		_scene_draw_node_pickup(s, n->children + i, m, subtick);
+		_scene_draw_node_pickup(s, n->children + i, subtick);
 
 	glPopMatrix();
 }
 
+/**
+ * _scene_draw_node - Recursively Draws the Nodes for a Scene
+ * @s: Scene
+ * @n: Node to Draw
+ * @subtick: Subtick Between Frames
+ */
 static void _scene_draw_node(const struct scene *s,
 			     const struct node *n, const f32 subtick)
 {
@@ -60,7 +74,7 @@ static void _scene_draw_node(const struct scene *s,
 	glPushMatrix();
 	if (!strncmp("PU.", m->name, 3))
 	{
-		_scene_draw_node_pickup(s, n, m, subtick);
+		_scene_draw_node_pickup(s, n, subtick);
 		return;
 	}
 	if (anim_ind != 0xFFFF)

@@ -9,6 +9,11 @@ static wav64_t *cough_sfx[9] = {
 	&cough_heavy0_sfx, &cough_heavy1_sfx, &cough_heavy2_sfx,
 };
 
+/**
+ * player_bong_check_use - Checks if the player is using their bong
+ * @p: Player to Check
+ * @iparms: Input Parameters
+ */
 void player_bong_check_use(struct player *p, const struct input_parms iparms)
 {
 	struct item *bong = p->items + 1;
@@ -53,6 +58,56 @@ void player_bong_check_use(struct player *p, const struct input_parms iparms)
 	}
 }
 
+/**
+ * player_bong_cough_setup - Sets up the Coughing for the Player after smoking
+ * @p: Player Structure
+ *
+ * Return: Number of Maximum Coughs for that session
+ */
+u16 player_bong_cough_setup(struct player *p)
+{
+	struct item *bong = p->items + 1;
+	u16 cough_rand = 0;
+
+	if (bong->usage_timer_last)
+	{
+		f32 usage_timer_exp = ((f32)bong->usage_timer_last / 56.0f);
+
+		usage_timer_exp *= usage_timer_exp * usage_timer_exp;
+		usage_timer_exp *= 56;
+
+		if ((u16)usage_timer_exp)
+			cough_rand = (rand() % (u16)usage_timer_exp);
+
+		if (bong->usage_timer_last >= 48 &&
+			bong->usage_timer_last <= 50)
+		{
+			mixer_ch_set_vol(SFXC_ITEM1, 0.3f, 0.3f);
+			wav64_play(&bong_hit_good_sfx, SFXC_ITEM1);
+			cough_rand = 0;
+		}
+		else
+		{
+			mixer_ch_set_vol(SFXC_ITEM1, 0.3f, 0.3f);
+			wav64_play(&bong_hit_bad_sfx, SFXC_ITEM1);
+		}
+
+		p->weed_high_amnt = 1.0f;
+		p->weed_progress = 0;
+		p->weed_duration = 240;
+		mixer_ch_set_vol(SFXC_MUSIC0, 0, 0);
+		mixer_ch_set_freq(SFXC_MUSIC0, 22050);
+		wav64_play(&nitrous_whine, SFXC_MUSIC0);
+	}
+	bong->qty2 = cough_rand;
+	return (bong->qty2);
+}
+
+/**
+ * player_bong_weed_effect_update - Updates the Weed Effect for Player
+ * @p: Player to Update for
+ * @num_coughs_max: Maximum number of coughs for given weed hit
+ */
 void player_bong_weed_effect_update(struct player *p,
 				    const u16 num_coughs_max)
 {
@@ -98,45 +153,14 @@ void player_bong_weed_effect_update(struct player *p,
 	}
 }
 
-void player_bong_cough_setup(struct player *p, u16 *num_coughs_max)
-{
-	struct item *bong = p->items + 1;
-	u16 cough_rand = 0;
-
-	if (bong->usage_timer_last)
-	{
-		f32 usage_timer_exp = ((f32)bong->usage_timer_last / 56.0f);
-
-		usage_timer_exp *= usage_timer_exp * usage_timer_exp;
-		usage_timer_exp *= 56;
-
-		if ((u16)usage_timer_exp)
-			cough_rand = (rand() % (u16)usage_timer_exp);
-
-		if (bong->usage_timer_last >= 48 &&
-			bong->usage_timer_last <= 50)
-		{
-			mixer_ch_set_vol(SFXC_ITEM1, 0.3f, 0.3f);
-			wav64_play(&bong_hit_good_sfx, SFXC_ITEM1);
-			cough_rand = 0;
-		}
-		else
-		{
-			mixer_ch_set_vol(SFXC_ITEM1, 0.3f, 0.3f);
-			wav64_play(&bong_hit_bad_sfx, SFXC_ITEM1);
-		}
-
-		p->weed_high_amnt = 1.0f;
-		p->weed_progress = 0;
-		p->weed_duration = 240;
-		mixer_ch_set_vol(SFXC_MUSIC0, 0, 0);
-		mixer_ch_set_freq(SFXC_MUSIC0, 22050);
-		wav64_play(&nitrous_whine, SFXC_MUSIC0);
-	}
-	bong->qty2 = cough_rand;
-	*num_coughs_max = bong->qty2;
-}
-
+/**
+ * player_bong_weed_effect_draw - Draws the Weed Effect using Framebuffer
+ * @p: Player to Refer to
+ * @surf: Color Framebuffer to Overlay
+ * @tick_cnt: Current Tick Count
+ * @tick_cnt_last: Previous Tick Count
+ * @subtick: Subtick Between Frames
+ */
 void player_bong_weed_effect_draw(const struct player *p,
 				  const surface_t *surf, const u32 tick_cnt,
 				  const u32 tick_cnt_last, const f32 subtick)

@@ -4,6 +4,11 @@
 #include "engine/vector.h"
 #include "engine/player.h"
 
+/**
+ * player_camera_view_matrix_setup - Sets up View Matrix for OpenGL with Cam
+ * @p: Player whose camera to reference
+ * @subtick: Subtick between Frames
+ */
 void player_camera_view_matrix_setup(const struct player *p,
 				     const f32 subtick)
 {
@@ -30,6 +35,10 @@ void player_camera_view_matrix_setup(const struct player *p,
 		0, 1, 0);
 }
 
+/**
+ * _player_camera_turn_offset_update - Updates turn offset for item in hand
+ * @p: Player to Update angle for
+ */
 static void _player_camera_turn_offset_update(struct player *p)
 {
 
@@ -60,6 +69,11 @@ static void _player_camera_turn_offset_update(struct player *p)
 		vector_scale(p->turn_offset, turn_off_max / turn_off_mag, 2);
 }
 
+/**
+ * player_camera_look_update - Updates look angles for Player
+ * @p: Player to Update angles for
+ * @iparms: Input Parameters
+ */
 void player_camera_look_update(struct player *p,
 			       const struct input_parms iparms)
 {

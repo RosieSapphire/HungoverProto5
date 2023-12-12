@@ -69,6 +69,11 @@ void player_item_load(struct player *p, const u8 flags_last)
 	};
 }
 
+/**
+ * player_item_check_pickup - Checks if Player is Picking Up an Item
+ * @s: Scene to Check for Item
+ * @p: Player Structure
+ */
 void player_item_check_pickup(struct scene *s, struct player *p)
 {
 	for (u16 i = 0; i < s->num_meshes; i++)
@@ -150,6 +155,11 @@ static void _player_item_check_switching(struct player *p,
 	}
 }
 
+/**
+ * player_items_update - Updates all attributes of Player's Items
+ * @p: Player Structure
+ * @iparms: Input Parameters
+ */
 void player_items_update(struct player *p, const struct input_parms iparms)
 {
 	p->recoil_amnt_last = p->recoil_amnt;
@@ -176,6 +186,11 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 		p->recoil_amnt = 0.0f;
 }
 
+/**
+ * player_item_draw - Draws the Item currently in Player's Hand
+ * @p: Player Structure
+ * @subtick: Subtick Between Frames
+ */
 void player_item_draw(const struct player *p, const f32 subtick)
 {
 	if (p->item_selected == ITEM_SELECT_NONE)

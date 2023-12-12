@@ -9,10 +9,9 @@
 u32 profile_start, profile_end;
 char profile_name[32];
 
-
 /**
  * profiler_begin - Begins the Profiler on the code you want to profile
- * @name: Name of function you're profiling
+ * @fmt: String Format
  */
 #ifdef CONF_DEBUG
 void profiler_begin(const char *fmt, ...)
@@ -25,15 +24,10 @@ void profiler_begin(const char *fmt, ...)
 
 	profile_start = get_ticks();
 }
-#else
-void profiler_begin(__attribute__((unused))const char *fmt, ...)
-{}
-#endif /* CONF_DEBUG */
 
 /**
  * profiler_end_print - Ends the Profiler and prints out the time it took
  */
-#ifdef CONF_DEBUG
 void profiler_end_print(void)
 {
 	u32 profile_delta;
@@ -45,6 +39,16 @@ void profiler_end_print(void)
 	memset(profile_name, 0, 32);
 }
 #else
+/**
+ * profiler_begin - Begins the Profiler on the code you want to profile
+ * @fmt: String Format
+ */
+void profiler_begin(__attribute__((unused))const char *fmt, ...)
+{}
+
+/**
+ * profiler_end_print - Ends the Profiler and prints out the time it took
+ */
 void profiler_end_print(void)
 {}
 #endif /* CONF_DEBUG */

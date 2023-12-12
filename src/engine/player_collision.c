@@ -8,6 +8,15 @@
 static const f32 upward[3] = {0, 1, 0}, downward[3] = {0, -1, 0};
 static const f32 floor_check_extra[3] = {0, 0.5f, 0};
 
+/**
+ * _player_collision_floor - Handles Player Collision with Floor Triangle
+ * @p: Player to Handle Collision for
+ * @v: 3 Vertices for the Floor Triangle
+ * @n: Normal Vector of Triangle
+ * @eye: Raycast Eye
+ * @dir: Raycast Direction
+ * @dist: Pointer to Output Distance from Triangle
+ */
 static void _player_collision_floor(struct player *p, vec3 *v, vec3 n,
 				    vec3 eye, vec3 dir, f32 *dist)
 {
@@ -36,6 +45,15 @@ static void _player_collision_floor(struct player *p, vec3 *v, vec3 n,
 	vector_add(p->pos, push_vec, p->pos, 3);
 }
 
+/**
+ * _player_collision_walls - Handles Player Collision with Wall Triangle
+ * @p: Player to Handle Collision for
+ * @v: 3 Vertices for the Wall Triangle
+ * @n: Normal Vector of Triangle
+ * @eye: Raycast Eye
+ * @dir: Raycast Direction
+ * @dist: Pointer to Output Distance from Triangle
+ */
 static void _player_collision_walls(struct player *p, vec3 *v, vec3 n,
 				    vec3 eye, vec3 dir, f32 *dist)
 {
@@ -62,6 +80,12 @@ static void (*colfuncs[2])(struct player *, vec3 *,
 	_player_collision_floor, _player_collision_walls,
 };
 
+/**
+ * player_collision - Handles All Player Collisions
+ * @m: Collision Mesh
+ * @p: Player to Handle Collision for
+ * @coltype: Collision Type (Floors, Walls, etc.)
+ */
 void player_collision(const struct collision_mesh *m, struct player *p,
 		      enum collision_type coltype)
 {

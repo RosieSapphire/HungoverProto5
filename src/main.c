@@ -117,8 +117,6 @@ int main(void)
 
 		(*draw_funcs[scene_index])(subtick);
 		_audio();
-		debugf("FPS=%d\n", (u16)(1.0f /
-	 		((f32)ticks_delta / (f32)TICKS_PER_SECOND)));
 	}
 	return (0);
 }

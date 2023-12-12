@@ -122,9 +122,9 @@ void player_pistol_check_use(struct player *p,
  * Bong
  */
 void player_bong_check_use(struct player *p, const struct input_parms iparms);
+u16 player_bong_cough_setup(struct player *p);
 void player_bong_weed_effect_update(struct player *p,
 				    const u16 num_coughs_max);
-void player_bong_cough_setup(struct player *p, u16 *num_coughs_max);
 void player_bong_weed_effect_draw(const struct player *p,
 				  const surface_t *surf, const u32 tick_cnt,
 				  const u32 tick_cnt_last, const f32 subtick);

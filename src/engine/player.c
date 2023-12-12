@@ -9,6 +9,12 @@
 static struct collision_mesh floormesh;
 static struct collision_mesh wallsmesh;
 
+/**
+ * player_init - Initializes a Player Struct
+ * @s: Scene to initialize into
+ * @p: Player Structure
+ * @items_equipped_flags: Which items Player has Equipped
+ */
 void player_init(const struct scene *s, struct player *p,
 		 u8 items_equipped_flags)
 {
@@ -33,17 +39,25 @@ void player_init(const struct scene *s, struct player *p,
 	collision_mesh_gen(&wallsmesh, walls_mesh);
 }
 
+/**
+ * player_terminate - Terminates a Player Struct
+ * @p: Player Structure
+ */
 void player_terminate(struct player *p)
 {
 	p->item_flags = ITEM_HAS_NONE;
 	scene_destroy(&p->items[0].s);
 }
 
+/**
+ * player_update - Updates a Player Structure
+ * @s: Scene to Refer to
+ * @p: Player Structure
+ * @iparms: Input Parameters
+ */
 void player_update(struct scene *s, struct player *p,
 		   const struct input_parms iparms)
 {
-	static u16 num_coughs_max;
-
 	vector_copy(p->view.angles_last, p->view.angles, 2);
 	vector_copy(p->view.eye_last, p->view.eye, 3);
 	vector_copy(p->turn_offset_last, p->turn_offset, 2);
@@ -63,9 +77,10 @@ void player_update(struct scene *s, struct player *p,
 	struct item *bong = p->items + 1;
 	const u8 is_coughing = bong->qty2 > 0;
 	const u8 must_stop_smoking = (bong->usage_timer >= 56) || iparms.up.z;
+	static u16 num_coughs_max;
 
 	if (must_stop_smoking && !is_coughing)
-		player_bong_cough_setup(p, &num_coughs_max);
+		num_coughs_max = player_bong_cough_setup(p);
 
 	player_bong_weed_effect_update(p, num_coughs_max);
 }

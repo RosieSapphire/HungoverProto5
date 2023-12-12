@@ -8,6 +8,10 @@
 #define MAX_VEL    0.8f
 #define FRICTION   4.0f
 
+/**
+ * player_friction - Applies Friction to the Player
+ * @p: Player to Apply Friction to
+ */
 void player_friction(struct player *p)
 {
 	const f32 speed = vector_magnitude(p->vel, 3);
@@ -26,6 +30,11 @@ void player_friction(struct player *p)
 	vector_scale(p->vel, newspeed, 3);
 }
 
+/**
+ * player_accelerate - Applies Acceleration to the Player based on Input
+ * @p: Player to Apply Acceleration to
+ * @iparms: Input Parameters
+ */
 void player_accelerate(struct player *p, const struct input_parms iparms)
 {
 	f32 focus[3], forw[3] = {0}, side[3] = {0}, accel[3] = {0};

@@ -22,4 +22,9 @@ struct mesh
 	u16 tind;
 };
 
+void mesh_path_from_scene_path(char *out, const char *mname,
+			       const char *scnpath);
+u16 mesh_ind_by_name(const char *name, const struct mesh *meshes,
+		     const u16 num_meshes);
+
 #endif /* _MESH_H_ */

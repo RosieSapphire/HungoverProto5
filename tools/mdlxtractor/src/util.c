@@ -64,3 +64,11 @@ void freadflipf32(f32 *ptr, FILE *stream)
 
 	*ptr = (*((f32 *)&tmp));
 }
+
+void matrix_transpose(const f32 *in, f32 *out)
+{
+	for (int i = 0; i < 4; i++)
+		for (int j = 0; j < 4; j++)
+			out[j * 4 + i] = in[i * 4 + j];
+}
+

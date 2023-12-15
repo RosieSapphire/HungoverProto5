@@ -5,11 +5,9 @@ CFLAGS=$(OPT_DEB) -Wall -Wextra -Werror -Wno-strict-aliasing
 
 SRC=$(wildcard src/*.c)
 OBJ=$(patsubst src/%.c,%.o,$(SRC))
-LIB=-L/usr/local/lib -lassimp -lm
+LIB=-L/usr/local/lib -lassimp -lm -lpthread
 INC=-Iinclude
 BIN=mdlxtractor
-
-BETTY_SCAN=src/*.c include/*.h
 
 default: $(BIN)
 
@@ -22,11 +20,12 @@ $(BIN): $(OBJ)
 clean:
 	rm -rf $(BIN) *.scn *.mdl *.o
 
-betty-style:
-	betty-style --allow-global-variables $(BETTY_SCAN)
+BETTY_SCAN=include/*.h src/*.c
 
-betty-doc:
-	betty-doc $(BETTY_SCAN)
+betty-style:
+	betty-style --subjective --strict \
+		--allow-global-variables \
+		--ignore=CAMELCASE,PREFER_KERNEL_TYPES $(BETTY_SCAN)
 
 betty:
 	clear; make betty-doc; make betty-style;

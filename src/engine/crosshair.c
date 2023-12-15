@@ -1,11 +1,16 @@
+/**
+ * @file src/engine/crosshair.c
+ */
+
+#include <libdragon.h>
+
 #include "engine/config.h"
 #include "engine/crosshair.h"
 
 /**
- * crosshair_rspq_block_gen - Generates RSPQ Block for Crosshair
- * @dim: Dimensions for the Crosshair
- *
- * Return: Generated RSPQ Block for Crosshair
+ * Generates RSPQ Block for Crosshair
+ * @param[in] dim Dimensions for the Crosshair
+ * @return Generated RSPQ Block for Crosshair
  */
 rspq_block_t *crosshair_rspq_block_gen(const u16 dim)
 {
@@ -20,8 +25,8 @@ rspq_block_t *crosshair_rspq_block_gen(const u16 dim)
 }
 
 /**
- * crosshair_draw - Draws Crosshair
- * @crosshair_block: Crosshair RSPQ Block to Run (draw effectively)
+ * Draws Crosshair
+ * @param[in] crosshair_block Crosshair RSPQ Block to Run (draw effectively)
  */
 void crosshair_draw(rspq_block_t *crosshair_block)
 {

@@ -1,89 +1,86 @@
+/**
+ * @file include/engine/player.h
+ */
+
 #ifndef _ENGINE_PLAYER_H_
 #define _ENGINE_PLAYER_H_
 
-#include <libdragon.h>
-
-#include "engine/types.h"
-#include "engine/input.h"
 #include "engine/camera.h"
 #include "engine/item.h"
 #include "engine/collision_mesh.h"
 
 /**
- * enum item_selected - Item Currently Selected
- * @ITEM_SELECT_NONE: No Item
- * @ITEM_SELECT_PISTOL: Pistol Selected
- * @ITEM_SELECT_BONG: Bong Selected
- * @ITEM_SELECT_NITROUS: Nitrous Canister Selected
- * @ITEM_COUNT: Max Number of Items
+ * Which item is currently selected
  */
 enum item_selected
 {
-	ITEM_SELECT_NONE = -1,
-	ITEM_SELECT_PISTOL,
-	ITEM_SELECT_BONG,
-	ITEM_SELECT_NITROUS,
-	ITEM_COUNT,
+	ITEM_SELECT_NONE = -1, ///< No Item
+	ITEM_SELECT_PISTOL,    ///< Pistol Selected
+	ITEM_SELECT_BONG,      ///< Bong Selected
+	ITEM_SELECT_NITROUS,   ///< Nitrous Canister Selected
+	ITEM_COUNT,            ///< Max Number of Items
 };
 
 /**
- * enum item_equipped_flags - Flags for Which Items Player Has
- * @ITEM_HAS_NONE: Empty Flag
- * @ITEM_HAS_PISTOL: Pistol Flag
- * @ITEM_HAS_BONG: Bong Flag
- * @ITEM_HAS_NITROUS: Nitrous Flag
+ * Flags for Which Items Player Has
  */
 enum item_equipped_flags
 {
-	ITEM_HAS_NONE    = 0x0,
-	ITEM_HAS_PISTOL  = 0x1,
-	ITEM_HAS_BONG    = 0x2,
-	ITEM_HAS_NITROUS = 0x4,
+	ITEM_HAS_NONE    = 0x0, ///< Empty Flag
+	ITEM_HAS_PISTOL  = 0x1, ///< Pistol Flag
+	ITEM_HAS_BONG    = 0x2, ///< Bong Flag
+	ITEM_HAS_NITROUS = 0x4, ///< Nitrous Flag
 };
 
 /**
- * struct player - Player Structure
- * @view: Camera for View Matrix
- * @pos: Position
- * @vel: Velocity
- * @vel_last: Previous Velocity
- * @item_flags: Which Items Player Has
- * @item_selected: Currently Selected Item
- * @items: Items Array
- * @recoil_amnt: Current Amount of Recoil
- * @recoil_amnt_last: Previous Amount of Recoil
- * @recoil_dir: Recoil Direction
- * @turn_offset: Current Turn Offset (Coughing, Recoil, etc.)
- * @turn_offset_last: Previous Turn Offset
- * @headbob_timer: Current Headbob Timer
- * @headbob_timer_last: Previous Headbob Timer
- * @weed_high_amnt: Weed High Amount
- * @weed_progress: Weed Progress
- * @weed_duration: Used as a percentage for `weed_progress`
+ * Enum for Which Drug the Player is On
+ */
+enum which_drug
+{
+	ON_DRUG_WEED,     ///< High on Weed
+	ON_DRUG_NITROUS,  ///< High on Nitrous Oxide
+	ON_DRUG_SHROOMS,  ///< Tripping on Shrooms
+	ON_DRUG_KETAMINE, ///< High on Ketamine
+	ON_DRUG_ALCOHOL,  ///< Drunk on Alcohol
+	ON_DRUG_CRACK,    ///< High on Crack
+	ON_DRUG_SALVIA,   ///< Has Special Gameplay Properties
+	ON_DRUG_COUNT,    ///< Number of Possible Drug States
+};
+
+/**
+ * Player Structure
  */
 struct player
 {
-	struct camera view;
-	f32 pos[3], vel[3], vel_last[3];
-	u8 item_flags;
-	s8 item_selected;
-	struct item items[ITEM_COUNT];
-	f32 recoil_amnt, recoil_amnt_last;
-	f32 recoil_dir[2];
-	f32 turn_offset[2], turn_offset_last[2];
-	f32 headbob_timer, headbob_timer_last;
-	f32 weed_high_amnt;
-	u16 weed_progress, weed_duration;
+	struct camera view; ///< Camera for view matrix
+	f32 pos[3]; ///< Position
+	f32 vel[3]; ///< Current velocity
+	f32 vel_last[3]; ///< Previous velocity
+	u8 item_flags; ///< Which items player has
+	s8 item_selected; ///< Item currently selected
+	struct item items[ITEM_COUNT]; ///< Items array
+	f32 recoil_amnt; ///< Current Recoil Amount
+	f32 recoil_amnt_last; ///< Previous Recoil Amount
+	f32 recoil_dir[2]; ///< Recoil direction
+	f32 turn_offset[2]; ///< Current turn offset (Coughing, Recoil, etc.)
+	f32 turn_offset_last[2]; ///< Previous turn offset
+	f32 headbob_timer; ///< Current Headbob timer
+	f32 headbob_timer_last; ///< Previous Headbob timer
+	u8 which_drug; ///< Which drug player is on
+	f32 drug_high_amnt; ///< How high player is on `which_drug`
+	u16 drug_progress; ///< Drug progress
+	u16 drug_duration; ///< Used as a percentage for `drug_progress`
 };
 
 /*
  * Main
  */
 void player_init(const struct scene *s, struct player *p,
-		 u8 items_equipped_flags);
+		 const u8 items_equipped_flags);
 void player_terminate(struct player *p);
 void player_update(struct scene *s, struct player *p,
 		   const struct input_parms iparms);
+
 /*
  * Camera
  */
@@ -119,7 +116,7 @@ void player_pistol_check_use(struct player *p,
 			     const struct input_parms iparms);
 
 /*
- * Bong
+ * Weed
  */
 void player_bong_check_use(struct player *p, const struct input_parms iparms);
 u16 player_bong_cough_setup(struct player *p);
@@ -128,5 +125,13 @@ void player_bong_weed_effect_update(struct player *p,
 void player_bong_weed_effect_draw(const struct player *p,
 				  const surface_t *surf, const u32 tick_cnt,
 				  const u32 tick_cnt_last, const f32 subtick);
+
+/*
+ * Nitrous
+ */
+void player_n2o_check_use(struct player *p, const struct input_parms iparms);
+void player_n2o_effect_draw(const struct player *p, const surface_t *surf,
+			    const u32 tick_cnt, const u32 tick_cnt_last,
+			    const f32 subtick);
 
 #endif /* _ENGINE_PLAYER_H_ */

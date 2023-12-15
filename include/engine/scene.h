@@ -1,3 +1,7 @@
+/**
+ * @file include/engine/scene.h
+ */
+
 #ifndef _ENGINE_SCENE_H_
 #define _ENGINE_SCENE_H_
 
@@ -7,39 +11,29 @@
 #include "engine/config.h"
 
 /**
- * enum scene_index - Scene Index
- * @SCENE_TITLE: Title Screen
- * @SCENE_TESTROOM: Test Room
- * @NUM_SCENES: Number of Scenes
+ * Scene Index
  */
 enum scene_index
 {
-	SCENE_TITLE,
-	SCENE_TESTROOM,
-	NUM_SCENES,
+	SCENE_TITLE, ///< Title Screen
+	SCENE_TESTROOM, ///< Test Room
+	NUM_SCENES, ///< Number of Scenes
 };
 
 extern enum scene_index scene_index;
 
 /**
- * struct scene - Scene Structure
- * @root_node: Root Node for Scene
- * @num_tex_ids: Number of OpenGL Texture IDs
- * @tex_ids: OpenGL Texture IDs Array
- * @num_meshes: Number of Meshes
- * @meshes: Meshes Array
- * @num_anims: Number of Animations
- * @anims: Animations Array
+ * Scene Structure
  */
 struct scene
 {
-	struct node root_node;
-	u16 num_tex_ids;
-	u32 *tex_ids;
-	u16 num_meshes;
-	struct mesh *meshes;
-	u16 num_anims;
-	struct animation *anims;
+	struct node root_node; ///< Root Node for Scene
+	u16 num_tex_ids; ///< Number of OpenGL Texture IDs
+	u32 *tex_ids; ///< OpenGL Texture IDs Array
+	u16 num_meshes; ///< Number of Meshes
+	struct mesh *meshes; ///< Meshes Array
+	u16 num_anims; ///< Number of Animations
+	struct animation *anims; ///< Animations Array
 };
 
 /*

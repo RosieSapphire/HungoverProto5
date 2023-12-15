@@ -1,15 +1,19 @@
+/**
+ * @file src/engine/texture.c
+ */
+
 #include <string.h>
 #include <malloc.h>
 #include <GL/gl.h>
 
 #include "engine/texture.h"
 
-u16 num_texs_loaded;
-char tex_paths_loaded[MAX_TOTAL_TEXS][TEX_PATH_MAX_LEN];
-struct texture *tex_objs_loaded;
+u16 num_texs_loaded; ///< Number of textures loaded
+char tex_paths_loaded[MAX_TOTAL_TEXS][TEX_PATH_MAX_LEN]; ///< Texture paths
+struct texture *tex_objs_loaded; ///< Texture objects
 
 /**
- * textures_init - Initializes Texture Subsystem
+ * Initializes Texture Subsystem
  */
 void textures_init(void)
 {
@@ -18,10 +22,9 @@ void textures_init(void)
 }
 
 /**
- * texture_create_file - Loads a Texture from a File
- * @path: Texture Path
- *
- * Return: OpenGL ID for Texture at Index
+ * Loads a Texture from a File
+ * @param[in] path Texture Path
+ * @return OpenGL ID for Texture at Index
  */
 u32 texture_create_file(const char *path)
 {
@@ -36,7 +39,7 @@ u32 texture_create_file(const char *path)
 
 	num_texs_loaded++;
 	tex_objs_loaded = realloc(tex_objs_loaded,
-			sizeof(struct texture) * num_texs_loaded);
+				  sizeof(struct texture) * num_texs_loaded);
 	t.spr = sprite_load(path);
 
 	glGenTextures(1, &t.id);
@@ -49,6 +52,7 @@ u32 texture_create_file(const char *path)
 		.s.repeats = REPEAT_INFINITE,
 		.t.repeats = REPEAT_INFINITE
 	};
+
 	glSpriteTextureN64(GL_TEXTURE_2D, t.spr, &parms);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -58,8 +62,8 @@ u32 texture_create_file(const char *path)
 }
 
 /**
- * texture_destroy - Destroys a Texture
- * @t: Texture in Question
+ * Destroys a Texture
+ * @param[in,out] t Texture in Question
  */
 void texture_destroy(struct texture *t)
 {
@@ -67,5 +71,5 @@ void texture_destroy(struct texture *t)
 	sprite_free(t->spr);
 	num_texs_loaded--;
 	tex_objs_loaded = realloc(tex_objs_loaded,
-			sizeof(struct texture) * num_texs_loaded);
+				  sizeof(struct texture) * num_texs_loaded);
 }

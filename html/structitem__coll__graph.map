@@ -1,0 +1,10 @@
+<map id="item" name="item">
+<area shape="rect" id="node1" title=" " alt="" coords="169,288,221,315"/>
+<area shape="rect" id="node2" href="$structscene.html" title=" " alt="" coords="165,199,225,225"/>
+<area shape="rect" id="node3" href="$structnode.html" title=" " alt="" coords="5,109,60,136"/>
+<area shape="rect" id="node4" href="$structmesh.html" title=" " alt="" coords="166,109,225,136"/>
+<area shape="rect" id="node5" href="$structvertex.html" title=" " alt="" coords="163,5,227,32"/>
+<area shape="rect" id="node6" href="$structanimation.html" title=" " alt="" coords="249,109,337,136"/>
+<area shape="rect" id="node7" href="$structvec3__key.html" title=" " alt="" coords="251,5,334,32"/>
+<area shape="rect" id="node8" href="$structvec4__key.html" title=" " alt="" coords="358,5,441,32"/>
+</map>

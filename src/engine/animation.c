@@ -1,12 +1,16 @@
+/**
+ * @file src/engine/animation.c
+ */
+
 #include <GL/gl.h>
 
-#include "engine/vector.h"
 #include "engine/util.h"
+#include "engine/vector.h"
 #include "engine/animation.h"
 
 /**
- * animation_update - Updates an Animation
- * @a: Animation to Update
+ * Updates an Animation
+ * @param[in,out] a Animation to Update
  */
 void animation_update(struct animation *a)
 {
@@ -27,12 +31,12 @@ void animation_update(struct animation *a)
 }
 
 /**
- * _animation_setup_values_lerp - Sets up Pos/Rot/Sca Lerp Values
- * @a: Animation to Update
- * @subtick: Subtick Between Frames
- * @pos_out: Position Output
- * @rot_out: Rotation Output
- * @sca_out: Scaling Output
+ * Sets up Pos/Rot/Sca Lerp Values
+ * @param[in] a Animation to Update
+ * @param[in] subtick Subtick Between Frames
+ * @param[in] pos_out Position Output
+ * @param[in] rot_out Rotation Output
+ * @param[in] sca_out Scaling Output
  */
 static void _animation_setup_values_lerp(const struct animation *a,
 					 f32 subtick, f32 *pos_out,
@@ -60,9 +64,9 @@ static void _animation_setup_values_lerp(const struct animation *a,
 }
 
 /**
- * animation_matrix_multiply - Multiplies an Animation's Matrix by GL Matrix
- * @a: Animation to Multiply its Matrix
- * @subtick: Subtick between Frames
+ * Multiplies an Animation's Matrix by GL Matrix
+ * @param[in] a Animation to Multiply its Matrix
+ * @param[in] subtick Subtick between Frames
  */
 void animation_matrix_multiply(const struct animation *a, const f32 subtick)
 {

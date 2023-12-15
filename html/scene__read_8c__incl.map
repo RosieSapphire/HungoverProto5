@@ -1,0 +1,16 @@
+<map id="src/engine/scene_read.c" name="src/engine/scene_read.c">
+<area shape="rect" id="node1" title=" " alt="" coords="219,5,397,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,80,72,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="97,80,175,107"/>
+<area shape="rect" id="node4" title=" " alt="" coords="199,80,270,107"/>
+<area shape="rect" id="node5" title=" " alt="" coords="367,229,462,256"/>
+<area shape="rect" id="node6" title=" " alt="" coords="669,80,736,107"/>
+<area shape="rect" id="node7" href="$texture_8h.html" title=" " alt="" coords="489,155,618,181"/>
+<area shape="rect" id="node10" href="$scene_8h.html" title=" " alt="" coords="525,80,645,107"/>
+<area shape="rect" id="node8" href="$types_8h.html" title=" " alt="" coords="503,229,622,256"/>
+<area shape="rect" id="node9" href="$config_8h.html" title=" " alt="" coords="655,229,777,256"/>
+<area shape="rect" id="node11" href="$mesh_8h.html" title=" " alt="" coords="346,155,465,181"/>
+<area shape="rect" id="node13" href="$node_8h.html" title=" " alt="" coords="815,155,929,181"/>
+<area shape="rect" id="node14" href="$animation_8h.html" title=" " alt="" coords="642,155,790,181"/>
+<area shape="rect" id="node12" href="$vertex_8h.html" title=" " alt="" coords="219,229,343,256"/>
+</map>

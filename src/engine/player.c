@@ -10,13 +10,13 @@ static struct collision_mesh floormesh;
 static struct collision_mesh wallsmesh;
 
 /**
- * player_init - Initializes a Player Struct
- * @s: Scene to initialize into
- * @p: Player Structure
- * @items_equipped_flags: Which items Player has Equipped
+ * Initializes a player struct.
+ * @param[in] s Scene to initialize into
+ * @param[out] p Player structure
+ * @param[in] items_equipped_flags Which items player has in inventory
  */
 void player_init(const struct scene *s, struct player *p,
-		 u8 items_equipped_flags)
+		 const u8 items_equipped_flags)
 {
 	camera_init(&p->view);
 	vector_copy(p->pos, p->view.eye, 3);
@@ -25,23 +25,24 @@ void player_init(const struct scene *s, struct player *p,
 	vector_zero(p->turn_offset, 2);
 	vector_zero(p->turn_offset_last, 2);
 	p->item_flags = items_equipped_flags;
-	p->headbob_timer = p->headbob_timer_last = 0;
+	p->headbob_timer = 0;
+	p->headbob_timer_last = 0;
 	p->item_selected = ITEM_SELECT_NONE;
 	player_item_load(p, ITEM_HAS_NONE);
 	const struct mesh *floor_mesh =
 		mesh_get_name(s->meshes, "Ground", s->num_meshes);
 	const struct mesh *walls_mesh =
 		mesh_get_name(s->meshes, "Walls", s->num_meshes);
-	assertf(floor_mesh != NULL, "Floor Mesh not found\n");
-	assertf(walls_mesh != NULL, "Wall Mesh not found\n");
+	assertf(floor_mesh, "Floor Mesh not found\n");
+	assertf(walls_mesh, "Wall Mesh not found\n");
 
 	collision_mesh_gen(&floormesh, floor_mesh);
 	collision_mesh_gen(&wallsmesh, walls_mesh);
 }
 
 /**
- * player_terminate - Terminates a Player Struct
- * @p: Player Structure
+ * Terminates a Player Struct
+ * @param[out] p Player Structure
  */
 void player_terminate(struct player *p)
 {
@@ -50,10 +51,10 @@ void player_terminate(struct player *p)
 }
 
 /**
- * player_update - Updates a Player Structure
- * @s: Scene to Refer to
- * @p: Player Structure
- * @iparms: Input Parameters
+ * Updates a Player Structure
+ * @param[in] s Scene to Refer to
+ * @param[out] p Player Structure
+ * @param[in] iparms Input Parameters
  */
 void player_update(struct scene *s, struct player *p,
 		   const struct input_parms iparms)

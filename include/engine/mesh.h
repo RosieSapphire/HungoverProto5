@@ -1,3 +1,7 @@
+/**
+ * @file include/engine/mesh.h
+ */
+
 #ifndef _ENGINE_MESH_H_
 #define _ENGINE_MESH_H_
 
@@ -8,34 +12,26 @@
 #include "engine/vertex.h"
 
 /**
- * enum mesh_flags - Mesh Flags
- * @MESH_IS_ACTIVE: Whether Mesh is Active
+ * Mesh Flags
  */
 enum mesh_flags
 {
-	MESH_IS_ACTIVE = 0x1,
+	MESH_IS_ACTIVE = 0x1, ///< Whether Mesh is Active
 };
 
 /**
- * struct mesh - Mesh Structure
- * @name: Mesh Name
- * @num_verts: Number of Vertices
- * @num_indis: Number of Indices
- * @verts: Vertices Array
- * @indis: Indices Array
- * @block: RSPQ Block for Faster Rendering of Static Meshes
- * @flags: Flags
- * @tind: Texture Index
+ * Mesh Structure
  */
 struct mesh
 {
-	char name[CONF_NAME_MAX];
-	u16 num_verts, num_indis;
-	struct vertex *verts;
-	u16 *indis;
-	rspq_block_t *block;
-	u8 flags;
-	u16 tind;
+	char name[CONF_NAME_MAX]; ///< Mesh Name
+	u16 num_verts; ///< Number of Vertices
+	u16 num_indis; ///< Number of Indices
+	struct vertex *verts; ///< Vertices Array
+	u16 *indis; ///< Indices Array
+	rspq_block_t *block; ///< RSPQ Block to render static meshes faster
+	u8 flags; ///< Flags
+	u16 tind; ///< Texture Index
 };
 
 void mesh_create_data(struct mesh *m, const char *name, const u16 num_verts,

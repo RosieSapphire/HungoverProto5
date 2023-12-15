@@ -1,3 +1,7 @@
+/**
+ * @file src/game/testroom.c
+ */
+
 #include <GL/gl.h>
 #include <GL/gl_integration.h>
 
@@ -21,7 +25,7 @@ static enum testroom_flags testroom_flags;
 static u32 tick_cnt, tick_cnt_last;
 
 /**
- * testroom_load - Loads assets for Testroom
+ * Loads assets for Testroom
  */
 void testroom_load(void)
 {
@@ -31,11 +35,12 @@ void testroom_load(void)
 	scene_read_file(&scene, "rom:/Test.scn");
 	player_init(&scene, &player, ITEM_HAS_NONE);
 	crosshair_block = crosshair_rspq_block_gen(7);
-	tick_cnt_last = tick_cnt = 0;
+	tick_cnt_last = 0;
+	tick_cnt = 0;
 }
 
 /**
- * testroom_unload - Unloads assets for Testroom
+ * Unloads assets from Testroom
  */
 void testroom_unload(void)
 {
@@ -46,10 +51,9 @@ void testroom_unload(void)
 }
 
 /**
- * testroom_update - Updates Testroom and all its stuff
- * @iparms: Input Parameters
- *
- * Return: Desired Next Scene Index
+ * Updates Testroom and all its stuff
+ * @param[in] iparms Input Parameters
+ * @return Desired Next Scene Index
  */
 enum scene_index testroom_update(struct input_parms iparms)
 {
@@ -72,8 +76,8 @@ enum scene_index testroom_update(struct input_parms iparms)
 }
 
 /**
- * _testroom_render - Renders everything for Testroom
- * @subtick: Subtick between Frames
+ * Renders everything for Testroom
+ * @param[in] subtick: Subtick between Frames
  */
 static void _testroom_render(const f32 subtick)
 {
@@ -113,23 +117,40 @@ static void _testroom_render(const f32 subtick)
 		ui_item_qty_draw(item, is_weapon);
 
 	if (player.item_selected == ITEM_SELECT_BONG &&
-			player.items[1].usage_timer > 0)
+	    player.items[1].usage_timer > 0)
 		ui_bongometer_draw(item, subtick);
 
 	ui_prototype_draw();
 }
 
 /**
- * testroom_draw - Draws all the stuff for Testroom
- * @subtick: Delta Value Between Frames
+ * Draws all the stuff for Testroom
+ * @param[in] subtick: Delta Value Between Frames
  */
 void testroom_draw(f32 subtick)
 {
 	color_buffer = display_get();
 	rdpq_attach(color_buffer, &depth_buffer);
 	_testroom_render(subtick);
-	if (player.weed_high_amnt > 0)
-		player_bong_weed_effect_draw(&player, color_buffer,
-			       tick_cnt, tick_cnt_last, subtick);
+	if (player.drug_high_amnt > 0)
+	{
+		switch (player.which_drug)
+		{
+		case ON_DRUG_WEED:
+			player_bong_weed_effect_draw(&player, color_buffer,
+						     tick_cnt, tick_cnt_last,
+						     subtick);
+			break;
+
+		case ON_DRUG_NITROUS:
+			player_n2o_effect_draw(&player, color_buffer,
+					       tick_cnt, tick_cnt_last,
+					       subtick);
+			break;
+
+		default:
+			break;
+		}
+	}
 	rdpq_detach_show();
 }

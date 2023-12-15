@@ -1,3 +1,7 @@
+/**
+ * @file include/game/testroom.h
+ */
+
 #ifndef _GAME_TESTROOM_H_
 #define _GAME_TESTROOM_H_
 
@@ -6,12 +10,11 @@
 #include "engine/scene.h"
 
 /**
- * enum testroom_flags - Testroom Flags
- * @TR_FREECAM_ENABLED: Whether Freecam is Enabled (Toggled by Start)
+ * Testroom Flags
  */
 enum testroom_flags
 {
-	TR_FREECAM_ENABLED = 0x1,
+	TR_FREECAM_ENABLED = 0x1, ///<  Whether or not Freecam is Enabled
 };
 
 void testroom_load(void);

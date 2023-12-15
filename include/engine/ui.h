@@ -1,3 +1,7 @@
+/**
+ * @file include/engine/ui.h
+ */
+
 #ifndef _ENGINE_UI_H_
 #define _ENGINE_UI_H_
 

@@ -1,3 +1,7 @@
+/**
+ * @file src/engine/mesh.c
+ */
+
 #include <string.h>
 #include <GL/gl.h>
 #include <libdragon.h>
@@ -5,13 +9,13 @@
 #include "engine/mesh.h"
 
 /**
- * mesh_create_data - Creates Mesh from Data
- * @m: Mesh to Write to
- * @name: Mesh Name
- * @num_verts: Number of Vertices
- * @num_indis: Number of Indices
- * @verts: Vertices Array
- * @indis: Indices Array
+ * Creates Mesh from Data
+ * @param[out] m Mesh to Write to
+ * @param[in] name Mesh Name
+ * @param[in] num_verts Number of Vertices
+ * @param[in] num_indis Number of Indices
+ * @param[in] verts Vertices Array
+ * @param[in] indis Indices Array
  */
 void mesh_create_data(struct mesh *m, const char *name, const u16 num_verts,
 		      const u16 num_indis, const struct vertex *verts,
@@ -30,13 +34,14 @@ void mesh_create_data(struct mesh *m, const char *name, const u16 num_verts,
 }
 
 /**
- * mesh_destroy - Destroys Mesh
- * @m: Mesh to Destroy
+ * Destroys Mesh
+ * @param[in,out] m Mesh to Destroy
  */
 void mesh_destroy(struct mesh *m)
 {
 	memset(m->name, 0, CONF_NAME_MAX);
-	m->num_verts = m->num_indis = 0;
+	m->num_verts = 0;
+	m->num_indis = 0;
 	free(m->verts);
 	free(m->indis);
 	m->indis = NULL;
@@ -45,8 +50,8 @@ void mesh_destroy(struct mesh *m)
 }
 
 /**
- * mesh_draw - Draws a Mesh via its RSPQ Block
- * @m: Mesh to be Rendered
+ * Draws a Mesh via its RSPQ Block
+ * @param[in] m Mesh to be Rendered
  */
 void mesh_draw(const struct mesh *m)
 {
@@ -54,9 +59,9 @@ void mesh_draw(const struct mesh *m)
 }
 
 /**
- * mesh_gen_rspqblock - Generates RSPQ Block for Mesh (Good for Static Meshes)
- * @m: Mesh to have Block generated for
- * @tid: Texture ID to generate with
+ * Generates RSPQ Block for Mesh (Good for Static Meshes)
+ * @param[in,out] m Mesh to have Block generated for
+ * @param[in] tid Texture ID to generate with
  */
 void mesh_gen_rspqblock(struct mesh *m, const u32 tid)
 {
@@ -67,13 +72,13 @@ void mesh_gen_rspqblock(struct mesh *m, const u32 tid)
 	glTexCoordPointer(2, GL_FLOAT, sizeof(struct vertex), m->verts->uv);
 	glEnableClientState(GL_COLOR_ARRAY);
 	glColorPointer(4, GL_UNSIGNED_BYTE,
-		sizeof(struct vertex), m->verts->col);
+		       sizeof(struct vertex), m->verts->col);
 
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, tid);
 
 	glDrawElements(GL_TRIANGLES, m->num_indis,
-		GL_UNSIGNED_SHORT, m->indis);
+		       GL_UNSIGNED_SHORT, m->indis);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDisable(GL_TEXTURE_2D);
@@ -85,12 +90,11 @@ void mesh_gen_rspqblock(struct mesh *m, const u32 tid)
 }
 
 /**
- * mesh_get_name - Get a Mesh by Name
- * @array: Array of Meshes to search through
- * @name: Name you are looking for
- * @num_elem: Count of Array Elements
- *
- * Return: Desired Mesh or NULL
+ * Get a Mesh by Name
+ * @param[in] array Array of Meshes to search through
+ * @param[in] name Name you are looking for
+ * @param[in] num_elem Count of Array Elements
+ * @return Desired Mesh or NULL
  */
 struct mesh *mesh_get_name(struct mesh *array,
 			   const char *name, const u16 num_elem)

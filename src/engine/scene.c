@@ -1,3 +1,7 @@
+/**
+ * @file src/engine/scene.c
+ */
+
 #include <GL/gl.h>
 
 #include "engine/util.h"
@@ -8,7 +12,7 @@ enum scene_index scene_index = SCENE_TESTROOM;
 static f32 spin_timer_last, spin_timer;
 
 /**
- * scene_global_spin_timer_update - Updates the Spin Timer for all Scenes
+ * Updates the Spin Timer for all Scenes
  */
 void scene_global_spin_timer_update(void)
 {
@@ -16,12 +20,6 @@ void scene_global_spin_timer_update(void)
 	spin_timer += 1.2f;
 }
 
-/**
- * _scene_draw_node_pickup - Draws the Nodes for Item Pickups
- * @s: Scene
- * @n: Node to Draw
- * @subtick: Subtick Between Frames
- */
 static void _scene_draw_node_pickup(const struct scene *s,
 				    const struct node *n, const f32 subtick)
 {
@@ -38,12 +36,6 @@ static void _scene_draw_node_pickup(const struct scene *s,
 	glPopMatrix();
 }
 
-/**
- * _scene_draw_node - Recursively Draws the Nodes for a Scene
- * @s: Scene
- * @n: Node to Draw
- * @subtick: Subtick Between Frames
- */
 static void _scene_draw_node(const struct scene *s,
 			     const struct node *n, const f32 subtick)
 {
@@ -89,9 +81,9 @@ static void _scene_draw_node(const struct scene *s,
 }
 
 /**
- * scene_draw - Draws a Scene and its Meshes
- * @s: Scene to Draw
- * @subtick: Subtick
+ * Draws a Scene and its Meshes
+ * @param[in] s Scene to Draw
+ * @param[in] subtick Subtick
  */
 void scene_draw(const struct scene *s, const f32 subtick)
 {
@@ -99,8 +91,8 @@ void scene_draw(const struct scene *s, const f32 subtick)
 }
 
 /**
- * scene_destroy - Destroys a Scene
- * @s: Scene to Destroy
+ * Destroys a Scene
+ * @param[in,out] s Scene to Destroy
  */
 void scene_destroy(struct scene *s)
 {

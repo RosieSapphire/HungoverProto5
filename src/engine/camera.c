@@ -1,3 +1,7 @@
+/**
+ * @file src/engine/camera.c
+ */
+
 #include <math.h>
 #include <GL/glu.h>
 
@@ -6,8 +10,8 @@
 #include "engine/camera.h"
 
 /**
- * camera_init - Initializes Camera
- * @c: Camera to Initialize
+ * Initializes Camera
+ * @param[out] c Camera to Initialize
  */
 void camera_init(struct camera *c)
 {
@@ -18,9 +22,9 @@ void camera_init(struct camera *c)
 }
 
 /**
- * camera_update - Updates Camera Eye and Angles
- * @c: Camera to Update
- * @iparms: Input Parameters
+ * Updates Camera Eye and Angles
+ * @param[in,out] c Camera to Update
+ * @param[in] iparms Input Parameters
  */
 void camera_update(struct camera *c, const struct input_parms iparms)
 {
@@ -55,9 +59,9 @@ void camera_update(struct camera *c, const struct input_parms iparms)
 }
 
 /**
- * camera_get_focus_now - Gets Camera's Focus on Current Frame
- * @c: Camera
- * @out: Focus Now Output
+ * Gets Camera's Focus on Current Frame
+ * @param[in] c Camera
+ * @param[out] out Focus Now Output
  */
 void camera_get_focus_now(const struct camera *c, f32 *out)
 {
@@ -70,10 +74,10 @@ void camera_get_focus_now(const struct camera *c, f32 *out)
 }
 
 /**
- * camera_get_focus_lerp - Gets Camera Value's Focus between Two Frames
- * @eye_lerp: Lerped Eye Position
- * @angles_lerp: Lerped Angles
- * @out: Focus Lerp Output
+ * Gets Camera Value's Focus between Two Frames
+ * @param[in] eye_lerp Lerped Eye Position
+ * @param[in] angles_lerp Lerped Angles
+ * @param[out] out Focus Lerp Output
  */
 void camera_get_focus_lerp(f32 *eye_lerp, f32 *angles_lerp, f32 *out)
 {
@@ -86,9 +90,9 @@ void camera_get_focus_lerp(f32 *eye_lerp, f32 *angles_lerp, f32 *out)
 }
 
 /**
- * camera_view_matrix_setup - Sets up OpenGL's View Matrix with Camera
- * @c: Camera
- * @subtick: Delta Between Frames
+ * Sets up OpenGL's View Matrix with Camera
+ * @param[in] c Camera
+ * @param[in] subtick Delta Between Frames
  */
 void camera_view_matrix_setup(const struct camera *c, f32 subtick)
 {
@@ -101,6 +105,6 @@ void camera_view_matrix_setup(const struct camera *c, f32 subtick)
 	camera_get_focus_lerp(eye_lerp, angles_lerp, focus_lerp);
 
 	gluLookAt(eye_lerp[0], eye_lerp[1], eye_lerp[2],
-		focus_lerp[0], focus_lerp[1], focus_lerp[2],
+		  focus_lerp[0], focus_lerp[1], focus_lerp[2],
 		0, 1, 0);
 }

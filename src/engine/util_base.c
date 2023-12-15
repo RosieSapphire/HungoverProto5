@@ -1,3 +1,7 @@
+/**
+ * @file src/engine/util_base.c
+ */
+
 #include <GL/gl.h>
 
 #include "engine/config.h"
@@ -5,13 +9,11 @@
 #include "engine/util.h"
 
 /**
- * clampf - Clamps a float between two values
- * @x: Float value
- * @min: Minimum
- * @max: Maximum
- *
- * Description: Clamps a float between a minimum and a maximum
- * Return: Clamped Float
+ * Clamps a float between two values
+ * @param[in] x Float value
+ * @param[in] min Minimum
+ * @param[in] max Maximum
+ * @return Clamped Float
  */
 f32 clampf(f32 x, f32 min, f32 max)
 {
@@ -25,13 +27,11 @@ f32 clampf(f32 x, f32 min, f32 max)
 }
 
 /**
- * clampi - Clamps an integer between two values
- * @x: Integer value
- * @min: Minimum
- * @max: Maximum
- *
- * Description: Clamps an integer between a minimum and a maximum
- * Return: Clamped Integer
+ * Clamps an integer between two values
+ * @param[in] x integer value
+ * @param[in] min Minimum
+ * @param[in] max Maximum
+ * @return Clamped integer
  */
 int clampi(int x, int min, int max)
 {
@@ -45,13 +45,11 @@ int clampi(int x, int min, int max)
 }
 
 /**
- * lerpf - Lerps between two values
- * @a: Value A
- * @b: Value B
- * @t: Interpolation
- *
- * Description: Linearly Interpolates between two values
- * Return: Lerped Value
+ * Lerps between two values
+ * @param[in] a Value A
+ * @param[in] b Value B
+ * @param[in] t Interpolation
+ * @return Lerped Value
  */
 f32 lerpf(f32 a, f32 b, f32 t)
 {
@@ -59,13 +57,11 @@ f32 lerpf(f32 a, f32 b, f32 t)
 }
 
 /**
- * smoothf - Smooth Interps between two values
- * @a: Value A
- * @b: Value B
- * @t: Interpolation
- *
- * Description: Smoothly Interpolates between two values
- * Return: Smoothly Interpolated Value
+ * Smoothly interpolates between two values
+ * @param[in] a Value A
+ * @param[in] b Value B
+ * @param[in] t Interpolation
+ * @return Smooth-interped Value
  */
 f32 smoothf(f32 a, f32 b, f32 t)
 {
@@ -73,12 +69,10 @@ f32 smoothf(f32 a, f32 b, f32 t)
 }
 
 /**
- * wrapf - Effectively Modulo for Floats
- * @x: Value
- * @max: Maximum
- *
- * Description: Effectively Modulo for Floats, but not expensive
- * Return: Wrapped Value
+ * Effectively Modulo for Floats
+ * @param[in] x Value
+ * @param[in] max Maximum
+ * @return: Wrapped Value
  */
 f32 wrapf(f32 x, f32 max)
 {

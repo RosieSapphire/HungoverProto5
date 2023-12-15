@@ -1,15 +1,17 @@
+/**
+ * @file src/engine/vector_math.c
+ */
+
 #include "engine/util.h"
 #include "engine/vector.h"
 
 /**
-* vector_add - Adds two vectors
-* @a: Vector A
-* @b: Vector B
-* @c: Vector Output
-* @comp: Number of Components
-*
-* Description: Adds two vectors
-*/
+ * Adds two vectors
+ * @param[in] a Vector A
+ * @param[in] b Vector B
+ * @param[out] c Vector Output
+ * @param[in] comp Number of Components
+ */
 void vector_add(const f32 *a, const f32 *b, f32 *c, const u8 comp)
 {
 	for (int i = 0; i < comp; i++)
@@ -17,14 +19,12 @@ void vector_add(const f32 *a, const f32 *b, f32 *c, const u8 comp)
 }
 
 /**
-* vector_sub - Subtracts two vectors
-* @a: Vector A
-* @b: Vector B
-* @c: Vector Output
-* @comp: Number of Components
-*
-* Description: Subtracts two vectors
-*/
+ * Subtracts two vectors
+ * @param[in] a Vector A
+ * @param[in] b Vector B
+ * @param[out] c Vector Output
+ * @param[in] comp Number of Components
+ */
 void vector_sub(const f32 *a, const f32 *b, f32 *c, const u8 comp)
 {
 	for (int i = 0; i < comp; i++)
@@ -32,13 +32,11 @@ void vector_sub(const f32 *a, const f32 *b, f32 *c, const u8 comp)
 }
 
 /**
-* vector_scale - Scales a Vector
-* @x: Vector (In/Out)
-* @s: Scalar
-* @comp: Number of Components
-*
-* Description: Scales a Vector by an amount
-*/
+ * Scales a vector by a scalar
+ * @param[in,out] a Vector
+ * @param[in] s Scalar
+ * @param[in] comp Number of Components
+ */
 void vector_scale(f32 *x, f32 s, const u8 comp)
 {
 	for (int i = 0; i < comp; i++)
@@ -46,15 +44,13 @@ void vector_scale(f32 *x, f32 s, const u8 comp)
 }
 
 /**
-* vector_lerp - Lerps between two Vectors
-* @a: Vector A
-* @b: Vector B
-* @t: Interpolation
-* @o: Vector Output
-* @comp: Number of Components
-*
-* Description: Lerps between two Vectors
-*/
+ * Lerps between two vectors
+ * @param[in] a Vector A
+ * @param[in] b Vector B
+ * @param[in] t Interpolation Factor
+ * @param[out] o Vector Output
+ * @param[in] comp Number of Components
+ */
 void vector_lerp(const f32 *a, const f32 *b, f32 t, f32 *o, const u8 comp)
 {
 	for (int i = 0; i < comp; i++)
@@ -62,15 +58,13 @@ void vector_lerp(const f32 *a, const f32 *b, f32 t, f32 *o, const u8 comp)
 }
 
 /**
-* vector_smooth - Smoothly Interpolates between two Vectors
-* @a: Vector A
-* @b: Vector B
-* @t: Interpolation
-* @o: Vector Output
-* @comp: Smoothly Interpolates between two Vectors
-*
-* Description: Lerps between two Vectors
-*/
+ * Smoothly Interpolates between two vectors
+ * @param[in] a Vector A
+ * @param[in] b Vector B
+ * @param[in] t Interpolation Factor
+ * @param[out] o Vector Output
+ * @param[in] comp Number of Components
+ */
 void vector_smooth(f32 *a, f32 *b, f32 t, f32 *o, const u8 comp)
 {
 	for (int i = 0; i < comp; i++)

@@ -53,11 +53,15 @@ clean:
 
 -include $(wildcard $(BUILD_DIR)/*.d)
 
+BETTY_SCAN=include/*/*.h src/*/*.c src/*.c
+
 betty-style:
-	betty-style --allow-global-variables include/*/*.h src/*/*.c src/*.c
+	betty-style --subjective --strict \
+		--allow-global-variables \
+		--ignore=CAMELCASE,PREFER_KERNEL_TYPES $(BETTY_SCAN)
 
 betty-doc:
-	betty-doc include/*/*.h src/*/*.c src/*.c
+	betty-doc $(BETTY_SCAN)
 
 betty:
 	clear; make betty-doc; make betty-style;

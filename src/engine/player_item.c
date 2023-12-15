@@ -27,9 +27,9 @@ static void (*item_use_funcs[ITEM_COUNT])(struct player *,
 };
 
 /**
- * player_item_load - Loads player's Item
- * @p: Player whos item needs to be loaded
- * @flags_last: Last state of Player Has Flags
+ * Loads player's Item.
+ * @param[in,out] p Player whos item needs to be loaded.
+ * @param[in] flags_last Last state of Player Has Flags.
  */
 void player_item_load(struct player *p, const u8 flags_last)
 {
@@ -47,7 +47,6 @@ void player_item_load(struct player *p, const u8 flags_last)
 		scene_anims_set_flags(s, ANIM_IS_PLAYING);
 		scene_anims_set_frame(s, 0);
 		p->item_selected = item_select[i];
-
 	}
 
 	struct item *item = p->items + p->item_selected;
@@ -71,8 +70,8 @@ void player_item_load(struct player *p, const u8 flags_last)
 
 /**
  * player_item_check_pickup - Checks if Player is Picking Up an Item
- * @s: Scene to Check for Item
- * @p: Player Structure
+ * @param[in] s Scene to Check for Item
+ * @param[in,out] p Player Structure
  */
 void player_item_check_pickup(struct scene *s, struct player *p)
 {
@@ -124,11 +123,11 @@ static void _player_item_check_switching(struct player *p,
 			p->item_selected = num_items - 1;
 		if (p->item_selected < -1)
 			p->item_selected = -1;
-		if (!(p->item_flags & (1 << p->item_selected))
-				&& p->item_selected != -1)
+		if (!(p->item_flags & (1 << p->item_selected)) &&
+		    p->item_selected != -1)
 			p->item_selected = item_selected_last;
-
 	}
+
 	if (p->item_selected != item_selected_last)
 	{
 		switch (p->item_selected)
@@ -156,9 +155,9 @@ static void _player_item_check_switching(struct player *p,
 }
 
 /**
- * player_items_update - Updates all attributes of Player's Items
- * @p: Player Structure
- * @iparms: Input Parameters
+ * Updates all attributes of players items
+ * @param[in,out] p Player Structure
+ * @param[in] iparms Input Parameters
  */
 void player_items_update(struct player *p, const struct input_parms iparms)
 {
@@ -187,9 +186,9 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 }
 
 /**
- * player_item_draw - Draws the Item currently in Player's Hand
- * @p: Player Structure
- * @subtick: Subtick Between Frames
+ * Draws the item currently in players hand
+ * @param[in] p Player Structure
+ * @param[in] subtick Subtick Between Frames
  */
 void player_item_draw(const struct player *p, const f32 subtick)
 {
@@ -209,9 +208,9 @@ void player_item_draw(const struct player *p, const f32 subtick)
 	f32 turn_offset_lerp[2];
 
 	glTranslatef(sinf(headbob_timer_lerp) * velmag_lerp,
-	      fabsf(cosf(headbob_timer_lerp) * velmag_lerp * 0.5f), 0);
+		     fabsf(cosf(headbob_timer_lerp) * velmag_lerp * 0.5f), 0);
 	vector_lerp(p->turn_offset_last, p->turn_offset,
-	     subtick, turn_offset_lerp, 2);
+		    subtick, turn_offset_lerp, 2);
 	vector_scale(turn_offset_lerp, 0.35f, 2);
 
 	glTranslatef(-turn_offset_lerp[0], -turn_offset_lerp[1], 0);

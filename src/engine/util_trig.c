@@ -1,3 +1,7 @@
+/**
+ * @file src/engine/util_trig.c
+ */
+
 #include <GL/gl.h>
 
 #include "engine/config.h"
@@ -5,26 +9,22 @@
 #include "engine/util.h"
 
 /**
- * projection_setup - Sets up the Projection Matrix
- *
- * Description: Sets up the Projection Matrix using Libdragon's OpenGL SDK
+ * Sets up the Projection Matrix for OpenGL
  */
 void projection_setup(void)
 {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glFrustum(-CONF_NEAR * CONF_ASPECT, CONF_NEAR * CONF_ASPECT,
-	   -CONF_NEAR, CONF_NEAR, CONF_NEAR, CONF_FAR);
+		  -CONF_NEAR, CONF_NEAR, CONF_NEAR, CONF_FAR);
 }
 
 /**
- * quat_lerp - Lerps between quaternions
- * @a: Quaternion A
- * @b: Quaternion B
- * @c: Quaternion Out
- * @t: Interpolation
- *
- * Description: Linearly Interpolates between two quaternions
+ * Lerps between quaternions
+ * @param[in] a Quaternion A
+ * @param[in] b Quaternion B
+ * @param[in] c Quaternion Out
+ * @param[in] t Interpolation
  */
 void quat_lerp(const f32 *a, const f32 *b, f32 *c, const f32 t)
 {
@@ -37,10 +37,10 @@ void quat_lerp(const f32 *a, const f32 *b, f32 *c, const f32 t)
 }
 
 /**
- * matrix_mult - Matrix Multiply
- * @a: Matrix A
- * @b: Matrix B
- * @o: Matrix Out
+ * Matrix Multiply
+ * @param[in] a Matrix A
+ * @param[in] b Matrix B
+ * @param[out] o Matrix Out
  */
 void matrix_mult(const f32 a[4][4], const f32 b[4][4], f32 o[4][4])
 {
@@ -55,8 +55,8 @@ void matrix_mult(const f32 a[4][4], const f32 b[4][4], f32 o[4][4])
 }
 
 /**
- * matrix_debug - Matrix Debugging
- * @m: Matrix to Debug
+ * Matrix Debugging
+ * @param[in] m Matrix to Debug
  */
 void matrix_debug(const f32 m[4][4])
 {
@@ -72,11 +72,9 @@ void matrix_debug(const f32 m[4][4])
 }
 
 /**
- * pos_from_mat - Position from Matrix
- * @mat: The Matrix (Starring Keanu Reeves)
- * @pos: Position Vector Output
- *
- * Description: Gets position from a 4x4 matrix
+ * Position from Matrix
+ * @param[in] mat The Matrix (Starring Keanu Reeves)
+ * @param[out] pos Position Vector Output
  */
 void pos_from_mat(const f32 *mat, f32 *pos)
 {

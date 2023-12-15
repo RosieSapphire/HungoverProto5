@@ -1,15 +1,18 @@
+/**
+ * @file src/engine/raycast.c
+ */
+
 #include "engine/vector.h"
 #include "engine/collision_mesh.h"
 #include "engine/raycast.h"
 
 /**
- * raycast_triangle - Does a Raycast from eye to dir
- * @eye: Eye Position
- * @dir: Direction Vector
- * @positions: Array of Vec3s for the triangle
- * @distance: Hit Distance Return
- *
- * Return: Whether or not the ray hit the triangle
+ * Does a Raycast from eye to dir
+ * @param eye Eye Position
+ * @param dir Direction Vector
+ * @param positions Array of Vec3s for the triangle
+ * @param distance Hit Distance Return
+ * @return Whether or not the ray hit the triangle
  */
 u8 raycast_triangle(vec3 eye, vec3 dir, vec3 *positions, f32 *distance)
 {

@@ -1,3 +1,7 @@
+/**
+ * @file include/engine/camera.h
+ */
+
 #ifndef _ENGINE_CAMERA_H_
 #define _ENGINE_CAMERA_H_
 
@@ -5,16 +9,14 @@
 #include "engine/input.h"
 
 /**
- * struct camera - Camera Structure
- * @eye_last: Eye Position Last
- * @eye: Eye Position Now
- * @angles_last: Angles Last
- * @angles: Angles Now
+ * Camera Structure
  */
 struct camera
 {
-	f32 eye_last[3], eye[3];
-	f32 angles_last[2], angles[2];
+	f32 eye[3]; ///< Current Eye Position
+	f32 eye_last[3]; ///< Previous Eye Position
+	f32 angles[2]; ///< Current Angles
+	f32 angles_last[2]; ///< Previous Angles
 };
 
 void camera_init(struct camera *c);

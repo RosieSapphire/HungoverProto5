@@ -1,7 +1,17 @@
+/**
+ * @file src/engine/item.c
+ */
+
 #include <GL/gl.h>
 
 #include "engine/item.h"
 
+/**
+ * Recursively draws nodes for an item
+ * @param[in] item Item to draw
+ * @param[in] n Node to reference
+ * @param[in] subtick Subtick between frames
+ */
 void item_node_draw(const struct item *item,
 		    const struct node *n, const f32 subtick)
 {
@@ -17,11 +27,12 @@ void item_node_draw(const struct item *item,
 
 	for (u16 i = 0; i < item->s.num_anims; i++)
 	{
-		if (item->s.anims[i].name[0] != ('0' + item->anim_index))
+		const struct animation *anim = item->s.anims + i;
+
+		if (anim->name[0] != ('0' + item->anim_index))
 			continue;
 
-		if (strncmp(m->name,
-				item->s.anims[i].name + 2, strlen(m->name)))
+		if (strncmp(m->name, anim->name + 2, strlen(m->name)))
 			continue;
 
 		anim_ind = i;

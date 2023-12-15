@@ -2,6 +2,11 @@
 #include "engine/vector.h"
 #include "engine/player.h"
 
+/**
+ * Checks if player is using pistol.
+ * @param[in,out] p Player
+ * @param[in] iparms Input Parameters
+ */
 void player_pistol_check_use(struct player *p,
 			     const struct input_parms iparms)
 {

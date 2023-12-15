@@ -1,18 +1,34 @@
+/**
+ * @file src/engine/sfx.c
+ */
+
 #include "engine/config.h"
 #include "engine/sfx.h"
 
-wav64_t title_music_intro, title_music_init, title_music_main,
-	pistol_fire_sfx, pistol_click_sfx, pistol_pullout_sfx,
-	footstep2_sfx, bong_pullout_sfx, bong_bubbling_sfx, lighter_flick_sfx,
-	bong_hit_good_sfx, bong_hit_bad_sfx,
-	cough_heavy0_sfx, cough_heavy1_sfx, cough_heavy2_sfx,
-	cough_medium0_sfx, cough_medium1_sfx, cough_medium2_sfx,
-	cough_small0_sfx, cough_small1_sfx, cough_small2_sfx,
-	trip_music, nitrous_whine;
+wav64_t title_music_intro; ///< Title music intro
+wav64_t title_music_init; ///< Title music init
+wav64_t title_music_main; ///< Title music main
+wav64_t pistol_fire_sfx; ///< Pistol fire sfx
+wav64_t pistol_click_sfx; ///< Pistol click sfx
+wav64_t pistol_pullout_sfx; ///< Pistol pullout sfx
+wav64_t footstep2_sfx; ///< Footstep sfx
+wav64_t bong_pullout_sfx; ///< Bong pullout sfx
+wav64_t bong_bubbling_sfx; ///< Bong bubbling sfx
+wav64_t lighter_flick_sfx; ///< Lighter flick sfx
+wav64_t bong_hit_good_sfx; ///< Bong hit good sfx
+wav64_t bong_hit_bad_sfx; ///< Bong hit bad sfx
+wav64_t cough_heavy0_sfx; ///< Cough heavy 0
+wav64_t cough_heavy1_sfx; ///< Cough heavy 1
+wav64_t cough_heavy2_sfx; ///< Cough heavy 2
+wav64_t cough_medium0_sfx; ///< Cough medium 0
+wav64_t cough_medium1_sfx; ///< Cough medium 1
+wav64_t cough_medium2_sfx; ///< Cough medium 2
+wav64_t cough_small0_sfx; ///< Cough small 0
+wav64_t cough_small1_sfx; ///< Cough small 1
+wav64_t cough_small2_sfx; ///< Cough small 2
+wav64_t trip_music; ///< Tripping music
+wav64_t nitrous_whine; ///< Nitrous Oxide whine
 
-/**
- * _sfx_set_mixer_ch_vols - Sets the Volumes for all the Mixer Channels
- */
 static void _sfx_set_mixer_ch_vols(void)
 {
 	mixer_ch_set_vol(SFXC_MUSIC0, 0.8f, 0.8f);
@@ -24,9 +40,6 @@ static void _sfx_set_mixer_ch_vols(void)
 	mixer_ch_set_vol(SFXC_FOOTSTEPS, 0.8f, 0.8f);
 }
 
-/**
- * _sfx_samples_open - Opens up all the Samples for the SFX
- */
 static void _sfx_samples_open(void)
 {
 	wav64_open(&title_music_intro, "rom:/title_intro.wav64");
@@ -54,9 +67,6 @@ static void _sfx_samples_open(void)
 	wav64_open(&nitrous_whine, "rom:/nitrous_whine.wav64");
 }
 
-/**
- * _sfx_set_looping - Sets the Loop Boolean for each Sample
- */
 static void _sfx_set_looping(void)
 {
 	wav64_set_loop(&title_music_intro, 0);
@@ -85,7 +95,7 @@ static void _sfx_set_looping(void)
 }
 
 /**
- * sfx_load - Loads Sound Effects
+ * Loads Sound Effects
  */
 void sfx_load(void)
 {

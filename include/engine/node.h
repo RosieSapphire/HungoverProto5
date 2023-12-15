@@ -1,3 +1,7 @@
+/**
+ * @file include/engine/node.h
+ */
+
 #ifndef _ENGINE_NODE_H_
 #define _ENGINE_NODE_H_
 
@@ -5,19 +9,15 @@
 #include "engine/config.h"
 
 /**
- * struct node - Node Structure
- * @mesh_path: Path to Mesh for Node
- * @num_children: Number of Node Children
- * @mesh_ind: Mesh Index
- * @trans: Transformation Matrix
- * @children: Node Children Array
+ * Node Structure
  */
 struct node
 {
-	char mesh_path[CONF_PATH_MAX];
-	u16 num_children, mesh_ind;
-	f32 trans[4][4];
-	struct node *children;
+	char mesh_path[CONF_PATH_MAX]; ///< Path to Mesh for Node
+	u16 num_children; ///< Number of Node Children
+	u16 mesh_ind; ///< Mesh Index
+	f32 trans[4][4]; ///< Transformation Matrix
+	struct node *children; ///< Node Children Array
 };
 
 struct node *node_from_mesh_ind(struct node *n, const u16 mid);

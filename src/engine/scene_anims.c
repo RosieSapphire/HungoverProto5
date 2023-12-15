@@ -1,11 +1,15 @@
+/**
+ * @file src/engine/scene_anims.c
+ */
+
 #include <assert.h>
 
 #include "engine/animation.h"
 #include "engine/scene.h"
 
 /**
- * scene_anims_update - Updates all Animations in a Scene Struct
- * @s: Scene to Update Animations for
+ * Updates all Animations in a Scene Struct
+ * @param[in,out] s Scene to Update Animations for
  */
 void scene_anims_update(struct scene *s)
 {
@@ -14,9 +18,9 @@ void scene_anims_update(struct scene *s)
 }
 
 /**
- * scene_anims_set_flags - Sets Flags for All Animations
- * @s: Scene to set Animation Flags For
- * @flags: Flags themselves
+ * Sets Flags for All Animations
+ * @param[out] s Scene to set Animation Flags For
+ * @param[in] flags Flags themselves
  */
 void scene_anims_set_flags(struct scene *s, u8 flags)
 {
@@ -25,9 +29,9 @@ void scene_anims_set_flags(struct scene *s, u8 flags)
 }
 
 /**
- * scene_anims_set_frame - Sets Frame for All Animations
- * @s: Scene to set Animation Frame For
- * @frame: Frame itself
+ * Sets Frame for All Animations
+ * @param[in,out] s Scene to set Animation Frame For
+ * @param[in] frame Frame itself
  */
 void scene_anims_set_frame(struct scene *s, u16 frame)
 {

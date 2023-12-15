@@ -9,8 +9,8 @@
 #define FRICTION   4.0f
 
 /**
- * player_friction - Applies Friction to the Player
- * @p: Player to Apply Friction to
+ * Applies friction to the player
+ * @param[in,out] p Player to apply friction to
  */
 void player_friction(struct player *p)
 {
@@ -31,9 +31,9 @@ void player_friction(struct player *p)
 }
 
 /**
- * player_accelerate - Applies Acceleration to the Player based on Input
- * @p: Player to Apply Acceleration to
- * @iparms: Input Parameters
+ * Applies Acceleration to the Player based on Input
+ * @param[in,out] p Player to Apply Acceleration to
+ * @param[in] iparms Input Parameters
  */
 void player_accelerate(struct player *p, const struct input_parms iparms)
 {

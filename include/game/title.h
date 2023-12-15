@@ -1,3 +1,7 @@
+/**
+ * @file include/game/title.h
+ */
+
 #ifndef _GAME_TITLE_H_
 #define _GAME_TITLE_H_
 
@@ -5,18 +9,14 @@
 #include "engine/types.h"
 
 /**
- * enum title_music_state - Music State of Title
- * @TM_INTRO: Intro State
- * @TM_INIT: Initial State
- * @TM_MAIN: Main State
- * @TM_COUNT: Number of Title Music States
+ * Music State of Title
  */
 enum title_music_state
 {
-	TM_INTRO = 0,
-	TM_INIT,
-	TM_MAIN,
-	TM_COUNT,
+	TM_INTRO = 0, ///< Intro State
+	TM_INIT, ///< Initial State
+	TM_MAIN, ///< Main State
+	TM_COUNT, ///< Number of Title Music States
 };
 
 void title_load(void);

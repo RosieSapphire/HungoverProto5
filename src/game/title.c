@@ -1,3 +1,7 @@
+/**
+ * @file src/game/title.c
+ */
+
 #include <GL/gl.h>
 #include <GL/gl_integration.h>
 
@@ -15,7 +19,7 @@ static f32 beat_counter_last, beat_counter;
 static u8 title_music_state;
 
 /**
- * title_load - Initializes Title Screen
+ * Initializes Title Screen
  */
 void title_load(void)
 {
@@ -35,24 +39,25 @@ void title_load(void)
 	wav64_play(&title_music_main, SFXC_MUSIC2);
 	f32 end = (f32)get_ticks() / (f32)TICKS_PER_SECOND;
 
-	beat_counter_last = beat_counter = -(end - start);
+	beat_counter_last = -(end - start);
+	beat_counter = beat_counter_last;
 }
 
 /**
- * title_unload - Unloads Title Screen
+ * Unloads Title Screen
  */
 void title_unload(void)
 {
-	beat_counter_last = beat_counter = 0.0f;
+	beat_counter_last = 0.0f;
+	beat_counter = 0.0f;
 	scene_destroy(&scene);
 	surface_free(&depth_buffer);
 }
 
 /**
- * title_update - Updates the Title Screen
- * @iparms: Input Parameters
- *
- * Return: New Desired Scene Index
+ * Updates the Title Screen
+ * @param[in] iparms Input Parameters
+ * @return New Desired Scene Index
  */
 enum scene_index title_update(struct input_parms iparms)
 {
@@ -88,11 +93,6 @@ enum scene_index title_update(struct input_parms iparms)
 	return (SCENE_TITLE);
 }
 
-/**
- * _title_setup_wiggle - Sets up Model Matrix with Wiggle for Title
- * @beat_counter_lerp: Timer lerped with Subtick
- * @offset: Offsets the Jiggle effect by time
- */
 static void _title_setup_wiggle(f32 beat_counter_lerp, u8 offset)
 {
 	beat_counter_lerp *= 1;
@@ -109,8 +109,8 @@ static void _title_setup_wiggle(f32 beat_counter_lerp, u8 offset)
 }
 
 /**
- * title_draw - Draws the Title Screen
- * @subtick: Delta Value between Frames
+ * Draws the Title Screen
+ * @param[in] subtick Delta Value between Frames
  */
 void title_draw(f32 subtick)
 {

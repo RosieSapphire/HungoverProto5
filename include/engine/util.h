@@ -1,13 +1,17 @@
+/**
+ * @file include/engine/util.h
+ */
+
 #ifndef _ENGINE_UTIL_H_
 #define _ENGINE_UTIL_H_
 
 #include "engine/types.h"
 
-#define PI 3.14159265358979323846f
-#define PI_HALF 1.57079632679489661923f
+#define PI 3.14159265358979323846f ///< Precomputed pi value
+#define PI_HALF 1.57079632679489661923f ///< Precomputed half-pi value
 
-#define TO_RADIANS (PI / 180.0f)
-#define TO_DEGREES (180.0f / PI)
+#define TO_RADIANS (PI / 180.0f) ///< Multiply to convert to radians
+#define TO_DEGREES (180.0f / PI) ///< Multiply to convert to degrees
 
 /*
  * Base

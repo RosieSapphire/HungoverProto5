@@ -1,3 +1,7 @@
+/**
+ * @file include/engine/animation.h
+ */
+
 #ifndef _ENGINE_ANIMATION_H_
 #define _ENGINE_ANIMATION_H_
 
@@ -5,63 +9,49 @@
 #include "engine/config.h"
 
 /**
- * struct vec3_key - Vector 3 Keyframe
- * @val: Value
+ * Vector 3 Keyframe
  */
 struct vec3_key
 {
-	f32 val[3];
+	f32 val[3]; ///< Value
 };
 
 /**
- * struct vec4_key - Vector 4 Keyframe
- * @val: Value
+ * Vector 4 Keyframe
  */
 struct vec4_key
 {
-	f32 val[4];
+	f32 val[4]; ///< Value
 };
 
 /**
- * enum animation_flags - Animation Flags
- * @ANIM_FLAGS_NONE: No Flags
- * @ANIM_IS_PLAYING: Animation is Playing
- * @ANIM_IS_BACKWARD: Animation is Backwards
- * @ANIM_LOOPS: Whether Animation Loops
+ * Animation Flags
  */
 enum animation_flags
 {
-	ANIM_FLAGS_NONE  = 0x0,
-	ANIM_IS_PLAYING  = 0x1,
-	ANIM_IS_BACKWARD = 0x2,
-	ANIM_LOOPS       = 0x4,
+	ANIM_FLAGS_NONE  = 0x0, ///< No Flags
+	ANIM_IS_PLAYING  = 0x1, ///< Animation is Playing
+	ANIM_IS_BACKWARD = 0x2, ///< Animation is Backwards
+	ANIM_LOOPS       = 0x4, ///< Whether Animation Loops
 };
 
 /**
- * struct animation - Animation Structure
- * @name: Name
- * @num_pos: Number of Position Keyframes
- * @num_rot: Number of Rotation Keyframes
- * @num_sca: Number of Scaling Keyframes
- * @pos_keys: Position Keyframes Array
- * @rot_keys: Rotation Keyframes Array
- * @sca_keys: Scaling Keyframes Array
- * @frame_last: Last Frame
- * @frame: Current Frame
- * @mesh_ind: Index for Mesh it Affects
- * @length: Length in Frames (24 FPS usually)
- * @flags: Flags, Obviously
+ * Animation Structure
  */
 struct animation
 {
-	char name[CONF_NAME_MAX];
-	u16 num_pos, num_rot, num_sca;
-	struct vec3_key *pos_keys;
-	struct vec4_key *rot_keys;
-	struct vec3_key *sca_keys;
-	s16 frame_last, frame;
-	u16 mesh_ind, length;
-	enum animation_flags flags;
+	char name[CONF_NAME_MAX]; ///< Name
+	u16 num_pos; ///< Number of Position Keyframes
+	u16 num_rot; ///< Number of Rotation Keyframes
+	u16 num_sca; ///< Number of Scaling Keyframes
+	struct vec3_key *pos_keys; ///< Position Keyframes Array
+	struct vec4_key *rot_keys; ///< Rotation Keyframes Array
+	struct vec3_key *sca_keys; ///< Scaling Keyframes Array
+	s16 frame_last; ///< Last Frame
+	s16 frame; ///< Current Frame
+	u16 mesh_ind; ///< Index for Mesh it Affects
+	u16 length; ///< Length in Frames (24 FPS usually)
+	enum animation_flags flags; ///< Flags, Obviously
 };
 
 void animation_update(struct animation *a);

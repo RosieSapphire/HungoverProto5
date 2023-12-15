@@ -1,35 +1,48 @@
+/**
+ * @file src/main.c
+ */
+
 #include <GL/gl.h>
 #include <GL/gl_integration.h>
-#include <libdragon.h>
 
-#include "engine/util.h"
-#include "engine/config.h"
-#include "engine/sfx.h"
-#include "engine/scene.h"
 #include "engine/texture.h"
 #include "engine/ui.h"
+#include "engine/sfx.h"
+#include "engine/util.h"
 
 #include "game/title.h"
 #include "game/testroom.h"
 
+/**
+ * Loading functions for all scenes
+ */
 static void (*load_funcs[NUM_SCENES])(void) = {
 	title_load, testroom_load,
 };
 
+/**
+ * Unloading functions for all scenes
+ */
 static void (*unload_funcs[NUM_SCENES])(void) = {
 	title_unload, testroom_unload,
 };
 
-enum scene_index (*update_funcs[NUM_SCENES])(struct input_parms) = {
+/**
+ * Update functions for all scenes
+ */
+static enum scene_index (*update_funcs[NUM_SCENES])(struct input_parms) = {
 	title_update, testroom_update,
 };
 
+/**
+ * Draw functions for all scenes
+ */
 static void (*draw_funcs[NUM_SCENES])(f32) = {
 	title_draw, testroom_draw,
 };
 
 /**
- * _init - Initialization Function
+ * Initialization function for game
  */
 static void _init(void)
 {
@@ -61,7 +74,7 @@ static void _init(void)
 }
 
 /**
- * _audio - Updates Audio
+ * Audio updating
  */
 static void _audio(void)
 {
@@ -73,9 +86,7 @@ static void _audio(void)
 }
 
 /**
- * main - Main Function
- *
- * Return: 0 = Success
+ * Main function
  */
 int main(void)
 {

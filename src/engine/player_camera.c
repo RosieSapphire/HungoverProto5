@@ -5,9 +5,9 @@
 #include "engine/player.h"
 
 /**
- * player_camera_view_matrix_setup - Sets up View Matrix for OpenGL with Cam
- * @p: Player whose camera to reference
- * @subtick: Subtick between Frames
+ * Sets up View Matrix for OpenGL with Cam
+ * @param[in] p Player whose camera to reference
+ * @param[in] subtick Subtick between Frames
  */
 void player_camera_view_matrix_setup(const struct player *p,
 				     const f32 subtick)
@@ -24,24 +24,22 @@ void player_camera_view_matrix_setup(const struct player *p,
 	vector_scale(recoil_vec, recoil_amnt_lerp, 2);
 
 	vector_lerp(p->view.eye_last, p->view.eye,
-	     subtick, eye_lerp, 3);
+		    subtick, eye_lerp, 3);
 	vector_lerp(p->view.angles_last, p->view.angles,
-	     subtick, angles_lerp, 2);
+		    subtick, angles_lerp, 2);
 	vector_add(angles_lerp, recoil_vec, angles_lerp, 2);
 	camera_get_focus_lerp(eye_lerp, angles_lerp, focus_lerp);
 
 	gluLookAt(eye_lerp[0], eye_lerp[1], eye_lerp[2],
-		focus_lerp[0], focus_lerp[1], focus_lerp[2],
-		0, 1, 0);
+		  focus_lerp[0], focus_lerp[1], focus_lerp[2], 0, 1, 0);
 }
 
 /**
- * _player_camera_turn_offset_update - Updates turn offset for item in hand
- * @p: Player to Update angle for
+ * Updates turn offset for item in hand
+ * @param[in,out] p Player to Update angle for
  */
 static void _player_camera_turn_offset_update(struct player *p)
 {
-
 	const f32 turn_vec[2] = {
 		p->view.angles_last[0] - p->view.angles[0],
 		p->view.angles_last[1] - p->view.angles[1],
@@ -70,9 +68,9 @@ static void _player_camera_turn_offset_update(struct player *p)
 }
 
 /**
- * player_camera_look_update - Updates look angles for Player
- * @p: Player to Update angles for
- * @iparms: Input Parameters
+ * Updates look angles for Player
+ * @param[in,out] p Player to Update angles for
+ * @param[in] iparms Input Parameters
  */
 void player_camera_look_update(struct player *p,
 			       const struct input_parms iparms)

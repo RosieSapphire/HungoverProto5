@@ -1,0 +1,12 @@
+var searchData=
+[
+  ['scene_5fanims_5fset_5fflags_0',['scene_anims_set_flags',['../scene__anims_8c.html#a0bffcf01c2f92fb23236c0107318f78d',1,'scene_anims_set_flags(struct scene *s, u8 flags):&#160;scene_anims.c'],['../scene_8h.html#a0bffcf01c2f92fb23236c0107318f78d',1,'scene_anims_set_flags(struct scene *s, u8 flags):&#160;scene_anims.c']]],
+  ['scene_5fanims_5fset_5fframe_1',['scene_anims_set_frame',['../scene_8h.html#a5bffe8a1314fd08983e99a23d08d1464',1,'scene_anims_set_frame(struct scene *s, u16 frame):&#160;scene_anims.c'],['../scene__anims_8c.html#a5bffe8a1314fd08983e99a23d08d1464',1,'scene_anims_set_frame(struct scene *s, u16 frame):&#160;scene_anims.c']]],
+  ['scene_5fanims_5fupdate_2',['scene_anims_update',['../scene_8h.html#a32deba51662a7ffc9ac5645ba116af11',1,'scene_anims_update(struct scene *s):&#160;scene_anims.c'],['../scene__anims_8c.html#a32deba51662a7ffc9ac5645ba116af11',1,'scene_anims_update(struct scene *s):&#160;scene_anims.c']]],
+  ['scene_5fdestroy_3',['scene_destroy',['../scene_8h.html#ade4b60f4ce4eb5edaa75ca0ceafdd9b8',1,'scene_destroy(struct scene *s):&#160;scene.c'],['../scene_8c.html#ade4b60f4ce4eb5edaa75ca0ceafdd9b8',1,'scene_destroy(struct scene *s):&#160;scene.c']]],
+  ['scene_5fdraw_4',['scene_draw',['../scene_8c.html#ad68b930465be813d04dcfb536e5000d0',1,'scene_draw(const struct scene *s, const f32 subtick):&#160;scene.c'],['../scene_8h.html#ad68b930465be813d04dcfb536e5000d0',1,'scene_draw(const struct scene *s, const f32 subtick):&#160;scene.c']]],
+  ['scene_5fglobal_5fspin_5ftimer_5fupdate_5',['scene_global_spin_timer_update',['../scene_8h.html#aa776a6d5aad566ff30c4300d9931c87a',1,'scene_global_spin_timer_update(void):&#160;scene.c'],['../scene_8c.html#aa776a6d5aad566ff30c4300d9931c87a',1,'scene_global_spin_timer_update(void):&#160;scene.c']]],
+  ['scene_5fread_5ffile_6',['scene_read_file',['../scene_8h.html#a4d4d1f19ef7bacc9db944747b0887783',1,'scene_read_file(struct scene *s, const char *path):&#160;scene_read.c'],['../scene__read_8c.html#a4d4d1f19ef7bacc9db944747b0887783',1,'scene_read_file(struct scene *s, const char *path):&#160;scene_read.c']]],
+  ['sfx_5fload_7',['sfx_load',['../sfx_8h.html#a85e4d55c590425b48bb1eb42d39c2879',1,'sfx_load(void):&#160;sfx.c'],['../sfx_8c.html#a85e4d55c590425b48bb1eb42d39c2879',1,'sfx_load(void):&#160;sfx.c']]],
+  ['smoothf_8',['smoothf',['../util_8h.html#aa39b7d7403d575e99f5139d7a1399c5c',1,'smoothf(f32 a, f32 b, f32 t):&#160;util_base.c'],['../util__base_8c.html#aa39b7d7403d575e99f5139d7a1399c5c',1,'smoothf(f32 a, f32 b, f32 t):&#160;util_base.c']]]
+];

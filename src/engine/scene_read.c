@@ -1,3 +1,7 @@
+/**
+ * @file src/engine/scene_read.c
+ */
+
 #include <stdio.h>
 #include <malloc.h>
 #include <string.h>
@@ -7,11 +11,6 @@
 #include "engine/texture.h"
 #include "engine/scene.h"
 
-/**
- * _scene_read_node - Reads a Node from a Scene file
- * @n: Node to Read to
- * @f: File to Read from
- */
 static void _scene_read_node(struct node *n, FILE *f)
 {
 	fread(n->mesh_path, sizeof(char), CONF_PATH_MAX, f);
@@ -23,11 +22,6 @@ static void _scene_read_node(struct node *n, FILE *f)
 		_scene_read_node(n->children + i, f);
 }
 
-/**
- * _scene_read_mesh - Reads a Mesh from its own File
- * @s: Scene to Read Mesh to
- * @i: Mesh Index
- */
 static void _scene_read_mesh(struct scene *s, u16 i)
 {
 	const char *prefix = "rom:/";
@@ -70,11 +64,6 @@ static void _scene_read_mesh(struct scene *s, u16 i)
 	m->flags = MESH_IS_ACTIVE;
 }
 
-/**
- * _scene_read_animation - Reads an Animation from a Scene File
- * @a: Animation to Read to
- * @f: File to Read from
- */
 static void _scene_read_animation(struct animation *a, FILE *f)
 {
 	fread(a->name, sizeof(char), CONF_NAME_MAX, f);
@@ -95,14 +84,15 @@ static void _scene_read_animation(struct animation *a, FILE *f)
 
 	fread(&a->length, sizeof(u16), 1, f);
 	fread(&a->mesh_ind, sizeof(u16), 1, f);
-	a->frame = a->frame_last = 0;
+	a->frame = 0;
+	a->frame_last = 0;
 	a->flags = ANIM_IS_PLAYING | ANIM_LOOPS;
 }
 
 /**
- * scene_read_file - Reads Scene Object from File
- * @s: Scene Read Output
- * @path: Path to File to Read from
+ * Reads Scene Object from File
+ * @param[out] s Scene Read Output
+ * @param[in] path Path to File to Read from
  */
 void scene_read_file(struct scene *s, const char *path)
 {

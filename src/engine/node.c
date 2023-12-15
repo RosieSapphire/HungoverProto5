@@ -1,13 +1,16 @@
+/**
+ * @file src/engine/node.c
+ */
+
 #include <stddef.h>
 
 #include "engine/node.h"
 
 /**
- * node_from_mesh_ind - Gets Pointer to Node from Mesh Index
- * @n: Node to start searching through
- * @mid: Mesh Index
- *
- * Return: Node Found (or NULL)
+ * Gets Pointer to Node from Mesh Index
+ * @param[in] n Node to start searching through
+ * @param[in] mid Mesh Index
+ * @return Node Found (or NULL)
  */
 struct node *node_from_mesh_ind(struct node *n, const u16 mid)
 {

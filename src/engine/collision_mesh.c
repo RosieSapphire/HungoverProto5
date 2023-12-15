@@ -1,3 +1,7 @@
+/**
+ * @file src/engine/collision_mesh.c
+ */
+
 #include <malloc.h>
 #include <libdragon.h>
 
@@ -5,12 +9,12 @@
 #include "engine/collision_mesh.h"
 
 /**
- * collision_mesh_gen - Generates a Collision Mesh from a Normal Mesh
- * @out: Collision Mesh Out
- * @in: Normal Mesh In
+ * Generates a Collision Mesh from a Normal Mesh
+ * @param[out] out Collision Mesh Out
+ * @param[in] in Normal Mesh In
  */
 void collision_mesh_gen(struct collision_mesh *out,
-			 const struct mesh *in)
+			const struct mesh *in)
 {
 	out->num_verts = in->num_indis;
 	out->verts = malloc(sizeof(vec3) * out->num_verts);

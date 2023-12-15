@@ -1,3 +1,7 @@
+/**
+ * @file include/engine/texture.h
+ */
+
 #ifndef _ENGINE_TEXTURE_H_
 #define _ENGINE_TEXTURE_H_
 
@@ -7,14 +11,12 @@
 #include "engine/config.h"
 
 /**
- * struct texture - Texture Struct
- * @id: OpenGL Texture ID
- * @spr: Libdragon Sprite
+ * Texture Struct
  */
 struct texture
 {
-	u32 id;
-	sprite_t *spr;
+	u32 id; ///< OpenGL Texture ID
+	sprite_t *spr; ///< Libdragon Sprite
 };
 
 extern u16 num_texs_loaded;

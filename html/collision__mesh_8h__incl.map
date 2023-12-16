@@ -1,8 +1,0 @@
-<map id="include/engine/collision_mesh.h" name="include/engine/collision_mesh.h">
-<area shape="rect" id="node1" title=" " alt="" coords="169,5,344,47"/>
-<area shape="rect" id="node2" href="$mesh_8h.html" title=" " alt="" coords="197,95,316,121"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,169,100,196"/>
-<area shape="rect" id="node4" href="$config_8h.html" title=" " alt="" coords="124,169,245,196"/>
-<area shape="rect" id="node5" href="$types_8h.html" title=" " alt="" coords="269,169,388,196"/>
-<area shape="rect" id="node6" href="$vertex_8h.html" title=" " alt="" coords="412,169,536,196"/>
-</map>

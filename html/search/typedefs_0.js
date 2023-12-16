@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['vec3_0',['vec3',['../collision__mesh_8h.html#a891a34b5b11ac9ab4380a8379cd2ab8e',1,'collision_mesh.h']]]
+  ['f32_0',['f32',['../types_8h.html#a5f6906312a689f27d70e9d086649d3fd',1,'types.h']]],
+  ['f64_1',['f64',['../types_8h.html#a94dab5770726ccbef8c7d026cfbdf8e5',1,'types.h']]]
 ];

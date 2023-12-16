@@ -1,0 +1,25 @@
+\hypertarget{include_2engine_2node_8h_source}{}\doxysection{node.\+h}
+\label{include_2engine_2node_8h_source}\index{include/engine/node.h@{include/engine/node.h}}
+\mbox{\hyperlink{include_2engine_2node_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef \_ENGINE\_NODE\_H\_}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define \_ENGINE\_NODE\_H\_}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{types_8h}{engine/types.h}}"{}}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{config_8h}{engine/config.h}}"{}}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{14 \textcolor{keyword}{struct }\mbox{\hyperlink{structnode}{node}}}
+\DoxyCodeLine{15 \{}
+\DoxyCodeLine{16     \textcolor{keywordtype}{char} \mbox{\hyperlink{structnode_ac9659627e6ccae3aa7fbbef2d1995b87}{mesh\_path}}[\mbox{\hyperlink{config_8h_a002aacd52b45e08a88b0f4d2581d9807}{CONF\_PATH\_MAX}}]; }
+\DoxyCodeLine{17     u16 \mbox{\hyperlink{structnode_a22d57e3f476e1f94a97fdceaa9863890}{num\_children}}; }
+\DoxyCodeLine{18     u16 \mbox{\hyperlink{structnode_afc527e60afa8ce56927b485947f6bb84}{mesh\_ind}}; }
+\DoxyCodeLine{19     f32 \mbox{\hyperlink{structnode_a006e5e28def23f2a038182d36f1b5974}{trans}}[4][4]; }
+\DoxyCodeLine{20     \textcolor{keyword}{struct }\mbox{\hyperlink{structnode}{node}} *\mbox{\hyperlink{structnode_a8cfed2b3892eef5470b51de6d0c03019}{children}}; }
+\DoxyCodeLine{21 \};}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23 \textcolor{keyword}{struct }\mbox{\hyperlink{structnode}{node}} *\mbox{\hyperlink{include_2engine_2node_8h_a56c17506094ef3a1926b1171d633c1cc}{node\_from\_mesh\_ind}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structnode}{node}} *n, \textcolor{keyword}{const} u16 mid);}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* \_ENGINE\_NODE\_H\_ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

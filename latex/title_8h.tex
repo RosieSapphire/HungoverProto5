@@ -1,0 +1,105 @@
+\hypertarget{title_8h}{}\doxysection{include/game/title.h File Reference}
+\label{title_8h}\index{include/game/title.h@{include/game/title.h}}
+{\ttfamily \#include \char`\"{}engine/input.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}engine/types.\+h\char`\"{}}\newline
+Include dependency graph for title.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=274pt]{title_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=258pt]{title_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{title_8h_aa3c92ec4e2a0f91fffeac2dd287c75ed}{title\+\_\+music\+\_\+state}} \{ \mbox{\hyperlink{title_8h_aa3c92ec4e2a0f91fffeac2dd287c75edadc84b9cfbc8543db90e26befe40aa074}{TM\+\_\+\+INTRO}} = 0
+, \mbox{\hyperlink{title_8h_aa3c92ec4e2a0f91fffeac2dd287c75eda9b6d40ba6b5784b0cf1090caa1c1be75}{TM\+\_\+\+INIT}}
+, \mbox{\hyperlink{title_8h_aa3c92ec4e2a0f91fffeac2dd287c75edad596b10c50e3a56828ab17e2c19af35e}{TM\+\_\+\+MAIN}}
+, \mbox{\hyperlink{title_8h_aa3c92ec4e2a0f91fffeac2dd287c75eda0ca68adfb0e1ea48f477c15b031f320b}{TM\+\_\+\+COUNT}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{title_8h_a4413a767ea445de969ffa802cad92499}{title\+\_\+load}} (void)
+\item 
+void \mbox{\hyperlink{title_8h_ae5867e165185323419a0e4561caa5e16}{title\+\_\+unload}} (void)
+\item 
+enum \mbox{\hyperlink{scene_8h_ac9f95692dedfa958757f3fed60b1ea76}{scene\+\_\+index}} \mbox{\hyperlink{title_8h_a0cf3fd5b3776ba51b59434e10b2fdff6}{title\+\_\+update}} (struct \mbox{\hyperlink{structinput__parms}{input\+\_\+parms}} iparms)
+\item 
+void \mbox{\hyperlink{title_8h_aff48155e4d9b970cb169c002222cd145}{title\+\_\+draw}} (\mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} subtick)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{title_8h_aa3c92ec4e2a0f91fffeac2dd287c75ed}\label{title_8h_aa3c92ec4e2a0f91fffeac2dd287c75ed}} 
+\index{title.h@{title.h}!title\_music\_state@{title\_music\_state}}
+\index{title\_music\_state@{title\_music\_state}!title.h@{title.h}}
+\doxysubsubsection{\texorpdfstring{title\_music\_state}{title\_music\_state}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{title_8h_aa3c92ec4e2a0f91fffeac2dd287c75ed}{title\+\_\+music\+\_\+state}}}
+
+Music State of Title \begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TM\_INTRO@{TM\_INTRO}!title.h@{title.h}}\index{title.h@{title.h}!TM\_INTRO@{TM\_INTRO}}}\mbox{\Hypertarget{title_8h_aa3c92ec4e2a0f91fffeac2dd287c75edadc84b9cfbc8543db90e26befe40aa074}\label{title_8h_aa3c92ec4e2a0f91fffeac2dd287c75edadc84b9cfbc8543db90e26befe40aa074}} 
+TM\+\_\+\+INTRO&Intro State. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TM\_INIT@{TM\_INIT}!title.h@{title.h}}\index{title.h@{title.h}!TM\_INIT@{TM\_INIT}}}\mbox{\Hypertarget{title_8h_aa3c92ec4e2a0f91fffeac2dd287c75eda9b6d40ba6b5784b0cf1090caa1c1be75}\label{title_8h_aa3c92ec4e2a0f91fffeac2dd287c75eda9b6d40ba6b5784b0cf1090caa1c1be75}} 
+TM\+\_\+\+INIT&Initial State. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TM\_MAIN@{TM\_MAIN}!title.h@{title.h}}\index{title.h@{title.h}!TM\_MAIN@{TM\_MAIN}}}\mbox{\Hypertarget{title_8h_aa3c92ec4e2a0f91fffeac2dd287c75edad596b10c50e3a56828ab17e2c19af35e}\label{title_8h_aa3c92ec4e2a0f91fffeac2dd287c75edad596b10c50e3a56828ab17e2c19af35e}} 
+TM\+\_\+\+MAIN&Main State. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TM\_COUNT@{TM\_COUNT}!title.h@{title.h}}\index{title.h@{title.h}!TM\_COUNT@{TM\_COUNT}}}\mbox{\Hypertarget{title_8h_aa3c92ec4e2a0f91fffeac2dd287c75eda0ca68adfb0e1ea48f477c15b031f320b}\label{title_8h_aa3c92ec4e2a0f91fffeac2dd287c75eda0ca68adfb0e1ea48f477c15b031f320b}} 
+TM\+\_\+\+COUNT&Number of Title Music States. \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{title_8h_aff48155e4d9b970cb169c002222cd145}\label{title_8h_aff48155e4d9b970cb169c002222cd145}} 
+\index{title.h@{title.h}!title\_draw@{title\_draw}}
+\index{title\_draw@{title\_draw}!title.h@{title.h}}
+\doxysubsubsection{\texorpdfstring{title\_draw()}{title\_draw()}}
+{\footnotesize\ttfamily void title\+\_\+draw (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}}}]{subtick }\end{DoxyParamCaption})}
+
+Draws the Title Screen 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em subtick} & Delta Value between Frames \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{title_8h_a4413a767ea445de969ffa802cad92499}\label{title_8h_a4413a767ea445de969ffa802cad92499}} 
+\index{title.h@{title.h}!title\_load@{title\_load}}
+\index{title\_load@{title\_load}!title.h@{title.h}}
+\doxysubsubsection{\texorpdfstring{title\_load()}{title\_load()}}
+{\footnotesize\ttfamily void title\+\_\+load (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Initializes Title Screen \mbox{\Hypertarget{title_8h_ae5867e165185323419a0e4561caa5e16}\label{title_8h_ae5867e165185323419a0e4561caa5e16}} 
+\index{title.h@{title.h}!title\_unload@{title\_unload}}
+\index{title\_unload@{title\_unload}!title.h@{title.h}}
+\doxysubsubsection{\texorpdfstring{title\_unload()}{title\_unload()}}
+{\footnotesize\ttfamily void title\+\_\+unload (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Unloads Title Screen \mbox{\Hypertarget{title_8h_a0cf3fd5b3776ba51b59434e10b2fdff6}\label{title_8h_a0cf3fd5b3776ba51b59434e10b2fdff6}} 
+\index{title.h@{title.h}!title\_update@{title\_update}}
+\index{title\_update@{title\_update}!title.h@{title.h}}
+\doxysubsubsection{\texorpdfstring{title\_update()}{title\_update()}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{scene_8h_ac9f95692dedfa958757f3fed60b1ea76}{scene\+\_\+index}} title\+\_\+update (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structinput__parms}{input\+\_\+parms}}}]{iparms }\end{DoxyParamCaption})}
+
+Updates the Title Screen 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em iparms} & Input Parameters \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New Desired Scene Index 
+\end{DoxyReturn}

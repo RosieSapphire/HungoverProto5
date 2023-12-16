@@ -3,10 +3,11 @@
 #include "engine/vector.h"
 
 /**
- * Vector get Magnitude Squared
- * @param[in] a Vector
+ * Vector get Dot Product
+ * @param[in] a Vector A
+ * @param[in] b Vector B
  * @param[in] comp Number of Components
- * @return Vectors magnitude (squared)
+ * @return Vectors Dot Product
  */
 f32 vector_dot(const f32 *a, const f32 *b, const u8 comp)
 {
@@ -20,7 +21,7 @@ f32 vector_dot(const f32 *a, const f32 *b, const u8 comp)
 
 /**
  * Vector get Magnitude Squared
- * @param[in] a Vector
+ * @param[in] x Vector
  * @param[in] comp Number of Components
  * @return Vectors magnitude (squared)
  */
@@ -31,7 +32,7 @@ f32 vector_magnitude_sqr(const f32 *x, const u8 comp)
 
 /**
  * Vector get Magnitude
- * @param[in] a Vector
+ * @param[in] x Vector
  * @param[in] comp Number of Components
  * @return Vectors magnitude
  */
@@ -42,8 +43,9 @@ f32 vector_magnitude(const f32 *x, const u8 comp)
 
 /**
  * Vector Normalize
- * @param[in,out] a Vector
+ * @param[in,out] x Vector
  * @param[in] comp Number of Components
+ * @return Vectors Magnitude
  */
 f32 vector_normalize(f32 *x, const u8 comp)
 {

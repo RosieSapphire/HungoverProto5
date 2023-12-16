@@ -1,0 +1,54 @@
+\hypertarget{group__player__nitrous}{}\doxysection{Player Nitrous Functions}
+\label{group__player__nitrous}\index{Player Nitrous Functions@{Player Nitrous Functions}}
+Collaboration diagram for Player Nitrous Functions\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=348pt]{group__player__nitrous}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{group__player__nitrous_ga43f21d282a8654c8d5e89d45095cdff5}{player\+\_\+n2o\+\_\+check\+\_\+use}} (struct \mbox{\hyperlink{structplayer}{player}} $\ast$p, const struct \mbox{\hyperlink{structinput__parms}{input\+\_\+parms}} iparms)
+\item 
+void \mbox{\hyperlink{group__player__nitrous_ga518aa7ffb578d3d7533a6c693390b3ec}{player\+\_\+n2o\+\_\+effect\+\_\+draw}} (const struct \mbox{\hyperlink{structplayer}{player}} $\ast$p, const surface\+\_\+t $\ast$surf, const \mbox{\hyperlink{types_8h_a2caf5cd7bcdbe1eefa727f44ffb10bac}{u32}} tick\+\_\+cnt, const \mbox{\hyperlink{types_8h_a2caf5cd7bcdbe1eefa727f44ffb10bac}{u32}} tick\+\_\+cnt\+\_\+last, const \mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} subtick)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{group__player__nitrous_ga43f21d282a8654c8d5e89d45095cdff5}\label{group__player__nitrous_ga43f21d282a8654c8d5e89d45095cdff5}} 
+\index{Player Nitrous Functions@{Player Nitrous Functions}!player\_n2o\_check\_use@{player\_n2o\_check\_use}}
+\index{player\_n2o\_check\_use@{player\_n2o\_check\_use}!Player Nitrous Functions@{Player Nitrous Functions}}
+\doxysubsubsection{\texorpdfstring{player\_n2o\_check\_use()}{player\_n2o\_check\_use()}}
+{\footnotesize\ttfamily void player\+\_\+n2o\+\_\+check\+\_\+use (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structplayer}{player}} $\ast$}]{p,  }\item[{const struct \mbox{\hyperlink{structinput__parms}{input\+\_\+parms}}}]{iparms }\end{DoxyParamCaption})}
+
+Checks if the player is using Nitrous Oxide 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em p} & Player to Check \\
+\hline
+\mbox{\texttt{ in}}  & {\em iparms} & Input Parameters \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{group__player__nitrous_ga518aa7ffb578d3d7533a6c693390b3ec}\label{group__player__nitrous_ga518aa7ffb578d3d7533a6c693390b3ec}} 
+\index{Player Nitrous Functions@{Player Nitrous Functions}!player\_n2o\_effect\_draw@{player\_n2o\_effect\_draw}}
+\index{player\_n2o\_effect\_draw@{player\_n2o\_effect\_draw}!Player Nitrous Functions@{Player Nitrous Functions}}
+\doxysubsubsection{\texorpdfstring{player\_n2o\_effect\_draw()}{player\_n2o\_effect\_draw()}}
+{\footnotesize\ttfamily void player\+\_\+n2o\+\_\+effect\+\_\+draw (\begin{DoxyParamCaption}\item[{const struct \mbox{\hyperlink{structplayer}{player}} $\ast$}]{p,  }\item[{const surface\+\_\+t $\ast$}]{surf,  }\item[{const \mbox{\hyperlink{types_8h_a2caf5cd7bcdbe1eefa727f44ffb10bac}{u32}}}]{tick\+\_\+cnt,  }\item[{const \mbox{\hyperlink{types_8h_a2caf5cd7bcdbe1eefa727f44ffb10bac}{u32}}}]{tick\+\_\+cnt\+\_\+last,  }\item[{const \mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}}}]{subtick }\end{DoxyParamCaption})}
+
+Draws the nitrous oxide effect using framebuffer 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em p} & Player to refer to \\
+\hline
+\mbox{\texttt{ in}}  & {\em surf} & Color framebuffer to overlay \\
+\hline
+\mbox{\texttt{ in}}  & {\em tick\+\_\+cnt} & Current tick count \\
+\hline
+\mbox{\texttt{ in}}  & {\em tick\+\_\+cnt\+\_\+last} & Previous tick count \\
+\hline
+\mbox{\texttt{ in}}  & {\em subtick} & Subtick between frames \\
+\hline
+\end{DoxyParams}

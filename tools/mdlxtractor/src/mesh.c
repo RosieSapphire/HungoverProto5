@@ -1,3 +1,7 @@
+/**
+ * @file src/mesh.c
+ */
+
 #include <assert.h>
 #include <string.h>
 #include <malloc.h>

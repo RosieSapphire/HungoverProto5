@@ -1,11 +1,14 @@
+/**
+ * @file src/util.c
+ */
+
 #include "util.h"
 
 /**
- * fwriteflipu16 - Wrapper for fwrite that flips endianness of u16
- * @ptr: Pointer to Write
- * @stream: Filestream to write to
- *
- * Return: Size Written
+ * Wrapper for fwrite that flips endianness of u16
+ * @param[in] ptr Pointer to Write
+ * @param[out] stream Filestream to write to
+ * @return Size Written
  */
 size_t fwriteflipu16(const u16 *ptr, FILE *stream)
 {
@@ -15,11 +18,10 @@ size_t fwriteflipu16(const u16 *ptr, FILE *stream)
 }
 
 /**
- * fwriteflipf32 - Wrapper for fwrite that flips endianness of f32
- * @ptr: Pointer to Write
- * @stream: Filestream to write to
- *
- * Return: Size Written
+ * Wrapper for fwrite that flips endianness of f32
+ * @param[in] ptr Pointer to Write
+ * @param[out] stream Filestream to write to
+ * @return Size Written
  */
 size_t fwriteflipf32(const f32 *ptr, FILE *stream)
 {
@@ -34,11 +36,9 @@ size_t fwriteflipf32(const f32 *ptr, FILE *stream)
 }
 
 /**
- * freadflipu16 - Wrapper for fread that flips endianness of u16
- * @ptr: Pointer to Write
- * @stream: Filestream to write to
- *
- * Return: Size Written
+ * Wrapper for fread that flips endianness of u16
+ * @param[in] ptr Pointer to Write
+ * @param[out] stream Filestream to write to
 */
 void freadflipu16(u16 *ptr, FILE *stream)
 {
@@ -47,11 +47,9 @@ void freadflipu16(u16 *ptr, FILE *stream)
 }
 
 /**
- * freadflipf32 - Wrapper for fread that flips endianness of f32
- * @ptr: Pointer to Write
- * @stream: Filestream to write to
- *
- * Return: Size Written
+ * Wrapper for fread that flips endianness of f32
+ * @param[in] ptr Pointer to Write
+ * @param[out] stream Filestream to write to
  */
 void freadflipf32(f32 *ptr, FILE *stream)
 {
@@ -65,10 +63,14 @@ void freadflipf32(f32 *ptr, FILE *stream)
 	*ptr = (*((f32 *)&tmp));
 }
 
+/**
+ * Transposing a 4x4 Matrix
+ * @param[in] in Input Matrix
+ * @param[out] out Output Matrix
+ */
 void matrix_transpose(const f32 *in, f32 *out)
 {
 	for (int i = 0; i < 4; i++)
 		for (int j = 0; j < 4; j++)
 			out[j * 4 + i] = in[i * 4 + j];
 }
-

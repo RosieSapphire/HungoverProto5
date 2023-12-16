@@ -57,7 +57,7 @@ BETTY_SCAN=include/*/*.h src/*/*.c src/*.c
 
 betty-style:
 	betty-style --subjective --strict \
-		--allow-global-variables \
+		--allow-global-variables --root=. \
 		--ignore=CAMELCASE,PREFER_KERNEL_TYPES $(BETTY_SCAN)
 
 betty-doc:

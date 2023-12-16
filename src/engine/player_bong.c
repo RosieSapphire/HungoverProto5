@@ -10,8 +10,8 @@ static wav64_t *cough_sfx[9] = {
 };
 
 /**
- * Checks if the player is using their bong
- * @param[in,out] p Player to Check
+ * Check if player is using bong
+ * @param[in,out] p Player
  * @param[in] iparms Input Parameters
  */
 void player_bong_check_use(struct player *p, const struct input_parms iparms)
@@ -59,9 +59,9 @@ void player_bong_check_use(struct player *p, const struct input_parms iparms)
 }
 
 /**
- * Sets up the Coughing for the Player after smoking
- * @param[in,out] p Player Structure
- * @return Number of Maximum Coughs for that session
+ * Setup coughing from smoking weed
+ * @param[in,out] p Player
+ * @return Number of max coughs
  */
 u16 player_bong_cough_setup(struct player *p)
 {
@@ -103,9 +103,9 @@ u16 player_bong_cough_setup(struct player *p)
 }
 
 /**
- * Updates the Weed Effect for Player
- * @param[in,out] p Player to Update for
- * @param[in] num_coughs_max Maximum number of coughs for given weed hit
+ * Update weed high effect for player
+ * @param[in,out] p Player
+ * @param[in] num_coughs_max Maximum number of coughs this session
  */
 void player_bong_weed_effect_update(struct player *p,
 				    const u16 num_coughs_max)
@@ -153,12 +153,12 @@ void player_bong_weed_effect_update(struct player *p,
 }
 
 /**
- * Draws the Weed Effect using Framebuffer
- * @param[in] p Player to Refer to
- * @param[in] surf Color Framebuffer to Overlay
- * @param[in] tick_cnt Current Tick Count
- * @param[in] tick_cnt_last Previous Tick Count
- * @param[in] subtick Subtick Between Frames
+ * Draws the weed effect for player
+ * @param[in] p Player
+ * @param[in] surf Framebuffer surface
+ * @param[in] tick_cnt Number of ticks passed current
+ * @param[in] tick_cnt_last Number of ticks passed previous
+ * @param[in] subtick Subtick between frames
  */
 void player_bong_weed_effect_draw(const struct player *p,
 				  const surface_t *surf, const u32 tick_cnt,

@@ -4,12 +4,16 @@
 #include "../../../include/engine/types.h"
 #include "../../../include/engine/config.h"
 
+/**
+ * Node Structure
+ */
 struct node
 {
-	char mesh_path[CONF_PATH_MAX];
-	u16 num_children, mesh_ind;
-	f32 trans[4][4];
-	struct node *children;
+	char mesh_path[CONF_PATH_MAX]; ///< Mesh Path
+	u16 num_children; ///< Number of Children
+	u16 mesh_ind; ///< Mesh Index
+	f32 trans[4][4]; ///< Transformation Matrix
+	struct node *children; ///< Children array
 };
 
 #endif /* _NODE_H_ */

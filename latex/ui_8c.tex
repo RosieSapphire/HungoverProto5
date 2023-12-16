@@ -1,0 +1,74 @@
+\hypertarget{ui_8c}{}\doxysection{src/engine/ui.c File Reference}
+\label{ui_8c}\index{src/engine/ui.c@{src/engine/ui.c}}
+{\ttfamily \#include $<$libdragon.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}engine/util.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}engine/config.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}engine/ui.\+h\char`\"{}}\newline
+Include dependency graph for ui.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{ui_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{ui_8c_a299a44054ca77c33500131a26c1a405f}{ui\+\_\+font\+\_\+init}} (void)
+\item 
+void \mbox{\hyperlink{ui_8c_a6c2f6140f319cc7c2fe1be26c277bcd0}{ui\+\_\+timer\+\_\+update}} (void)
+\item 
+void \mbox{\hyperlink{ui_8c_ac069ae6d01f4254483b7fe93924bbdb7}{ui\+\_\+prototype\+\_\+draw}} (void)
+\item 
+void \mbox{\hyperlink{ui_8c_a2d5af3eaee629254038d4abe4f329283}{ui\+\_\+item\+\_\+qty\+\_\+draw}} (const struct \mbox{\hyperlink{structitem}{item}} $\ast$i, const \mbox{\hyperlink{types_8h_aed742c436da53c1080638ce6ef7d13de}{u8}} uses\+\_\+2nd)
+\item 
+void \mbox{\hyperlink{ui_8c_af71b3c59c97fc122f83b023b615f3410}{ui\+\_\+bongometer\+\_\+draw}} (const struct \mbox{\hyperlink{structitem}{item}} $\ast$\mbox{\hyperlink{structitem}{item}}, const \mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} subtick)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{ui_8c_af71b3c59c97fc122f83b023b615f3410}\label{ui_8c_af71b3c59c97fc122f83b023b615f3410}} 
+\index{ui.c@{ui.c}!ui\_bongometer\_draw@{ui\_bongometer\_draw}}
+\index{ui\_bongometer\_draw@{ui\_bongometer\_draw}!ui.c@{ui.c}}
+\doxysubsubsection{\texorpdfstring{ui\_bongometer\_draw()}{ui\_bongometer\_draw()}}
+{\footnotesize\ttfamily void ui\+\_\+bongometer\+\_\+draw (\begin{DoxyParamCaption}\item[{const struct \mbox{\hyperlink{structitem}{item}} $\ast$}]{item,  }\item[{const \mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}}}]{subtick }\end{DoxyParamCaption})}
+
+Draws the Bong-\/\+O-\/\+Meter for Smoking Weed 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em item} & Pretty much only the Bong (p-\/\texorpdfstring{$>$}{>}items + 1) \\
+\hline
+\mbox{\texttt{ in}}  & {\em subtick} & Subtick between Frames \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{ui_8c_a299a44054ca77c33500131a26c1a405f}\label{ui_8c_a299a44054ca77c33500131a26c1a405f}} 
+\index{ui.c@{ui.c}!ui\_font\_init@{ui\_font\_init}}
+\index{ui\_font\_init@{ui\_font\_init}!ui.c@{ui.c}}
+\doxysubsubsection{\texorpdfstring{ui\_font\_init()}{ui\_font\_init()}}
+{\footnotesize\ttfamily void ui\+\_\+font\+\_\+init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Initializes the UI Font \mbox{\Hypertarget{ui_8c_a2d5af3eaee629254038d4abe4f329283}\label{ui_8c_a2d5af3eaee629254038d4abe4f329283}} 
+\index{ui.c@{ui.c}!ui\_item\_qty\_draw@{ui\_item\_qty\_draw}}
+\index{ui\_item\_qty\_draw@{ui\_item\_qty\_draw}!ui.c@{ui.c}}
+\doxysubsubsection{\texorpdfstring{ui\_item\_qty\_draw()}{ui\_item\_qty\_draw()}}
+{\footnotesize\ttfamily void ui\+\_\+item\+\_\+qty\+\_\+draw (\begin{DoxyParamCaption}\item[{const struct \mbox{\hyperlink{structitem}{item}} $\ast$}]{i,  }\item[{const \mbox{\hyperlink{types_8h_aed742c436da53c1080638ce6ef7d13de}{u8}}}]{uses\+\_\+2nd }\end{DoxyParamCaption})}
+
+Draws the Quantity of an Item 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em i} & Item whose quantity is to be displayed \\
+\hline
+\mbox{\texttt{ in}}  & {\em uses\+\_\+2nd} & Whether or not it uses the 2nd Quantity available \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{ui_8c_ac069ae6d01f4254483b7fe93924bbdb7}\label{ui_8c_ac069ae6d01f4254483b7fe93924bbdb7}} 
+\index{ui.c@{ui.c}!ui\_prototype\_draw@{ui\_prototype\_draw}}
+\index{ui\_prototype\_draw@{ui\_prototype\_draw}!ui.c@{ui.c}}
+\doxysubsubsection{\texorpdfstring{ui\_prototype\_draw()}{ui\_prototype\_draw()}}
+{\footnotesize\ttfamily void ui\+\_\+prototype\+\_\+draw (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Draws the PROTOTYPE BUILD 5 Text in the topleft corner \mbox{\Hypertarget{ui_8c_a6c2f6140f319cc7c2fe1be26c277bcd0}\label{ui_8c_a6c2f6140f319cc7c2fe1be26c277bcd0}} 
+\index{ui.c@{ui.c}!ui\_timer\_update@{ui\_timer\_update}}
+\index{ui\_timer\_update@{ui\_timer\_update}!ui.c@{ui.c}}
+\doxysubsubsection{\texorpdfstring{ui\_timer\_update()}{ui\_timer\_update()}}
+{\footnotesize\ttfamily void ui\+\_\+timer\+\_\+update (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Updates the UI Timer 

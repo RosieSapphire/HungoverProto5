@@ -1,0 +1,91 @@
+\hypertarget{testroom_8h}{}\doxysection{include/game/testroom.h File Reference}
+\label{testroom_8h}\index{include/game/testroom.h@{include/game/testroom.h}}
+{\ttfamily \#include \char`\"{}engine/types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}engine/input.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}engine/scene.\+h\char`\"{}}\newline
+Include dependency graph for testroom.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{testroom_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=282pt]{testroom_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{testroom_8h_ad491fc93a9e8ab4e62fa45afc31728cb}{testroom\+\_\+flags}} \{ \mbox{\hyperlink{testroom_8h_ad491fc93a9e8ab4e62fa45afc31728cba23cfaa349fb5ca3c00af436722b261eb}{TR\+\_\+\+FREECAM\+\_\+\+ENABLED}} = 0x1
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{testroom_8h_ad91c309ad755dfe8ef16ec4cd838fd91}{testroom\+\_\+load}} (void)
+\item 
+void \mbox{\hyperlink{testroom_8h_a7cff4da63f866e7e310e93508a349b90}{testroom\+\_\+unload}} (void)
+\item 
+enum \mbox{\hyperlink{scene_8h_ac9f95692dedfa958757f3fed60b1ea76}{scene\+\_\+index}} \mbox{\hyperlink{testroom_8h_a45658f22cd32ac94b2af52ef43c2e643}{testroom\+\_\+update}} (struct \mbox{\hyperlink{structinput__parms}{input\+\_\+parms}} iparms)
+\item 
+void \mbox{\hyperlink{testroom_8h_ad22b26dfdec0dcf4c7f30527fa4615f3}{testroom\+\_\+draw}} (\mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} subtick)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{testroom_8h_ad491fc93a9e8ab4e62fa45afc31728cb}\label{testroom_8h_ad491fc93a9e8ab4e62fa45afc31728cb}} 
+\index{testroom.h@{testroom.h}!testroom\_flags@{testroom\_flags}}
+\index{testroom\_flags@{testroom\_flags}!testroom.h@{testroom.h}}
+\doxysubsubsection{\texorpdfstring{testroom\_flags}{testroom\_flags}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{testroom_8h_ad491fc93a9e8ab4e62fa45afc31728cb}{testroom\+\_\+flags}}}
+
+Testroom Flags \begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TR\_FREECAM\_ENABLED@{TR\_FREECAM\_ENABLED}!testroom.h@{testroom.h}}\index{testroom.h@{testroom.h}!TR\_FREECAM\_ENABLED@{TR\_FREECAM\_ENABLED}}}\mbox{\Hypertarget{testroom_8h_ad491fc93a9e8ab4e62fa45afc31728cba23cfaa349fb5ca3c00af436722b261eb}\label{testroom_8h_ad491fc93a9e8ab4e62fa45afc31728cba23cfaa349fb5ca3c00af436722b261eb}} 
+TR\+\_\+\+FREECAM\+\_\+\+ENABLED&Whether or not Freecam is Enabled. \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{testroom_8h_ad22b26dfdec0dcf4c7f30527fa4615f3}\label{testroom_8h_ad22b26dfdec0dcf4c7f30527fa4615f3}} 
+\index{testroom.h@{testroom.h}!testroom\_draw@{testroom\_draw}}
+\index{testroom\_draw@{testroom\_draw}!testroom.h@{testroom.h}}
+\doxysubsubsection{\texorpdfstring{testroom\_draw()}{testroom\_draw()}}
+{\footnotesize\ttfamily void testroom\+\_\+draw (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}}}]{subtick }\end{DoxyParamCaption})}
+
+Draws all the stuff for Testroom 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em subtick} & Delta Value Between Frames \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{testroom_8h_ad91c309ad755dfe8ef16ec4cd838fd91}\label{testroom_8h_ad91c309ad755dfe8ef16ec4cd838fd91}} 
+\index{testroom.h@{testroom.h}!testroom\_load@{testroom\_load}}
+\index{testroom\_load@{testroom\_load}!testroom.h@{testroom.h}}
+\doxysubsubsection{\texorpdfstring{testroom\_load()}{testroom\_load()}}
+{\footnotesize\ttfamily void testroom\+\_\+load (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Loads assets for Testroom \mbox{\Hypertarget{testroom_8h_a7cff4da63f866e7e310e93508a349b90}\label{testroom_8h_a7cff4da63f866e7e310e93508a349b90}} 
+\index{testroom.h@{testroom.h}!testroom\_unload@{testroom\_unload}}
+\index{testroom\_unload@{testroom\_unload}!testroom.h@{testroom.h}}
+\doxysubsubsection{\texorpdfstring{testroom\_unload()}{testroom\_unload()}}
+{\footnotesize\ttfamily void testroom\+\_\+unload (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Unloads assets from Testroom \mbox{\Hypertarget{testroom_8h_a45658f22cd32ac94b2af52ef43c2e643}\label{testroom_8h_a45658f22cd32ac94b2af52ef43c2e643}} 
+\index{testroom.h@{testroom.h}!testroom\_update@{testroom\_update}}
+\index{testroom\_update@{testroom\_update}!testroom.h@{testroom.h}}
+\doxysubsubsection{\texorpdfstring{testroom\_update()}{testroom\_update()}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{scene_8h_ac9f95692dedfa958757f3fed60b1ea76}{scene\+\_\+index}} testroom\+\_\+update (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structinput__parms}{input\+\_\+parms}}}]{iparms }\end{DoxyParamCaption})}
+
+Updates Testroom and all its stuff 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em iparms} & Input Parameters \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Desired Next Scene Index 
+\end{DoxyReturn}

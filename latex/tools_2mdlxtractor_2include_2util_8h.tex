@@ -1,0 +1,99 @@
+\hypertarget{tools_2mdlxtractor_2include_2util_8h}{}\doxysection{tools/mdlxtractor/include/util.h File Reference}
+\label{tools_2mdlxtractor_2include_2util_8h}\index{tools/mdlxtractor/include/util.h@{tools/mdlxtractor/include/util.h}}
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}../../../include/engine/types.\+h\char`\"{}}\newline
+Include dependency graph for util.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=264pt]{tools_2mdlxtractor_2include_2util_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+size\+\_\+t \mbox{\hyperlink{tools_2mdlxtractor_2include_2util_8h_aad234a6d75081021ffece51f573473b2}{fwriteflipu16}} (const u16 $\ast$ptr, FILE $\ast$stream)
+\item 
+size\+\_\+t \mbox{\hyperlink{tools_2mdlxtractor_2include_2util_8h_a2133e1cdb537a33b140ee4b46833a5a1}{fwriteflipf32}} (const f32 $\ast$ptr, FILE $\ast$stream)
+\item 
+void \mbox{\hyperlink{tools_2mdlxtractor_2include_2util_8h_acbe3934d23d59c10608470e11ae59020}{freadflipu16}} (u16 $\ast$ptr, FILE $\ast$stream)
+\item 
+void \mbox{\hyperlink{tools_2mdlxtractor_2include_2util_8h_ab09d68be285cdfa95d2987cbbc7a6f6e}{freadflipf32}} (f32 $\ast$ptr, FILE $\ast$stream)
+\item 
+void \mbox{\hyperlink{tools_2mdlxtractor_2include_2util_8h_ad1083ab4583e5e604f3694a074130397}{matrix\+\_\+transpose}} (const f32 $\ast$in, f32 $\ast$out)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{tools_2mdlxtractor_2include_2util_8h_ab09d68be285cdfa95d2987cbbc7a6f6e}\label{tools_2mdlxtractor_2include_2util_8h_ab09d68be285cdfa95d2987cbbc7a6f6e}} 
+\index{util.h@{util.h}!freadflipf32@{freadflipf32}}
+\index{freadflipf32@{freadflipf32}!util.h@{util.h}}
+\doxysubsubsection{\texorpdfstring{freadflipf32()}{freadflipf32()}}
+{\footnotesize\ttfamily void freadflipf32 (\begin{DoxyParamCaption}\item[{f32 $\ast$}]{ptr,  }\item[{FILE $\ast$}]{stream }\end{DoxyParamCaption})}
+
+Wrapper for fread that flips endianness of f32 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em ptr} & Pointer to Write \\
+\hline
+\mbox{\texttt{ out}}  & {\em stream} & Filestream to write to \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{tools_2mdlxtractor_2include_2util_8h_acbe3934d23d59c10608470e11ae59020}\label{tools_2mdlxtractor_2include_2util_8h_acbe3934d23d59c10608470e11ae59020}} 
+\index{util.h@{util.h}!freadflipu16@{freadflipu16}}
+\index{freadflipu16@{freadflipu16}!util.h@{util.h}}
+\doxysubsubsection{\texorpdfstring{freadflipu16()}{freadflipu16()}}
+{\footnotesize\ttfamily void freadflipu16 (\begin{DoxyParamCaption}\item[{u16 $\ast$}]{ptr,  }\item[{FILE $\ast$}]{stream }\end{DoxyParamCaption})}
+
+Wrapper for fread that flips endianness of u16 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em ptr} & Pointer to Write \\
+\hline
+\mbox{\texttt{ out}}  & {\em stream} & Filestream to write to \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{tools_2mdlxtractor_2include_2util_8h_a2133e1cdb537a33b140ee4b46833a5a1}\label{tools_2mdlxtractor_2include_2util_8h_a2133e1cdb537a33b140ee4b46833a5a1}} 
+\index{util.h@{util.h}!fwriteflipf32@{fwriteflipf32}}
+\index{fwriteflipf32@{fwriteflipf32}!util.h@{util.h}}
+\doxysubsubsection{\texorpdfstring{fwriteflipf32()}{fwriteflipf32()}}
+{\footnotesize\ttfamily size\+\_\+t fwriteflipf32 (\begin{DoxyParamCaption}\item[{const f32 $\ast$}]{ptr,  }\item[{FILE $\ast$}]{stream }\end{DoxyParamCaption})}
+
+Wrapper for fwrite that flips endianness of f32 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em ptr} & Pointer to Write \\
+\hline
+\mbox{\texttt{ out}}  & {\em stream} & Filestream to write to \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Size Written 
+\end{DoxyReturn}
+\mbox{\Hypertarget{tools_2mdlxtractor_2include_2util_8h_aad234a6d75081021ffece51f573473b2}\label{tools_2mdlxtractor_2include_2util_8h_aad234a6d75081021ffece51f573473b2}} 
+\index{util.h@{util.h}!fwriteflipu16@{fwriteflipu16}}
+\index{fwriteflipu16@{fwriteflipu16}!util.h@{util.h}}
+\doxysubsubsection{\texorpdfstring{fwriteflipu16()}{fwriteflipu16()}}
+{\footnotesize\ttfamily size\+\_\+t fwriteflipu16 (\begin{DoxyParamCaption}\item[{const u16 $\ast$}]{ptr,  }\item[{FILE $\ast$}]{stream }\end{DoxyParamCaption})}
+
+Wrapper for fwrite that flips endianness of u16 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em ptr} & Pointer to Write \\
+\hline
+\mbox{\texttt{ out}}  & {\em stream} & Filestream to write to \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Size Written 
+\end{DoxyReturn}
+\mbox{\Hypertarget{tools_2mdlxtractor_2include_2util_8h_ad1083ab4583e5e604f3694a074130397}\label{tools_2mdlxtractor_2include_2util_8h_ad1083ab4583e5e604f3694a074130397}} 
+\index{util.h@{util.h}!matrix\_transpose@{matrix\_transpose}}
+\index{matrix\_transpose@{matrix\_transpose}!util.h@{util.h}}
+\doxysubsubsection{\texorpdfstring{matrix\_transpose()}{matrix\_transpose()}}
+{\footnotesize\ttfamily void matrix\+\_\+transpose (\begin{DoxyParamCaption}\item[{const f32 $\ast$}]{in,  }\item[{f32 $\ast$}]{out }\end{DoxyParamCaption})}
+
+Transposing a 4x4 Matrix 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em in} & Input Matrix \\
+\hline
+\mbox{\texttt{ out}}  & {\em out} & Output Matrix \\
+\hline
+\end{DoxyParams}

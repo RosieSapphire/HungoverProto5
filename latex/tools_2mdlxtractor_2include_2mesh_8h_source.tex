@@ -1,0 +1,30 @@
+\hypertarget{tools_2mdlxtractor_2include_2mesh_8h_source}{}\doxysection{mesh.\+h}
+\label{tools_2mdlxtractor_2include_2mesh_8h_source}\index{tools/mdlxtractor/include/mesh.h@{tools/mdlxtractor/include/mesh.h}}
+\mbox{\hyperlink{tools_2mdlxtractor_2include_2mesh_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef \_MESH\_H\_}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define \_MESH\_H\_}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include "{}../../../include/engine/config.h"{}}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{tools_2mdlxtractor_2include_2vertex_8h}{vertex.h}}"{}}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{14 \textcolor{keyword}{struct }\mbox{\hyperlink{structmesh}{mesh}}}
+\DoxyCodeLine{15 \{}
+\DoxyCodeLine{16     \textcolor{keywordtype}{char} \mbox{\hyperlink{structmesh_a224e337ceae910f278041225740563ee}{name}}[\mbox{\hyperlink{config_8h_ab3cf7d07e330b11f314832285681c84f}{CONF\_NAME\_MAX}}]; }
+\DoxyCodeLine{17     u16 \mbox{\hyperlink{structmesh_a5b738a0c49b1715f0c4e435d11f79bb9}{num\_verts}}; }
+\DoxyCodeLine{18     u16 \mbox{\hyperlink{structmesh_ae02054ed017361f318429f1069366a93}{num\_indis}}; }
+\DoxyCodeLine{19     \textcolor{keyword}{struct }\mbox{\hyperlink{structvertex}{vertex}} *\mbox{\hyperlink{structmesh_a5e56110e950c3b246168864a5328a44b}{verts}}; }
+\DoxyCodeLine{20     u16 *\mbox{\hyperlink{structmesh_a74349c65e13a7b8444a4f81a939fdee4}{indis}}; }
+\DoxyCodeLine{21     u16 \mbox{\hyperlink{structmesh_abad14a420543d27f8a359f5bebcf15b7}{tind}}; }
+\DoxyCodeLine{22 \};}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{30 \textcolor{keywordtype}{void} \mbox{\hyperlink{tools_2mdlxtractor_2include_2mesh_8h_af16e1132b8b25145d34a8879b5f8515c}{mesh\_path\_from\_scene\_path}}(\textcolor{keywordtype}{char} *out, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *mname,}
+\DoxyCodeLine{31                    \textcolor{keyword}{const} \textcolor{keywordtype}{char} *scnpath);}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{40 u16 \mbox{\hyperlink{tools_2mdlxtractor_2include_2mesh_8h_a7e3db625a3aaaefad6be8977042db44e}{mesh\_ind\_by\_name}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char} *name, \textcolor{keyword}{const} \textcolor{keyword}{struct} \mbox{\hyperlink{structmesh}{mesh}} *meshes,}
+\DoxyCodeLine{41              \textcolor{keyword}{const} u16 num\_meshes);}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* \_MESH\_H\_ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

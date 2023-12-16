@@ -10,15 +10,10 @@
 #include "engine/profiler.h"
 #include "engine/config.h"
 
-u32 profile_start, profile_end;
-char profile_name[32];
+static u32 profile_start, profile_end;
+static char profile_name[32];
 
 #ifdef CONF_DEBUG
-/**
- * Begins the Profiler on the code you want to profile
- * @param[in] fmt String Format
- * @param[in] ... Va args
- */
 void profiler_begin(const char *fmt, ...)
 {
 	va_list args;
@@ -30,9 +25,6 @@ void profiler_begin(const char *fmt, ...)
 	profile_start = get_ticks();
 }
 
-/**
- * Ends the Profiler and prints out the time it took
- */
 void profiler_end_print(void)
 {
 	u32 profile_delta;
@@ -44,17 +36,9 @@ void profiler_end_print(void)
 	memset(profile_name, 0, 32);
 }
 #else
-/**
- * Begins the Profiler on the code you want to profile
- * @param[in] fmt String Format
- * @param[in] ... Va args
- */
-void profiler_begin(__attribute__((unused))const char *fmt, ...)
+void profiler_begin(const char *fmt, ...)
 {}
 
-/**
- * Ends the Profiler and prints out the time it took
- */
 void profiler_end_print(void)
 {}
 #endif /* CONF_DEBUG */

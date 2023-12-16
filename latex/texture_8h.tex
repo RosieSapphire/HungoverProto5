@@ -1,0 +1,80 @@
+\hypertarget{texture_8h}{}\doxysection{include/engine/texture.h File Reference}
+\label{texture_8h}\index{include/engine/texture.h@{include/engine/texture.h}}
+{\ttfamily \#include $<$libdragon.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}engine/types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}engine/config.\+h\char`\"{}}\newline
+Include dependency graph for texture.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{texture_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{texture_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structtexture}{texture}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{texture_8h_ab18e09521b2436e2920ec2fbfd38e738}{textures\+\_\+init}} (void)
+\item 
+\mbox{\hyperlink{types_8h_a2caf5cd7bcdbe1eefa727f44ffb10bac}{u32}} \mbox{\hyperlink{texture_8h_ada91b0a06c997fcd72952d82aa0acebe}{texture\+\_\+create\+\_\+file}} (const char $\ast$path)
+\item 
+void \mbox{\hyperlink{texture_8h_afadb3987ab2be03d4bb779dc91001ecb}{texture\+\_\+destroy}} (struct \mbox{\hyperlink{structtexture}{texture}} $\ast$t)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{texture_8h_a85e8e15b901c0604afd4ff97d1694a08}\label{texture_8h_a85e8e15b901c0604afd4ff97d1694a08}} 
+\mbox{\hyperlink{types_8h_a9e6c91d77e24643b888dbd1a1a590054}{u16}} {\bfseries num\+\_\+texs\+\_\+loaded}
+\begin{DoxyCompactList}\small\item\em Number of textures loaded. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{texture_8h_a07b5416f6c18456fe11928eede8e91d5}\label{texture_8h_a07b5416f6c18456fe11928eede8e91d5}} 
+char {\bfseries tex\+\_\+paths\+\_\+loaded} \mbox{[}\mbox{\hyperlink{config_8h_a2cde33d9f3c505c7d4bef767d446b554}{MAX\+\_\+\+TOTAL\+\_\+\+TEXS}}\mbox{]}\mbox{[}\mbox{\hyperlink{config_8h_a5e3fb3fca1216d5374bae58e8e8e607f}{TEX\+\_\+\+PATH\+\_\+\+MAX\+\_\+\+LEN}}\mbox{]}
+\begin{DoxyCompactList}\small\item\em Texture paths. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{texture_8h_ada8c4ce2827e85303c588f2b5c5cb6f3}\label{texture_8h_ada8c4ce2827e85303c588f2b5c5cb6f3}} 
+struct \mbox{\hyperlink{structtexture}{texture}} $\ast$ {\bfseries tex\+\_\+objs\+\_\+loaded}
+\begin{DoxyCompactList}\small\item\em Texture objects. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{texture_8h_ada91b0a06c997fcd72952d82aa0acebe}\label{texture_8h_ada91b0a06c997fcd72952d82aa0acebe}} 
+\index{texture.h@{texture.h}!texture\_create\_file@{texture\_create\_file}}
+\index{texture\_create\_file@{texture\_create\_file}!texture.h@{texture.h}}
+\doxysubsubsection{\texorpdfstring{texture\_create\_file()}{texture\_create\_file()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{types_8h_a2caf5cd7bcdbe1eefa727f44ffb10bac}{u32}} texture\+\_\+create\+\_\+file (\begin{DoxyParamCaption}\item[{const char $\ast$}]{path }\end{DoxyParamCaption})}
+
+Loads a Texture from a File 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em path} & Texture Path \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Open\+GL ID for Texture at Index 
+\end{DoxyReturn}
+\mbox{\Hypertarget{texture_8h_afadb3987ab2be03d4bb779dc91001ecb}\label{texture_8h_afadb3987ab2be03d4bb779dc91001ecb}} 
+\index{texture.h@{texture.h}!texture\_destroy@{texture\_destroy}}
+\index{texture\_destroy@{texture\_destroy}!texture.h@{texture.h}}
+\doxysubsubsection{\texorpdfstring{texture\_destroy()}{texture\_destroy()}}
+{\footnotesize\ttfamily void texture\+\_\+destroy (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structtexture}{texture}} $\ast$}]{t }\end{DoxyParamCaption})}
+
+Destroys a Texture 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em t} & Texture in Question \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{texture_8h_ab18e09521b2436e2920ec2fbfd38e738}\label{texture_8h_ab18e09521b2436e2920ec2fbfd38e738}} 
+\index{texture.h@{texture.h}!textures\_init@{textures\_init}}
+\index{textures\_init@{textures\_init}!texture.h@{texture.h}}
+\doxysubsubsection{\texorpdfstring{textures\_init()}{textures\_init()}}
+{\footnotesize\ttfamily void textures\+\_\+init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Initializes Texture Subsystem 

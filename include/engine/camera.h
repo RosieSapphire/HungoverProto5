@@ -19,10 +19,20 @@ struct camera
 	f32 angles_last[2]; ///< Previous Angles
 };
 
+/**
+ * @defgroup engine Engine Functions
+ * @{
+ * @defgroup camera Camera Functions
+ * @{
+ */
 void camera_init(struct camera *c);
 void camera_update(struct camera *c, const struct input_parms iparms);
 void camera_get_focus_now(const struct camera *c, f32 *out);
 void camera_get_focus_lerp(f32 *eye_lerp, f32 *angles_lerp, f32 *out);
 void camera_view_matrix_setup(const struct camera *c, f32 subtick);
+/**
+ * @}
+ * @}
+ */
 
 #endif /* _ENGINE_CAMERA_H_ */

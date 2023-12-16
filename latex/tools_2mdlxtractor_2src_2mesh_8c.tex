@@ -1,0 +1,57 @@
+\hypertarget{tools_2mdlxtractor_2src_2mesh_8c}{}\doxysection{tools/mdlxtractor/src/mesh.c File Reference}
+\label{tools_2mdlxtractor_2src_2mesh_8c}\index{tools/mdlxtractor/src/mesh.c@{tools/mdlxtractor/src/mesh.c}}
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$malloc.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}mesh.\+h\char`\"{}}\newline
+Include dependency graph for mesh.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{tools_2mdlxtractor_2src_2mesh_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{tools_2mdlxtractor_2src_2mesh_8c_af16e1132b8b25145d34a8879b5f8515c}{mesh\+\_\+path\+\_\+from\+\_\+scene\+\_\+path}} (char $\ast$out, const char $\ast$mname, const char $\ast$scnpath)
+\item 
+u16 \mbox{\hyperlink{tools_2mdlxtractor_2src_2mesh_8c_a7e3db625a3aaaefad6be8977042db44e}{mesh\+\_\+ind\+\_\+by\+\_\+name}} (const char $\ast$name, const struct \mbox{\hyperlink{structmesh}{mesh}} $\ast$meshes, const u16 num\+\_\+meshes)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{tools_2mdlxtractor_2src_2mesh_8c_a7e3db625a3aaaefad6be8977042db44e}\label{tools_2mdlxtractor_2src_2mesh_8c_a7e3db625a3aaaefad6be8977042db44e}} 
+\index{mesh.c@{mesh.c}!mesh\_ind\_by\_name@{mesh\_ind\_by\_name}}
+\index{mesh\_ind\_by\_name@{mesh\_ind\_by\_name}!mesh.c@{mesh.c}}
+\doxysubsubsection{\texorpdfstring{mesh\_ind\_by\_name()}{mesh\_ind\_by\_name()}}
+{\footnotesize\ttfamily u16 mesh\+\_\+ind\+\_\+by\+\_\+name (\begin{DoxyParamCaption}\item[{const char $\ast$}]{name,  }\item[{const struct \mbox{\hyperlink{structmesh}{mesh}} $\ast$}]{meshes,  }\item[{const u16}]{num\+\_\+meshes }\end{DoxyParamCaption})}
+
+Get Mesh Index by Name 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em name} & Name of Desired Mesh \\
+\hline
+\mbox{\texttt{ in}}  & {\em meshes} & Meshes array \\
+\hline
+\mbox{\texttt{ in}}  & {\em num\+\_\+meshes} & Number of Meshes \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Mesh Index from Name 
+\end{DoxyReturn}
+\mbox{\Hypertarget{tools_2mdlxtractor_2src_2mesh_8c_af16e1132b8b25145d34a8879b5f8515c}\label{tools_2mdlxtractor_2src_2mesh_8c_af16e1132b8b25145d34a8879b5f8515c}} 
+\index{mesh.c@{mesh.c}!mesh\_path\_from\_scene\_path@{mesh\_path\_from\_scene\_path}}
+\index{mesh\_path\_from\_scene\_path@{mesh\_path\_from\_scene\_path}!mesh.c@{mesh.c}}
+\doxysubsubsection{\texorpdfstring{mesh\_path\_from\_scene\_path()}{mesh\_path\_from\_scene\_path()}}
+{\footnotesize\ttfamily void mesh\+\_\+path\+\_\+from\+\_\+scene\+\_\+path (\begin{DoxyParamCaption}\item[{char $\ast$}]{out,  }\item[{const char $\ast$}]{mname,  }\item[{const char $\ast$}]{scnpath }\end{DoxyParamCaption})}
+
+Get Mesh Path from Scene Path 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em out} & Output String \\
+\hline
+\mbox{\texttt{ in}}  & {\em mname} & Mesh Name \\
+\hline
+\mbox{\texttt{ in}}  & {\em scnpath} & Scene Path \\
+\hline
+\end{DoxyParams}

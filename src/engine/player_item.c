@@ -8,6 +8,7 @@
 static const s8 item_has_flags[ITEM_COUNT] = {
 	ITEM_HAS_PISTOL,
 	ITEM_HAS_BONG,
+	ITEM_HAS_NITROUS
 };
 
 static const s8 item_select[ITEM_COUNT] = {

@@ -1,0 +1,128 @@
+\hypertarget{item_8h}{}\doxysection{include/engine/item.h File Reference}
+\label{item_8h}\index{include/engine/item.h@{include/engine/item.h}}
+{\ttfamily \#include \char`\"{}engine/scene.\+h\char`\"{}}\newline
+Include dependency graph for item.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{item_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{item_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structitem}{item}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{item_8h_af04d379991451ac197e581a191dffcd8}{item\+\_\+node\+\_\+draw}} (const struct \mbox{\hyperlink{structitem}{item}} $\ast$\mbox{\hyperlink{structitem}{item}}, const struct \mbox{\hyperlink{structnode}{node}} $\ast$n, const \mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} subtick)
+\item 
+void \mbox{\hyperlink{item_8h_a3a976cfe34ac11786b07b781885a30aa}{item\+\_\+anim\+\_\+update}} (struct \mbox{\hyperlink{structitem}{item}} $\ast$\mbox{\hyperlink{structitem}{item}})
+\item 
+\mbox{\hyperlink{types_8h_aed742c436da53c1080638ce6ef7d13de}{u8}} \mbox{\hyperlink{item_8h_ae1d3ba7b1f851cabb6e8509439f9305c}{item\+\_\+anim\+\_\+at\+\_\+end}} (const struct \mbox{\hyperlink{structitem}{item}} $\ast$\mbox{\hyperlink{structitem}{item}}, const \mbox{\hyperlink{types_8h_a9e6c91d77e24643b888dbd1a1a590054}{u16}} anim\+\_\+index)
+\item 
+\mbox{\hyperlink{types_8h_aed742c436da53c1080638ce6ef7d13de}{u8}} \mbox{\hyperlink{item_8h_a646d035dbe19b23f2a61f8214941bbd8}{item\+\_\+anim\+\_\+is\+\_\+index}} (const struct \mbox{\hyperlink{structitem}{item}} $\ast$\mbox{\hyperlink{structitem}{item}}, const \mbox{\hyperlink{types_8h_a9e6c91d77e24643b888dbd1a1a590054}{u16}} anim\+\_\+index)
+\item 
+void \mbox{\hyperlink{item_8h_a3d5d381b315b604dbd1b26d706805505}{item\+\_\+anim\+\_\+set\+\_\+flags}} (struct \mbox{\hyperlink{structitem}{item}} $\ast$\mbox{\hyperlink{structitem}{item}}, const \mbox{\hyperlink{types_8h_a9e6c91d77e24643b888dbd1a1a590054}{u16}} anim\+\_\+index, const \mbox{\hyperlink{types_8h_aed742c436da53c1080638ce6ef7d13de}{u8}} flags)
+\item 
+void \mbox{\hyperlink{item_8h_aa822d061336f2c2e28cf0437fbdd7002}{item\+\_\+anim\+\_\+set\+\_\+frame}} (struct \mbox{\hyperlink{structitem}{item}} $\ast$\mbox{\hyperlink{structitem}{item}}, const \mbox{\hyperlink{types_8h_a9e6c91d77e24643b888dbd1a1a590054}{u16}} anim\+\_\+index, const \mbox{\hyperlink{types_8h_a9e6c91d77e24643b888dbd1a1a590054}{u16}} frame)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{item_8h_ae1d3ba7b1f851cabb6e8509439f9305c}\label{item_8h_ae1d3ba7b1f851cabb6e8509439f9305c}} 
+\index{item.h@{item.h}!item\_anim\_at\_end@{item\_anim\_at\_end}}
+\index{item\_anim\_at\_end@{item\_anim\_at\_end}!item.h@{item.h}}
+\doxysubsubsection{\texorpdfstring{item\_anim\_at\_end()}{item\_anim\_at\_end()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{types_8h_aed742c436da53c1080638ce6ef7d13de}{u8}} item\+\_\+anim\+\_\+at\+\_\+end (\begin{DoxyParamCaption}\item[{const struct \mbox{\hyperlink{structitem}{item}} $\ast$}]{item,  }\item[{const \mbox{\hyperlink{types_8h_a9e6c91d77e24643b888dbd1a1a590054}{u16}}}]{anim\+\_\+index }\end{DoxyParamCaption})}
+
+Whether an Item\textquotesingle{}s Animation is at its End 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em item} & Item to Check Anim End \\
+\hline
+\mbox{\texttt{ in}}  & {\em anim\+\_\+index} & Animation Index to Check \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Whether that Animation is at its end 
+\end{DoxyReturn}
+\mbox{\Hypertarget{item_8h_a646d035dbe19b23f2a61f8214941bbd8}\label{item_8h_a646d035dbe19b23f2a61f8214941bbd8}} 
+\index{item.h@{item.h}!item\_anim\_is\_index@{item\_anim\_is\_index}}
+\index{item\_anim\_is\_index@{item\_anim\_is\_index}!item.h@{item.h}}
+\doxysubsubsection{\texorpdfstring{item\_anim\_is\_index()}{item\_anim\_is\_index()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{types_8h_aed742c436da53c1080638ce6ef7d13de}{u8}} item\+\_\+anim\+\_\+is\+\_\+index (\begin{DoxyParamCaption}\item[{const struct \mbox{\hyperlink{structitem}{item}} $\ast$}]{item,  }\item[{const \mbox{\hyperlink{types_8h_a9e6c91d77e24643b888dbd1a1a590054}{u16}}}]{anim\+\_\+index }\end{DoxyParamCaption})}
+
+Whether the Item\textquotesingle{}s Current Animation is index 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em item} & Item to Check Index \\
+\hline
+\mbox{\texttt{ in}}  & {\em anim\+\_\+index} & Animation Index Desired \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Whether the Item\textquotesingle{}s Current Animation is the index specified 
+\end{DoxyReturn}
+\mbox{\Hypertarget{item_8h_a3d5d381b315b604dbd1b26d706805505}\label{item_8h_a3d5d381b315b604dbd1b26d706805505}} 
+\index{item.h@{item.h}!item\_anim\_set\_flags@{item\_anim\_set\_flags}}
+\index{item\_anim\_set\_flags@{item\_anim\_set\_flags}!item.h@{item.h}}
+\doxysubsubsection{\texorpdfstring{item\_anim\_set\_flags()}{item\_anim\_set\_flags()}}
+{\footnotesize\ttfamily void item\+\_\+anim\+\_\+set\+\_\+flags (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structitem}{item}} $\ast$}]{item,  }\item[{const \mbox{\hyperlink{types_8h_a9e6c91d77e24643b888dbd1a1a590054}{u16}}}]{anim\+\_\+index,  }\item[{const \mbox{\hyperlink{types_8h_aed742c436da53c1080638ce6ef7d13de}{u8}}}]{flags }\end{DoxyParamCaption})}
+
+Sets Flags for an Item\textquotesingle{}s Specific Animation 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em item} & Item to Set Anim Flags \\
+\hline
+\mbox{\texttt{ in}}  & {\em anim\+\_\+index} & Desired Animation Index \\
+\hline
+\mbox{\texttt{ in}}  & {\em flags} & The Flags in Question \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{item_8h_aa822d061336f2c2e28cf0437fbdd7002}\label{item_8h_aa822d061336f2c2e28cf0437fbdd7002}} 
+\index{item.h@{item.h}!item\_anim\_set\_frame@{item\_anim\_set\_frame}}
+\index{item\_anim\_set\_frame@{item\_anim\_set\_frame}!item.h@{item.h}}
+\doxysubsubsection{\texorpdfstring{item\_anim\_set\_frame()}{item\_anim\_set\_frame()}}
+{\footnotesize\ttfamily void item\+\_\+anim\+\_\+set\+\_\+frame (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structitem}{item}} $\ast$}]{item,  }\item[{const \mbox{\hyperlink{types_8h_a9e6c91d77e24643b888dbd1a1a590054}{u16}}}]{anim\+\_\+index,  }\item[{const \mbox{\hyperlink{types_8h_a9e6c91d77e24643b888dbd1a1a590054}{u16}}}]{frame }\end{DoxyParamCaption})}
+
+Sets Frame for Item\textquotesingle{}s Specific Animation 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em item} & Item \\
+\hline
+\mbox{\texttt{ in}}  & {\em anim\+\_\+index} & Animation Index \\
+\hline
+\mbox{\texttt{ in}}  & {\em frame} & Desired Frame \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{item_8h_a3a976cfe34ac11786b07b781885a30aa}\label{item_8h_a3a976cfe34ac11786b07b781885a30aa}} 
+\index{item.h@{item.h}!item\_anim\_update@{item\_anim\_update}}
+\index{item\_anim\_update@{item\_anim\_update}!item.h@{item.h}}
+\doxysubsubsection{\texorpdfstring{item\_anim\_update()}{item\_anim\_update()}}
+{\footnotesize\ttfamily void item\+\_\+anim\+\_\+update (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structitem}{item}} $\ast$}]{item }\end{DoxyParamCaption})}
+
+Updates all Animations for Item 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em item} & Item to Update Current Animation \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{item_8h_af04d379991451ac197e581a191dffcd8}\label{item_8h_af04d379991451ac197e581a191dffcd8}} 
+\index{item.h@{item.h}!item\_node\_draw@{item\_node\_draw}}
+\index{item\_node\_draw@{item\_node\_draw}!item.h@{item.h}}
+\doxysubsubsection{\texorpdfstring{item\_node\_draw()}{item\_node\_draw()}}
+{\footnotesize\ttfamily void item\+\_\+node\+\_\+draw (\begin{DoxyParamCaption}\item[{const struct \mbox{\hyperlink{structitem}{item}} $\ast$}]{item,  }\item[{const struct \mbox{\hyperlink{structnode}{node}} $\ast$}]{n,  }\item[{const \mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}}}]{subtick }\end{DoxyParamCaption})}
+
+Recursively draws nodes for an item 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em item} & Item to draw \\
+\hline
+\mbox{\texttt{ in}}  & {\em n} & Node to reference \\
+\hline
+\mbox{\texttt{ in}}  & {\em subtick} & Subtick between frames \\
+\hline
+\end{DoxyParams}

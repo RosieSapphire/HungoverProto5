@@ -1,0 +1,45 @@
+\hypertarget{profiler_8c}{}\doxysection{src/engine/profiler.c File Reference}
+\label{profiler_8c}\index{src/engine/profiler.c@{src/engine/profiler.c}}
+{\ttfamily \#include $<$stdarg.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$libdragon.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}engine/types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}engine/profiler.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}engine/config.\+h\char`\"{}}\newline
+Include dependency graph for profiler.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{profiler_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{profiler_8c_a763399f7b8ba2483e7b635fea2365c53}{profiler\+\_\+begin}} (const char $\ast$fmt,...)
+\item 
+void \mbox{\hyperlink{profiler_8c_a6ccb682c8c31f34bf1841004974e5365}{profiler\+\_\+end\+\_\+print}} (void)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{profiler_8c_a763399f7b8ba2483e7b635fea2365c53}\label{profiler_8c_a763399f7b8ba2483e7b635fea2365c53}} 
+\index{profiler.c@{profiler.c}!profiler\_begin@{profiler\_begin}}
+\index{profiler\_begin@{profiler\_begin}!profiler.c@{profiler.c}}
+\doxysubsubsection{\texorpdfstring{profiler\_begin()}{profiler\_begin()}}
+{\footnotesize\ttfamily void profiler\+\_\+begin (\begin{DoxyParamCaption}\item[{const char $\ast$}]{fmt,  }\item[{}]{... }\end{DoxyParamCaption})}
+
+Begins the Profiler on the code you want to profile 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em fmt} & String Format \\
+\hline
+\mbox{\texttt{ in}}  & {\em ...} & Va args \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{profiler_8c_a6ccb682c8c31f34bf1841004974e5365}\label{profiler_8c_a6ccb682c8c31f34bf1841004974e5365}} 
+\index{profiler.c@{profiler.c}!profiler\_end\_print@{profiler\_end\_print}}
+\index{profiler\_end\_print@{profiler\_end\_print}!profiler.c@{profiler.c}}
+\doxysubsubsection{\texorpdfstring{profiler\_end\_print()}{profiler\_end\_print()}}
+{\footnotesize\ttfamily void profiler\+\_\+end\+\_\+print (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Ends the Profiler and prints out the time it took 

@@ -1,0 +1,27 @@
+\hypertarget{camera_8h_source}{}\doxysection{camera.\+h}
+\label{camera_8h_source}\index{include/engine/camera.h@{include/engine/camera.h}}
+\mbox{\hyperlink{camera_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef \_ENGINE\_CAMERA\_H\_}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define \_ENGINE\_CAMERA\_H\_}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{types_8h}{engine/types.h}}"{}}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{input_8h}{engine/input.h}}"{}}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{14 \textcolor{keyword}{struct }\mbox{\hyperlink{structcamera}{camera}}}
+\DoxyCodeLine{15 \{}
+\DoxyCodeLine{16     \mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} \mbox{\hyperlink{structcamera_a0470416d40597de181927b3ccbe83bae}{eye}}[3]; }
+\DoxyCodeLine{17     \mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} \mbox{\hyperlink{structcamera_ab28739df05afd5c9ca237b09fa200150}{eye\_last}}[3]; }
+\DoxyCodeLine{18     \mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} \mbox{\hyperlink{structcamera_a156277260258819be4f03260b233877d}{angles}}[2]; }
+\DoxyCodeLine{19     \mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} \mbox{\hyperlink{structcamera_ae11c4d4327ac65680f9b86add9421e98}{angles\_last}}[2]; }
+\DoxyCodeLine{20 \};}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{28 \textcolor{keywordtype}{void} \mbox{\hyperlink{group__camera_gae901747031257c21f9aa54ef923f9cf6}{camera\_init}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structcamera}{camera}} *c);}
+\DoxyCodeLine{29 \textcolor{keywordtype}{void} \mbox{\hyperlink{group__camera_gadaf3412f72448a76407b6563fe95c57d}{camera\_update}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structcamera}{camera}} *c, \textcolor{keyword}{const} \textcolor{keyword}{struct} \mbox{\hyperlink{structinput__parms}{input\_parms}} iparms);}
+\DoxyCodeLine{30 \textcolor{keywordtype}{void} \mbox{\hyperlink{group__camera_ga9b065f54fa5cc5f80b86d1891cdf61c9}{camera\_get\_focus\_now}}(\textcolor{keyword}{const} \textcolor{keyword}{struct} \mbox{\hyperlink{structcamera}{camera}} *c, \mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} *out);}
+\DoxyCodeLine{31 \textcolor{keywordtype}{void} \mbox{\hyperlink{group__camera_ga8013527c2fe6e95c2767acedc22b3af0}{camera\_get\_focus\_lerp}}(\mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} *eye\_lerp, \mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} *angles\_lerp, \mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} *out);}
+\DoxyCodeLine{32 \textcolor{keywordtype}{void} \mbox{\hyperlink{group__camera_gaa20fe99fa62ade4513c379e3fcdf95ae}{camera\_view\_matrix\_setup}}(\textcolor{keyword}{const} \textcolor{keyword}{struct} \mbox{\hyperlink{structcamera}{camera}} *c, \mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} subtick);}
+\DoxyCodeLine{38 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* \_ENGINE\_CAMERA\_H\_ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

@@ -1,0 +1,87 @@
+\hypertarget{group__scene__main}{}\doxysection{Scene Main Functions}
+\label{group__scene__main}\index{Scene Main Functions@{Scene Main Functions}}
+Collaboration diagram for Scene Main Functions\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=333pt]{group__scene__main}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{group__scene__main_gaa776a6d5aad566ff30c4300d9931c87a}{scene\+\_\+global\+\_\+spin\+\_\+timer\+\_\+update}} (void)
+\item 
+void \mbox{\hyperlink{group__scene__main_ga4d4d1f19ef7bacc9db944747b0887783}{scene\+\_\+read\+\_\+file}} (struct \mbox{\hyperlink{structscene}{scene}} $\ast$s, const char $\ast$path)
+\item 
+void \mbox{\hyperlink{group__scene__main_gad68b930465be813d04dcfb536e5000d0}{scene\+\_\+draw}} (const struct \mbox{\hyperlink{structscene}{scene}} $\ast$s, const \mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} subtick)
+\item 
+void \mbox{\hyperlink{group__scene__main_gade4b60f4ce4eb5edaa75ca0ceafdd9b8}{scene\+\_\+destroy}} (struct \mbox{\hyperlink{structscene}{scene}} $\ast$s)
+\item 
+struct \mbox{\hyperlink{structnode}{node}} $\ast$ \mbox{\hyperlink{group__scene__main_ga56c17506094ef3a1926b1171d633c1cc}{node\+\_\+from\+\_\+mesh\+\_\+ind}} (struct \mbox{\hyperlink{structnode}{node}} $\ast$n, const \mbox{\hyperlink{types_8h_a9e6c91d77e24643b888dbd1a1a590054}{u16}} mid)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{group__scene__main_ga56c17506094ef3a1926b1171d633c1cc}\label{group__scene__main_ga56c17506094ef3a1926b1171d633c1cc}} 
+\index{Scene Main Functions@{Scene Main Functions}!node\_from\_mesh\_ind@{node\_from\_mesh\_ind}}
+\index{node\_from\_mesh\_ind@{node\_from\_mesh\_ind}!Scene Main Functions@{Scene Main Functions}}
+\doxysubsubsection{\texorpdfstring{node\_from\_mesh\_ind()}{node\_from\_mesh\_ind()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structnode}{node}} $\ast$ node\+\_\+from\+\_\+mesh\+\_\+ind (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structnode}{node}} $\ast$}]{n,  }\item[{const \mbox{\hyperlink{types_8h_a9e6c91d77e24643b888dbd1a1a590054}{u16}}}]{mid }\end{DoxyParamCaption})}
+
+Gets Pointer to Node from Mesh Index 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em n} & Node to start searching through \\
+\hline
+\mbox{\texttt{ in}}  & {\em mid} & Mesh Index \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Node Found (or NULL) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{group__scene__main_gade4b60f4ce4eb5edaa75ca0ceafdd9b8}\label{group__scene__main_gade4b60f4ce4eb5edaa75ca0ceafdd9b8}} 
+\index{Scene Main Functions@{Scene Main Functions}!scene\_destroy@{scene\_destroy}}
+\index{scene\_destroy@{scene\_destroy}!Scene Main Functions@{Scene Main Functions}}
+\doxysubsubsection{\texorpdfstring{scene\_destroy()}{scene\_destroy()}}
+{\footnotesize\ttfamily void scene\+\_\+destroy (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structscene}{scene}} $\ast$}]{s }\end{DoxyParamCaption})}
+
+Destroys a Scene 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em s} & Scene to Destroy \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{group__scene__main_gad68b930465be813d04dcfb536e5000d0}\label{group__scene__main_gad68b930465be813d04dcfb536e5000d0}} 
+\index{Scene Main Functions@{Scene Main Functions}!scene\_draw@{scene\_draw}}
+\index{scene\_draw@{scene\_draw}!Scene Main Functions@{Scene Main Functions}}
+\doxysubsubsection{\texorpdfstring{scene\_draw()}{scene\_draw()}}
+{\footnotesize\ttfamily void scene\+\_\+draw (\begin{DoxyParamCaption}\item[{const struct \mbox{\hyperlink{structscene}{scene}} $\ast$}]{s,  }\item[{const \mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}}}]{subtick }\end{DoxyParamCaption})}
+
+Draws a Scene and its Meshes 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & Scene to Draw \\
+\hline
+\mbox{\texttt{ in}}  & {\em subtick} & Subtick \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{group__scene__main_gaa776a6d5aad566ff30c4300d9931c87a}\label{group__scene__main_gaa776a6d5aad566ff30c4300d9931c87a}} 
+\index{Scene Main Functions@{Scene Main Functions}!scene\_global\_spin\_timer\_update@{scene\_global\_spin\_timer\_update}}
+\index{scene\_global\_spin\_timer\_update@{scene\_global\_spin\_timer\_update}!Scene Main Functions@{Scene Main Functions}}
+\doxysubsubsection{\texorpdfstring{scene\_global\_spin\_timer\_update()}{scene\_global\_spin\_timer\_update()}}
+{\footnotesize\ttfamily void scene\+\_\+global\+\_\+spin\+\_\+timer\+\_\+update (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Updates the Spin Timer for all Scenes \mbox{\Hypertarget{group__scene__main_ga4d4d1f19ef7bacc9db944747b0887783}\label{group__scene__main_ga4d4d1f19ef7bacc9db944747b0887783}} 
+\index{Scene Main Functions@{Scene Main Functions}!scene\_read\_file@{scene\_read\_file}}
+\index{scene\_read\_file@{scene\_read\_file}!Scene Main Functions@{Scene Main Functions}}
+\doxysubsubsection{\texorpdfstring{scene\_read\_file()}{scene\_read\_file()}}
+{\footnotesize\ttfamily void scene\+\_\+read\+\_\+file (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structscene}{scene}} $\ast$}]{s,  }\item[{const char $\ast$}]{path }\end{DoxyParamCaption})}
+
+Reads Scene Object from File 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em s} & Scene Read Output \\
+\hline
+\mbox{\texttt{ in}}  & {\em path} & Path to File to Read from \\
+\hline
+\end{DoxyParams}

@@ -93,15 +93,15 @@ Include dependency graph for mesh.c:</div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a8dc5af733a0fae9b605be47577d6885c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mesh_8c.html#a8dc5af733a0fae9b605be47577d6885c">mesh_create_data</a> (struct <a class="el" href="structmesh.html">mesh</a> *m, const char *name, const u16 num_verts, const u16 num_indis, const struct <a class="el" href="structvertex.html">vertex</a> *verts, const u16 *indis)</td></tr>
+<tr class="memitem:a8dc5af733a0fae9b605be47577d6885c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mesh_8c.html#a8dc5af733a0fae9b605be47577d6885c">mesh_create_data</a> (struct <a class="el" href="structmesh.html">mesh</a> *m, const char *name, const <a class="el" href="types_8h.html#a9e6c91d77e24643b888dbd1a1a590054">u16</a> num_verts, const <a class="el" href="types_8h.html#a9e6c91d77e24643b888dbd1a1a590054">u16</a> num_indis, const struct <a class="el" href="structvertex.html">vertex</a> *verts, const <a class="el" href="types_8h.html#a9e6c91d77e24643b888dbd1a1a590054">u16</a> *indis)</td></tr>
 <tr class="separator:a8dc5af733a0fae9b605be47577d6885c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed5e3ddce9461ee2883ce565b86ad753"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mesh_8c.html#aed5e3ddce9461ee2883ce565b86ad753">mesh_destroy</a> (struct <a class="el" href="structmesh.html">mesh</a> *m)</td></tr>
 <tr class="separator:aed5e3ddce9461ee2883ce565b86ad753"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa960427313989601ad3cdb2a6c18eabf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mesh_8c.html#aa960427313989601ad3cdb2a6c18eabf">mesh_draw</a> (const struct <a class="el" href="structmesh.html">mesh</a> *m)</td></tr>
 <tr class="separator:aa960427313989601ad3cdb2a6c18eabf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c5b54397483244ff83d781b326b8400"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mesh_8c.html#a6c5b54397483244ff83d781b326b8400">mesh_gen_rspqblock</a> (struct <a class="el" href="structmesh.html">mesh</a> *m, const u32 tid)</td></tr>
+<tr class="memitem:a6c5b54397483244ff83d781b326b8400"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mesh_8c.html#a6c5b54397483244ff83d781b326b8400">mesh_gen_rspqblock</a> (struct <a class="el" href="structmesh.html">mesh</a> *m, const <a class="el" href="types_8h.html#a2caf5cd7bcdbe1eefa727f44ffb10bac">u32</a> tid)</td></tr>
 <tr class="separator:a6c5b54397483244ff83d781b326b8400"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a113b7fe4cdbf3ee8606cbd1409430b8e"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structmesh.html">mesh</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mesh_8c.html#a113b7fe4cdbf3ee8606cbd1409430b8e">mesh_get_name</a> (struct <a class="el" href="structmesh.html">mesh</a> *array, const char *name, const u16 num_elem)</td></tr>
+<tr class="memitem:a113b7fe4cdbf3ee8606cbd1409430b8e"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structmesh.html">mesh</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mesh_8c.html#a113b7fe4cdbf3ee8606cbd1409430b8e">mesh_get_name</a> (struct <a class="el" href="structmesh.html">mesh</a> *array, const char *name, const <a class="el" href="types_8h.html#a9e6c91d77e24643b888dbd1a1a590054">u16</a> num_elem)</td></tr>
 <tr class="separator:a113b7fe4cdbf3ee8606cbd1409430b8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
@@ -126,13 +126,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const u16&#160;</td>
+          <td class="paramtype">const <a class="el" href="types_8h.html#a9e6c91d77e24643b888dbd1a1a590054">u16</a>&#160;</td>
           <td class="paramname"><em>num_verts</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const u16&#160;</td>
+          <td class="paramtype">const <a class="el" href="types_8h.html#a9e6c91d77e24643b888dbd1a1a590054">u16</a>&#160;</td>
           <td class="paramname"><em>num_indis</em>, </td>
         </tr>
         <tr>
@@ -144,7 +144,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const u16 *&#160;</td>
+          <td class="paramtype">const <a class="el" href="types_8h.html#a9e6c91d77e24643b888dbd1a1a590054">u16</a> *&#160;</td>
           <td class="paramname"><em>indis</em>&#160;</td>
         </tr>
         <tr>
@@ -231,7 +231,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const u32&#160;</td>
+          <td class="paramtype">const <a class="el" href="types_8h.html#a2caf5cd7bcdbe1eefa727f44ffb10bac">u32</a>&#160;</td>
           <td class="paramname"><em>tid</em>&#160;</td>
         </tr>
         <tr>
@@ -272,7 +272,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const u16&#160;</td>
+          <td class="paramtype">const <a class="el" href="types_8h.html#a9e6c91d77e24643b888dbd1a1a590054">u16</a>&#160;</td>
           <td class="paramname"><em>num_elem</em>&#160;</td>
         </tr>
         <tr>

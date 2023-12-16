@@ -75,7 +75,7 @@ $(function() {
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;<a class="code" href="mesh_8h.html">engine/mesh.h</a>&quot;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="collision__mesh_8h.html#a891a34b5b11ac9ab4380a8379cd2ab8e">   13</a></span><span class="keyword">typedef</span> f32 <a class="code hl_typedef" href="collision__mesh_8h.html#a891a34b5b11ac9ab4380a8379cd2ab8e">vec3</a>[3];</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="collision__mesh_8h.html#a891a34b5b11ac9ab4380a8379cd2ab8e">   13</a></span><span class="keyword">typedef</span> <a class="code hl_typedef" href="types_8h.html#a5f6906312a689f27d70e9d086649d3fd">f32</a> <a class="code hl_typedef" href="collision__mesh_8h.html#a891a34b5b11ac9ab4380a8379cd2ab8e">vec3</a>[3];</div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="collision__mesh_8h.html#abf013669fb468a5fec852a8f4023fda5">   18</a></span><span class="keyword">enum</span> <a class="code hl_enumeration" href="collision__mesh_8h.html#abf013669fb468a5fec852a8f4023fda5">collision_type</a></div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>{</div>
@@ -86,7 +86,7 @@ $(function() {
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="structcollision__mesh.html">   28</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structcollision__mesh.html">collision_mesh</a></div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>{</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="structcollision__mesh.html#ac84068d48e4eb2c662465a1d38ca9775">   30</a></span>    u16 <a class="code hl_variable" href="structcollision__mesh.html#ac84068d48e4eb2c662465a1d38ca9775">num_verts</a>; </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="structcollision__mesh.html#ac84068d48e4eb2c662465a1d38ca9775">   30</a></span>    <a class="code hl_typedef" href="types_8h.html#a9e6c91d77e24643b888dbd1a1a590054">u16</a> <a class="code hl_variable" href="structcollision__mesh.html#ac84068d48e4eb2c662465a1d38ca9775">num_verts</a>; </div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="structcollision__mesh.html#ae6909cfc89d72c8d963b2f2d2a9b07bb">   31</a></span>    <a class="code hl_typedef" href="collision__mesh_8h.html#a891a34b5b11ac9ab4380a8379cd2ab8e">vec3</a> *<a class="code hl_variable" href="structcollision__mesh.html#ae6909cfc89d72c8d963b2f2d2a9b07bb">verts</a>; </div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>};</div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
@@ -105,6 +105,8 @@ $(function() {
 <div class="ttc" id="astructcollision__mesh_html_ac84068d48e4eb2c662465a1d38ca9775"><div class="ttname"><a href="structcollision__mesh.html#ac84068d48e4eb2c662465a1d38ca9775">collision_mesh::num_verts</a></div><div class="ttdeci">u16 num_verts</div><div class="ttdoc">Number of vertices.</div><div class="ttdef"><b>Definition:</b> collision_mesh.h:30</div></div>
 <div class="ttc" id="astructcollision__mesh_html_ae6909cfc89d72c8d963b2f2d2a9b07bb"><div class="ttname"><a href="structcollision__mesh.html#ae6909cfc89d72c8d963b2f2d2a9b07bb">collision_mesh::verts</a></div><div class="ttdeci">vec3 * verts</div><div class="ttdoc">Vertices array.</div><div class="ttdef"><b>Definition:</b> collision_mesh.h:31</div></div>
 <div class="ttc" id="astructmesh_html"><div class="ttname"><a href="structmesh.html">mesh</a></div><div class="ttdef"><b>Definition:</b> mesh.h:26</div></div>
+<div class="ttc" id="atypes_8h_html_a5f6906312a689f27d70e9d086649d3fd"><div class="ttname"><a href="types_8h.html#a5f6906312a689f27d70e9d086649d3fd">f32</a></div><div class="ttdeci">float f32</div><div class="ttdoc">Floating Point 32-bit.</div><div class="ttdef"><b>Definition:</b> types.h:16</div></div>
+<div class="ttc" id="atypes_8h_html_a9e6c91d77e24643b888dbd1a1a590054"><div class="ttname"><a href="types_8h.html#a9e6c91d77e24643b888dbd1a1a590054">u16</a></div><div class="ttdeci">unsigned short u16</div><div class="ttdoc">Unsigned 16-bit Integer.</div><div class="ttdef"><b>Definition:</b> types.h:9</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

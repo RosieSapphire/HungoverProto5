@@ -121,10 +121,9 @@ static const struct node *_node_from_mesh_ind(const struct node *n,
  */
 void scene_read_file(struct scene *s, const char *path)
 {
-	assert(s);
-
 	FILE *sf = fopen(path, "rb");
 
+	assert(s);
 	if (!sf)
 	{
 		fprintf(stderr, "Couldn't find scene at '%s'\n", path);
@@ -132,7 +131,6 @@ void scene_read_file(struct scene *s, const char *path)
 	}
 
 	scene_read_node(s, &s->root_node, sf);
-
 	freadflipu16(&s->num_tex_paths, sf);
 	for (u16 i = 0; i < s->num_tex_paths; i++)
 		fread(s->tex_paths[i], sizeof(char), TEX_PATH_MAX_LEN, sf);
@@ -157,7 +155,6 @@ void scene_read_file(struct scene *s, const char *path)
 
 		scene_read_mesh(s->meshes + i, path_correct);
 	}
-
 	freadflipu16(&s->num_anims, sf);
 	for (u16 i = 0; i < s->num_anims; i++)
 		scene_read_anim(s->anims + i, sf);

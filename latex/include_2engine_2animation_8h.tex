@@ -1,0 +1,99 @@
+\hypertarget{include_2engine_2animation_8h}{}\doxysection{include/engine/animation.h File Reference}
+\label{include_2engine_2animation_8h}\index{include/engine/animation.h@{include/engine/animation.h}}
+{\ttfamily \#include \char`\"{}engine/types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}engine/config.\+h\char`\"{}}\newline
+Include dependency graph for animation.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=278pt]{include_2engine_2animation_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{include_2engine_2animation_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structvec3__key}{vec3\+\_\+key}}
+\item 
+struct \mbox{\hyperlink{structvec4__key}{vec4\+\_\+key}}
+\item 
+struct \mbox{\hyperlink{structanimation}{animation}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{include_2engine_2animation_8h_a67d78c3a97681f4855a81432d4ee5614}{animation\+\_\+flags}} \{ \mbox{\hyperlink{include_2engine_2animation_8h_a67d78c3a97681f4855a81432d4ee5614a4926c5befb98d3a53b99c9262b4be191}{ANIM\+\_\+\+FLAGS\+\_\+\+NONE}} = 0x0
+, \mbox{\hyperlink{include_2engine_2animation_8h_a67d78c3a97681f4855a81432d4ee5614a31fad5d11ef607a0fe04b4d0c8c6b907}{ANIM\+\_\+\+IS\+\_\+\+PLAYING}} = 0x1
+, \mbox{\hyperlink{include_2engine_2animation_8h_a67d78c3a97681f4855a81432d4ee5614a9f188d92bea4a9f96e324f8f63ef50e7}{ANIM\+\_\+\+IS\+\_\+\+BACKWARD}} = 0x2
+, \mbox{\hyperlink{include_2engine_2animation_8h_a67d78c3a97681f4855a81432d4ee5614aa5dd1097b9c472eb3559db16ca617c32}{ANIM\+\_\+\+LOOPS}} = 0x4
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{include_2engine_2animation_8h_a1ac7e7fa8a8391550df9a3c6d3aff2b6}{animation\+\_\+update}} (struct \mbox{\hyperlink{structanimation}{animation}} $\ast$a)
+\item 
+void \mbox{\hyperlink{include_2engine_2animation_8h_aadb2d088b210ab74354c50b169e0da05}{animation\+\_\+matrix\+\_\+multiply}} (const struct \mbox{\hyperlink{structanimation}{animation}} $\ast$a, const f32 subtick)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{include_2engine_2animation_8h_a67d78c3a97681f4855a81432d4ee5614}\label{include_2engine_2animation_8h_a67d78c3a97681f4855a81432d4ee5614}} 
+\index{animation.h@{animation.h}!animation\_flags@{animation\_flags}}
+\index{animation\_flags@{animation\_flags}!animation.h@{animation.h}}
+\doxysubsubsection{\texorpdfstring{animation\_flags}{animation\_flags}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{include_2engine_2animation_8h_a67d78c3a97681f4855a81432d4ee5614}{animation\+\_\+flags}}}
+
+Animation Flags \begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ANIM\_FLAGS\_NONE@{ANIM\_FLAGS\_NONE}!animation.h@{animation.h}}\index{animation.h@{animation.h}!ANIM\_FLAGS\_NONE@{ANIM\_FLAGS\_NONE}}}\mbox{\Hypertarget{include_2engine_2animation_8h_a67d78c3a97681f4855a81432d4ee5614a4926c5befb98d3a53b99c9262b4be191}\label{include_2engine_2animation_8h_a67d78c3a97681f4855a81432d4ee5614a4926c5befb98d3a53b99c9262b4be191}} 
+ANIM\+\_\+\+FLAGS\+\_\+\+NONE&No Flags. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ANIM\_IS\_PLAYING@{ANIM\_IS\_PLAYING}!animation.h@{animation.h}}\index{animation.h@{animation.h}!ANIM\_IS\_PLAYING@{ANIM\_IS\_PLAYING}}}\mbox{\Hypertarget{include_2engine_2animation_8h_a67d78c3a97681f4855a81432d4ee5614a31fad5d11ef607a0fe04b4d0c8c6b907}\label{include_2engine_2animation_8h_a67d78c3a97681f4855a81432d4ee5614a31fad5d11ef607a0fe04b4d0c8c6b907}} 
+ANIM\+\_\+\+IS\+\_\+\+PLAYING&Animation is Playing. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ANIM\_IS\_BACKWARD@{ANIM\_IS\_BACKWARD}!animation.h@{animation.h}}\index{animation.h@{animation.h}!ANIM\_IS\_BACKWARD@{ANIM\_IS\_BACKWARD}}}\mbox{\Hypertarget{include_2engine_2animation_8h_a67d78c3a97681f4855a81432d4ee5614a9f188d92bea4a9f96e324f8f63ef50e7}\label{include_2engine_2animation_8h_a67d78c3a97681f4855a81432d4ee5614a9f188d92bea4a9f96e324f8f63ef50e7}} 
+ANIM\+\_\+\+IS\+\_\+\+BACKWARD&Animation is Backwards. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ANIM\_LOOPS@{ANIM\_LOOPS}!animation.h@{animation.h}}\index{animation.h@{animation.h}!ANIM\_LOOPS@{ANIM\_LOOPS}}}\mbox{\Hypertarget{include_2engine_2animation_8h_a67d78c3a97681f4855a81432d4ee5614aa5dd1097b9c472eb3559db16ca617c32}\label{include_2engine_2animation_8h_a67d78c3a97681f4855a81432d4ee5614aa5dd1097b9c472eb3559db16ca617c32}} 
+ANIM\+\_\+\+LOOPS&Whether Animation Loops. \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{include_2engine_2animation_8h_aadb2d088b210ab74354c50b169e0da05}\label{include_2engine_2animation_8h_aadb2d088b210ab74354c50b169e0da05}} 
+\index{animation.h@{animation.h}!animation\_matrix\_multiply@{animation\_matrix\_multiply}}
+\index{animation\_matrix\_multiply@{animation\_matrix\_multiply}!animation.h@{animation.h}}
+\doxysubsubsection{\texorpdfstring{animation\_matrix\_multiply()}{animation\_matrix\_multiply()}}
+{\footnotesize\ttfamily void animation\+\_\+matrix\+\_\+multiply (\begin{DoxyParamCaption}\item[{const struct \mbox{\hyperlink{structanimation}{animation}} $\ast$}]{a,  }\item[{const f32}]{subtick }\end{DoxyParamCaption})}
+
+Multiplies an Animation\textquotesingle{}s Matrix by GL Matrix 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em a} & Animation to Multiply its Matrix \\
+\hline
+\mbox{\texttt{ in}}  & {\em subtick} & Subtick between Frames \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{include_2engine_2animation_8h_a1ac7e7fa8a8391550df9a3c6d3aff2b6}\label{include_2engine_2animation_8h_a1ac7e7fa8a8391550df9a3c6d3aff2b6}} 
+\index{animation.h@{animation.h}!animation\_update@{animation\_update}}
+\index{animation\_update@{animation\_update}!animation.h@{animation.h}}
+\doxysubsubsection{\texorpdfstring{animation\_update()}{animation\_update()}}
+{\footnotesize\ttfamily void animation\+\_\+update (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structanimation}{animation}} $\ast$}]{a }\end{DoxyParamCaption})}
+
+Updates an Animation 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em a} & Animation to Update \\
+\hline
+\end{DoxyParams}

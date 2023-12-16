@@ -20,6 +20,9 @@ enum scene_index
 	NUM_SCENES, ///< Number of Scenes
 };
 
+/**
+ * Which scene is currently active (global)
+ */
 extern enum scene_index scene_index;
 
 /**
@@ -36,20 +39,37 @@ struct scene
 	struct animation *anims; ///< Animations Array
 };
 
-/*
- * Main
+/**
+ * @defgroup engine Engine Functions
+ * @{
+ * @defgroup scene Scene Functions
+ * @{
+ */
+
+/**
+ * @defgroup scene_main Scene Main Functions
+ * @{
  */
 void scene_global_spin_timer_update(void);
 void scene_read_file(struct scene *s, const char *path);
 void scene_draw(const struct scene *s, const f32 subtick);
 void scene_destroy(struct scene *s);
 struct node *node_from_mesh_ind(struct node *n, const u16 mid);
+/**
+ * @}
+ */
 
-/*
- * Animations
+/**
+ * @defgroup scene_anims Scene Animation Functions
+ * @{
  */
 void scene_anims_update(struct scene *s);
 void scene_anims_set_flags(struct scene *s, u8 flags);
 void scene_anims_set_frame(struct scene *s, u16 frame);
+/**
+ * @}
+ * @}
+ * @}
+ */
 
 #endif /* _ENGINE_SCENE_H_ */

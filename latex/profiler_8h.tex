@@ -1,0 +1,39 @@
+\hypertarget{profiler_8h}{}\doxysection{include/engine/profiler.h File Reference}
+\label{profiler_8h}\index{include/engine/profiler.h@{include/engine/profiler.h}}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=214pt]{profiler_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{profiler_8h_a763399f7b8ba2483e7b635fea2365c53}{profiler\+\_\+begin}} (const char $\ast$fmt,...)
+\item 
+void \mbox{\hyperlink{profiler_8h_a6ccb682c8c31f34bf1841004974e5365}{profiler\+\_\+end\+\_\+print}} (void)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{profiler_8h_a763399f7b8ba2483e7b635fea2365c53}\label{profiler_8h_a763399f7b8ba2483e7b635fea2365c53}} 
+\index{profiler.h@{profiler.h}!profiler\_begin@{profiler\_begin}}
+\index{profiler\_begin@{profiler\_begin}!profiler.h@{profiler.h}}
+\doxysubsubsection{\texorpdfstring{profiler\_begin()}{profiler\_begin()}}
+{\footnotesize\ttfamily void profiler\+\_\+begin (\begin{DoxyParamCaption}\item[{const char $\ast$}]{fmt,  }\item[{}]{... }\end{DoxyParamCaption})}
+
+Begins the Profiler on the code you want to profile 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em fmt} & String Format \\
+\hline
+\mbox{\texttt{ in}}  & {\em ...} & Va args \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{profiler_8h_a6ccb682c8c31f34bf1841004974e5365}\label{profiler_8h_a6ccb682c8c31f34bf1841004974e5365}} 
+\index{profiler.h@{profiler.h}!profiler\_end\_print@{profiler\_end\_print}}
+\index{profiler\_end\_print@{profiler\_end\_print}!profiler.h@{profiler.h}}
+\doxysubsubsection{\texorpdfstring{profiler\_end\_print()}{profiler\_end\_print()}}
+{\footnotesize\ttfamily void profiler\+\_\+end\+\_\+print (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Ends the Profiler and prints out the time it took 

@@ -10,19 +10,17 @@
 #include "../../../include/engine/config.h"
 
 /**
- * struct scene - Scene Structure
- * @num_meshes: Number of Meshes
- * @meshes: Meshes Array
+ * Scene Structure
  */
 struct scene
 {
-	u16 num_meshes;
-	struct node root_node;
-	struct mesh *meshes;
-	u16 num_anims;
-	struct animation *anims;
-	u16 num_tex_paths;
-	char tex_paths[MAX_SCENE_TEXS][TEX_PATH_MAX_LEN];
+	struct node root_node; ///< Root node
+	u16 num_meshes; ///< Number of meshes
+	struct mesh *meshes; ///< Meshes array
+	u16 num_anims; ///< Number of animations
+	struct animation *anims; ///< Animations array
+	u16 num_tex_paths; ///< Number of Texture Paths
+	char tex_paths[MAX_SCENE_TEXS][TEX_PATH_MAX_LEN]; ///< Tex paths array
 };
 
 /*

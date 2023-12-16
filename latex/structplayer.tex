@@ -1,0 +1,80 @@
+\hypertarget{structplayer}{}\doxysection{player Struct Reference}
+\label{structplayer}\index{player@{player}}
+
+
+{\ttfamily \#include $<$player.\+h$>$}
+
+
+
+Collaboration diagram for player\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structplayer__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structplayer_ae40f8b97aeaf9e7747c8a55ff140fd6b}\label{structplayer_ae40f8b97aeaf9e7747c8a55ff140fd6b}} 
+struct \mbox{\hyperlink{structcamera}{camera}} {\bfseries view}
+\begin{DoxyCompactList}\small\item\em Camera for view matrix. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structplayer_a80399122391815f306f290e9ea1fdb83}\label{structplayer_a80399122391815f306f290e9ea1fdb83}} 
+\mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} {\bfseries pos} \mbox{[}3\mbox{]}
+\begin{DoxyCompactList}\small\item\em Position. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structplayer_a1aa462f03df097c4972497e8ba6db2b2}\label{structplayer_a1aa462f03df097c4972497e8ba6db2b2}} 
+\mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} {\bfseries vel} \mbox{[}3\mbox{]}
+\begin{DoxyCompactList}\small\item\em Current velocity. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structplayer_a3418d4a28f0c96b47878bd32b07b87a1}\label{structplayer_a3418d4a28f0c96b47878bd32b07b87a1}} 
+\mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} {\bfseries vel\+\_\+last} \mbox{[}3\mbox{]}
+\begin{DoxyCompactList}\small\item\em Previous velocity. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structplayer_abdb46aa7cb8832ae74b88e672a48c952}\label{structplayer_abdb46aa7cb8832ae74b88e672a48c952}} 
+\mbox{\hyperlink{types_8h_aed742c436da53c1080638ce6ef7d13de}{u8}} {\bfseries item\+\_\+flags}
+\begin{DoxyCompactList}\small\item\em Which items player has. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structplayer_a7e75c3f2f93d3632c1e4007be22d9c65}\label{structplayer_a7e75c3f2f93d3632c1e4007be22d9c65}} 
+\mbox{\hyperlink{types_8h_a151f780fb455885061d3b77ec1c90c03}{s8}} {\bfseries item\+\_\+selected}
+\begin{DoxyCompactList}\small\item\em Item currently selected. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structplayer_a5dd35b55c71bf03b03ad13caf57b3203}\label{structplayer_a5dd35b55c71bf03b03ad13caf57b3203}} 
+struct \mbox{\hyperlink{structitem}{item}} {\bfseries items} \mbox{[}\mbox{\hyperlink{player_8h_ae27f3e692f481894e3bdb4ed2e1c9503a0e2bf2717d794ae1474c656a77c6856a}{ITEM\+\_\+\+COUNT}}\mbox{]}
+\begin{DoxyCompactList}\small\item\em Items array. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structplayer_a26dfc2bfa9631dce22deb76ec457b9e3}\label{structplayer_a26dfc2bfa9631dce22deb76ec457b9e3}} 
+\mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} {\bfseries recoil\+\_\+amnt}
+\begin{DoxyCompactList}\small\item\em Current Recoil Amount. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structplayer_a8c5ab47dd1b6c0e03af02ffe3614da1d}\label{structplayer_a8c5ab47dd1b6c0e03af02ffe3614da1d}} 
+\mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} {\bfseries recoil\+\_\+amnt\+\_\+last}
+\begin{DoxyCompactList}\small\item\em Previous Recoil Amount. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structplayer_a8618883f4947ef913fc0152b64fdf6fc}\label{structplayer_a8618883f4947ef913fc0152b64fdf6fc}} 
+\mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} {\bfseries recoil\+\_\+dir} \mbox{[}2\mbox{]}
+\begin{DoxyCompactList}\small\item\em Recoil direction. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structplayer_ad44aa14fe98c56ac6aeb0b7e645e959f}\label{structplayer_ad44aa14fe98c56ac6aeb0b7e645e959f}} 
+\mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} {\bfseries turn\+\_\+offset} \mbox{[}2\mbox{]}
+\begin{DoxyCompactList}\small\item\em Current turn offset (Coughing, Recoil, etc.) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structplayer_a3d400a5efa8402cc0737a82660590273}\label{structplayer_a3d400a5efa8402cc0737a82660590273}} 
+\mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} {\bfseries turn\+\_\+offset\+\_\+last} \mbox{[}2\mbox{]}
+\begin{DoxyCompactList}\small\item\em Previous turn offset. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structplayer_a4b45ccebfd6e2550099469c86ee0055f}\label{structplayer_a4b45ccebfd6e2550099469c86ee0055f}} 
+\mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} {\bfseries headbob\+\_\+timer}
+\begin{DoxyCompactList}\small\item\em Current Headbob timer. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structplayer_a18938ed9f5fc09d177b5ba65eb1dfc29}\label{structplayer_a18938ed9f5fc09d177b5ba65eb1dfc29}} 
+\mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} {\bfseries headbob\+\_\+timer\+\_\+last}
+\begin{DoxyCompactList}\small\item\em Previous Headbob timer. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structplayer_a776557f27b975b856662a30cc73bf000}\label{structplayer_a776557f27b975b856662a30cc73bf000}} 
+\mbox{\hyperlink{types_8h_aed742c436da53c1080638ce6ef7d13de}{u8}} {\bfseries which\+\_\+drug}
+\begin{DoxyCompactList}\small\item\em Which drug player is on. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structplayer_a3c69a3d2432e3a3fabb79d9ed25d4509}\label{structplayer_a3c69a3d2432e3a3fabb79d9ed25d4509}} 
+\mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} {\bfseries drug\+\_\+high\+\_\+amnt}
+\begin{DoxyCompactList}\small\item\em How high player is on {\ttfamily which\+\_\+drug} \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structplayer_a3336371e7272f0dbc927ecf96cdc3a20}\label{structplayer_a3336371e7272f0dbc927ecf96cdc3a20}} 
+\mbox{\hyperlink{types_8h_a9e6c91d77e24643b888dbd1a1a590054}{u16}} {\bfseries drug\+\_\+progress}
+\begin{DoxyCompactList}\small\item\em Drug progress. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structplayer_a8df2bd8726932f9135bee7128463ee3b}\label{structplayer_a8df2bd8726932f9135bee7128463ee3b}} 
+\mbox{\hyperlink{types_8h_a9e6c91d77e24643b888dbd1a1a590054}{u16}} {\bfseries drug\+\_\+duration}
+\begin{DoxyCompactList}\small\item\em Used as a percentage for {\ttfamily drug\+\_\+progress} \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Player Structure 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/engine/\mbox{\hyperlink{player_8h}{player.\+h}}\end{DoxyCompactItemize}

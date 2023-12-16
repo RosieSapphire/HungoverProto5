@@ -8,10 +8,11 @@ var searchData=
   ['anim_5fis_5fplaying_5',['ANIM_IS_PLAYING',['../animation_8h.html#a67d78c3a97681f4855a81432d4ee5614a31fad5d11ef607a0fe04b4d0c8c6b907',1,'animation.h']]],
   ['anim_5floops_6',['ANIM_LOOPS',['../animation_8h.html#a67d78c3a97681f4855a81432d4ee5614aa5dd1097b9c472eb3559db16ca617c32',1,'animation.h']]],
   ['animation_7',['animation',['../structanimation.html',1,'']]],
-  ['animation_2ec_8',['animation.c',['../animation_8c.html',1,'']]],
-  ['animation_2eh_9',['animation.h',['../animation_8h.html',1,'']]],
-  ['animation_5fflags_10',['animation_flags',['../animation_8h.html#a67d78c3a97681f4855a81432d4ee5614',1,'animation.h']]],
-  ['animation_5fmatrix_5fmultiply_11',['animation_matrix_multiply',['../animation_8h.html#aadb2d088b210ab74354c50b169e0da05',1,'animation_matrix_multiply(const struct animation *a, const f32 subtick):&#160;animation.c'],['../animation_8c.html#aadb2d088b210ab74354c50b169e0da05',1,'animation_matrix_multiply(const struct animation *a, const f32 subtick):&#160;animation.c']]],
-  ['animation_5fupdate_12',['animation_update',['../animation_8h.html#a1ac7e7fa8a8391550df9a3c6d3aff2b6',1,'animation_update(struct animation *a):&#160;animation.c'],['../animation_8c.html#a1ac7e7fa8a8391550df9a3c6d3aff2b6',1,'animation_update(struct animation *a):&#160;animation.c']]],
-  ['anims_13',['anims',['../structscene.html#a1d86b3c125c2a9765751682432898373',1,'scene']]]
+  ['animation_20functions_8',['Animation Functions',['../group__animation.html',1,'']]],
+  ['animation_2ec_9',['animation.c',['../animation_8c.html',1,'']]],
+  ['animation_2eh_10',['animation.h',['../animation_8h.html',1,'']]],
+  ['animation_5fflags_11',['animation_flags',['../animation_8h.html#a67d78c3a97681f4855a81432d4ee5614',1,'animation.h']]],
+  ['animation_5fmatrix_5fmultiply_12',['animation_matrix_multiply',['../group__animation.html#gaadb2d088b210ab74354c50b169e0da05',1,'animation_matrix_multiply(const struct animation *a, const f32 subtick):&#160;animation.c'],['../group__animation.html#gaadb2d088b210ab74354c50b169e0da05',1,'animation_matrix_multiply(const struct animation *a, const f32 subtick):&#160;animation.c']]],
+  ['animation_5fupdate_13',['animation_update',['../group__animation.html#ga1ac7e7fa8a8391550df9a3c6d3aff2b6',1,'animation_update(struct animation *a):&#160;animation.c'],['../group__animation.html#ga1ac7e7fa8a8391550df9a3c6d3aff2b6',1,'animation_update(struct animation *a):&#160;animation.c']]],
+  ['anims_14',['anims',['../structscene.html#a1d86b3c125c2a9765751682432898373',1,'scene']]]
 ];

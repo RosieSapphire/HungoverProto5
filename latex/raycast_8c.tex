@@ -1,0 +1,40 @@
+\hypertarget{raycast_8c}{}\doxysection{src/engine/raycast.c File Reference}
+\label{raycast_8c}\index{src/engine/raycast.c@{src/engine/raycast.c}}
+{\ttfamily \#include \char`\"{}engine/vector.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}engine/collision\+\_\+mesh.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}engine/raycast.\+h\char`\"{}}\newline
+Include dependency graph for raycast.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{raycast_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{types_8h_aed742c436da53c1080638ce6ef7d13de}{u8}} \mbox{\hyperlink{raycast_8c_a6b33c68beff13b59b7096b36e98db20e}{raycast\+\_\+triangle}} (\mbox{\hyperlink{collision__mesh_8h_a891a34b5b11ac9ab4380a8379cd2ab8e}{vec3}} eye, \mbox{\hyperlink{collision__mesh_8h_a891a34b5b11ac9ab4380a8379cd2ab8e}{vec3}} dir, \mbox{\hyperlink{collision__mesh_8h_a891a34b5b11ac9ab4380a8379cd2ab8e}{vec3}} $\ast$positions, \mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} $\ast$distance)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{raycast_8c_a6b33c68beff13b59b7096b36e98db20e}\label{raycast_8c_a6b33c68beff13b59b7096b36e98db20e}} 
+\index{raycast.c@{raycast.c}!raycast\_triangle@{raycast\_triangle}}
+\index{raycast\_triangle@{raycast\_triangle}!raycast.c@{raycast.c}}
+\doxysubsubsection{\texorpdfstring{raycast\_triangle()}{raycast\_triangle()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{types_8h_aed742c436da53c1080638ce6ef7d13de}{u8}} raycast\+\_\+triangle (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{collision__mesh_8h_a891a34b5b11ac9ab4380a8379cd2ab8e}{vec3}}}]{eye,  }\item[{\mbox{\hyperlink{collision__mesh_8h_a891a34b5b11ac9ab4380a8379cd2ab8e}{vec3}}}]{dir,  }\item[{\mbox{\hyperlink{collision__mesh_8h_a891a34b5b11ac9ab4380a8379cd2ab8e}{vec3}} $\ast$}]{positions,  }\item[{\mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} $\ast$}]{distance }\end{DoxyParamCaption})}
+
+Does a Raycast from eye to dir 
+\begin{DoxyParams}{Parameters}
+{\em eye} & Eye Position \\
+\hline
+{\em dir} & Direction Vector \\
+\hline
+{\em positions} & Array of Vec3s for the triangle \\
+\hline
+{\em distance} & Hit Distance Return \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Whether or not the ray hit the triangle 
+\end{DoxyReturn}

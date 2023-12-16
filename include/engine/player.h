@@ -72,51 +72,83 @@ struct player
 	u16 drug_duration; ///< Used as a percentage for `drug_progress`
 };
 
-/*
- * Main
+/**
+ * @defgroup engine Engine Functions
+ * @{
+ * @defgroup player Player Functions
+ * @{
+ */
+
+/**
+ * @defgroup player_main Player Main Functions
+ * @{
  */
 void player_init(const struct scene *s, struct player *p,
 		 const u8 items_equipped_flags);
 void player_terminate(struct player *p);
 void player_update(struct scene *s, struct player *p,
 		   const struct input_parms iparms);
+/**
+ * @}
+ */
 
-/*
- * Camera
+/**
+ * @defgroup player_camera Player Camera Functions
+ * @{
  */
 void player_camera_view_matrix_setup(const struct player *p,
 				     const f32 subtick);
 void player_camera_look_update(struct player *p,
 			       const struct input_parms iparms);
+/**
+ * @}
+ */
 
-/*
- * Physics
+/**
+ * @defgroup player_physics Player Physics Functions
+ * @{
  */
 void player_friction(struct player *p);
 void player_accelerate(struct player *p, const struct input_parms iparms);
+/**
+ * @}
+ */
 
-/*
- * Collision
+/**
+ * @defgroup player_collision Player Collision Functions
+ * @{
  */
 void player_collision(const struct collision_mesh *m, struct player *p,
 		      enum collision_type coltype);
+/**
+ * @}
+ */
 
-/*
- * Items
+/**
+ * @defgroup player_items Player Item Functions
+ * @{
  */
 void player_item_load(struct player *p, const u8 flags_last);
 void player_item_check_pickup(struct scene *s, struct player *p);
 void player_items_update(struct player *p, const struct input_parms iparms);
 void player_item_draw(const struct player *p, const f32 subtick);
+/**
+ * @}
+ */
 
-/*
- * Pistol
+/**
+ * @defgroup player_pistol Player Pistol Functions
+ * @{
  */
 void player_pistol_check_use(struct player *p,
 			     const struct input_parms iparms);
+/**
+ * @}
+ */
 
-/*
- * Weed
+/**
+ * @defgroup player_weed Player Weed Functions
+ * @{
  */
 void player_bong_check_use(struct player *p, const struct input_parms iparms);
 u16 player_bong_cough_setup(struct player *p);
@@ -125,13 +157,22 @@ void player_bong_weed_effect_update(struct player *p,
 void player_bong_weed_effect_draw(const struct player *p,
 				  const surface_t *surf, const u32 tick_cnt,
 				  const u32 tick_cnt_last, const f32 subtick);
+/**
+ * @}
+ */
 
-/*
- * Nitrous
+/**
+ * @defgroup player_nitrous Player Nitrous Functions
+ * @{
  */
 void player_n2o_check_use(struct player *p, const struct input_parms iparms);
 void player_n2o_effect_draw(const struct player *p, const surface_t *surf,
 			    const u32 tick_cnt, const u32 tick_cnt_last,
 			    const f32 subtick);
+/**
+ * @}
+ * @}
+ * @}
+ */
 
 #endif /* _ENGINE_PLAYER_H_ */

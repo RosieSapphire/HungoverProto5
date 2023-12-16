@@ -1,0 +1,50 @@
+\hypertarget{animation_8h_source}{}\doxysection{animation.\+h}
+\label{animation_8h_source}\index{include/engine/animation.h@{include/engine/animation.h}}
+\mbox{\hyperlink{animation_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef \_ENGINE\_ANIMATION\_H\_}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define \_ENGINE\_ANIMATION\_H\_}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{types_8h}{engine/types.h}}"{}}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{config_8h}{engine/config.h}}"{}}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{14 \textcolor{keyword}{struct }\mbox{\hyperlink{structvec3__key}{vec3\_key}}}
+\DoxyCodeLine{15 \{}
+\DoxyCodeLine{16     \mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} \mbox{\hyperlink{structvec3__key_aa2d108a4f2357d19c10a99493d4d7e06}{val}}[3]; }
+\DoxyCodeLine{17 \};}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{22 \textcolor{keyword}{struct }\mbox{\hyperlink{structvec4__key}{vec4\_key}}}
+\DoxyCodeLine{23 \{}
+\DoxyCodeLine{24     \mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} \mbox{\hyperlink{structvec4__key_a245e1983fc0da6134333f27d1632ca92}{val}}[4]; }
+\DoxyCodeLine{25 \};}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{30 \textcolor{keyword}{enum} \mbox{\hyperlink{animation_8h_a67d78c3a97681f4855a81432d4ee5614}{animation\_flags}}}
+\DoxyCodeLine{31 \{}
+\DoxyCodeLine{32     \mbox{\hyperlink{animation_8h_a67d78c3a97681f4855a81432d4ee5614a4926c5befb98d3a53b99c9262b4be191}{ANIM\_FLAGS\_NONE}}  = 0x0, }
+\DoxyCodeLine{33     \mbox{\hyperlink{animation_8h_a67d78c3a97681f4855a81432d4ee5614a31fad5d11ef607a0fe04b4d0c8c6b907}{ANIM\_IS\_PLAYING}}  = 0x1, }
+\DoxyCodeLine{34     \mbox{\hyperlink{animation_8h_a67d78c3a97681f4855a81432d4ee5614a9f188d92bea4a9f96e324f8f63ef50e7}{ANIM\_IS\_BACKWARD}} = 0x2, }
+\DoxyCodeLine{35     \mbox{\hyperlink{animation_8h_a67d78c3a97681f4855a81432d4ee5614aa5dd1097b9c472eb3559db16ca617c32}{ANIM\_LOOPS}}       = 0x4, }
+\DoxyCodeLine{36 \};}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{41 \textcolor{keyword}{struct }\mbox{\hyperlink{structanimation}{animation}}}
+\DoxyCodeLine{42 \{}
+\DoxyCodeLine{43     \textcolor{keywordtype}{char} \mbox{\hyperlink{structanimation_ae3d14ae503a60147a05813b60298e60b}{name}}[\mbox{\hyperlink{config_8h_ab3cf7d07e330b11f314832285681c84f}{CONF\_NAME\_MAX}}]; }
+\DoxyCodeLine{44     \mbox{\hyperlink{types_8h_a9e6c91d77e24643b888dbd1a1a590054}{u16}} \mbox{\hyperlink{structanimation_a8a55b6e8e47dbb3b89f493b28b57aa67}{num\_pos}}; }
+\DoxyCodeLine{45     \mbox{\hyperlink{types_8h_a9e6c91d77e24643b888dbd1a1a590054}{u16}} \mbox{\hyperlink{structanimation_abf9f10feb4e614d5015efe4fd9ec2d0f}{num\_rot}}; }
+\DoxyCodeLine{46     \mbox{\hyperlink{types_8h_a9e6c91d77e24643b888dbd1a1a590054}{u16}} \mbox{\hyperlink{structanimation_ad8ee63264e6bcb5cb5cc19ddcb6eb2a6}{num\_sca}}; }
+\DoxyCodeLine{47     \textcolor{keyword}{struct }\mbox{\hyperlink{structvec3__key}{vec3\_key}} *\mbox{\hyperlink{structanimation_a63b31fa819a8e1445950562b7618af78}{pos\_keys}}; }
+\DoxyCodeLine{48     \textcolor{keyword}{struct }\mbox{\hyperlink{structvec4__key}{vec4\_key}} *\mbox{\hyperlink{structanimation_a1508872dccb00e59377c02bc2285f8bf}{rot\_keys}}; }
+\DoxyCodeLine{49     \textcolor{keyword}{struct }\mbox{\hyperlink{structvec3__key}{vec3\_key}} *\mbox{\hyperlink{structanimation_a703b14f1ef24ab0095ed73912f5a9e51}{sca\_keys}}; }
+\DoxyCodeLine{50     \mbox{\hyperlink{types_8h_a5ffa4f640862b25ba6d4f635b78bdbe1}{s16}} \mbox{\hyperlink{structanimation_a46d7fd2d246443e686e6cba9a1d34df2}{frame\_last}}; }
+\DoxyCodeLine{51     \mbox{\hyperlink{types_8h_a5ffa4f640862b25ba6d4f635b78bdbe1}{s16}} \mbox{\hyperlink{structanimation_adb7abeff2ce4951c805ee9789ee626f3}{frame}}; }
+\DoxyCodeLine{52     \mbox{\hyperlink{types_8h_a9e6c91d77e24643b888dbd1a1a590054}{u16}} \mbox{\hyperlink{structanimation_a0f5c68102a2ccb5d6f507c294957d43d}{mesh\_ind}}; }
+\DoxyCodeLine{53     \mbox{\hyperlink{types_8h_a9e6c91d77e24643b888dbd1a1a590054}{u16}} \mbox{\hyperlink{structanimation_a51a7b1574376906b7774187427b24bcd}{length}}; }
+\DoxyCodeLine{54     \textcolor{keyword}{enum} \mbox{\hyperlink{animation_8h_a67d78c3a97681f4855a81432d4ee5614}{animation\_flags}} \mbox{\hyperlink{structanimation_aa9a971eb28fb01290423a826f9f1da8c}{flags}}; }
+\DoxyCodeLine{55 \};}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{63 \textcolor{keywordtype}{void} \mbox{\hyperlink{group__animation_ga1ac7e7fa8a8391550df9a3c6d3aff2b6}{animation\_update}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structanimation}{animation}} *a);}
+\DoxyCodeLine{64 \textcolor{keywordtype}{void} \mbox{\hyperlink{group__animation_gaadb2d088b210ab74354c50b169e0da05}{animation\_matrix\_multiply}}(\textcolor{keyword}{const} \textcolor{keyword}{struct} \mbox{\hyperlink{structanimation}{animation}} *a, \textcolor{keyword}{const} \mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} subtick);}
+\DoxyCodeLine{70 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* \_ENGINE\_ANIMATION\_H\_ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

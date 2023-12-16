@@ -1,0 +1,183 @@
+\hypertarget{include_2engine_2scene_8h}{}\doxysection{include/engine/scene.h File Reference}
+\label{include_2engine_2scene_8h}\index{include/engine/scene.h@{include/engine/scene.h}}
+{\ttfamily \#include \char`\"{}engine/mesh.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}engine/node.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}engine/animation.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}engine/config.\+h\char`\"{}}\newline
+Include dependency graph for scene.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{include_2engine_2scene_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{include_2engine_2scene_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structscene}{scene}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{include_2engine_2scene_8h_ac9f95692dedfa958757f3fed60b1ea76}{scene\+\_\+index}} \{ \mbox{\hyperlink{include_2engine_2scene_8h_ac9f95692dedfa958757f3fed60b1ea76a96f75e824fdc81751dcfc4f447390853}{SCENE\+\_\+\+TITLE}}
+, \mbox{\hyperlink{include_2engine_2scene_8h_ac9f95692dedfa958757f3fed60b1ea76a7dffdf5e1684161a6f87f3bcdff1b943}{SCENE\+\_\+\+TESTROOM}}
+, \mbox{\hyperlink{include_2engine_2scene_8h_ac9f95692dedfa958757f3fed60b1ea76ad6cbc2775dd07fead3eebb0aeca42eab}{NUM\+\_\+\+SCENES}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{include_2engine_2scene_8h_aa776a6d5aad566ff30c4300d9931c87a}{scene\+\_\+global\+\_\+spin\+\_\+timer\+\_\+update}} (void)
+\item 
+void \mbox{\hyperlink{include_2engine_2scene_8h_a4d4d1f19ef7bacc9db944747b0887783}{scene\+\_\+read\+\_\+file}} (struct \mbox{\hyperlink{structscene}{scene}} $\ast$s, const char $\ast$path)
+\item 
+void \mbox{\hyperlink{include_2engine_2scene_8h_ad68b930465be813d04dcfb536e5000d0}{scene\+\_\+draw}} (const struct \mbox{\hyperlink{structscene}{scene}} $\ast$s, const f32 subtick)
+\item 
+void \mbox{\hyperlink{include_2engine_2scene_8h_ade4b60f4ce4eb5edaa75ca0ceafdd9b8}{scene\+\_\+destroy}} (struct \mbox{\hyperlink{structscene}{scene}} $\ast$s)
+\item 
+struct \mbox{\hyperlink{structnode}{node}} $\ast$ \mbox{\hyperlink{include_2engine_2scene_8h_a56c17506094ef3a1926b1171d633c1cc}{node\+\_\+from\+\_\+mesh\+\_\+ind}} (struct \mbox{\hyperlink{structnode}{node}} $\ast$n, const u16 mid)
+\item 
+void \mbox{\hyperlink{include_2engine_2scene_8h_a32deba51662a7ffc9ac5645ba116af11}{scene\+\_\+anims\+\_\+update}} (struct \mbox{\hyperlink{structscene}{scene}} $\ast$s)
+\item 
+void \mbox{\hyperlink{include_2engine_2scene_8h_a0bffcf01c2f92fb23236c0107318f78d}{scene\+\_\+anims\+\_\+set\+\_\+flags}} (struct \mbox{\hyperlink{structscene}{scene}} $\ast$s, u8 flags)
+\item 
+void \mbox{\hyperlink{include_2engine_2scene_8h_a5bffe8a1314fd08983e99a23d08d1464}{scene\+\_\+anims\+\_\+set\+\_\+frame}} (struct \mbox{\hyperlink{structscene}{scene}} $\ast$s, u16 frame)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{include_2engine_2scene_8h_a83d8c297e61a1494b279643efb2ce79e}\label{include_2engine_2scene_8h_a83d8c297e61a1494b279643efb2ce79e}} 
+enum \mbox{\hyperlink{include_2engine_2scene_8h_ac9f95692dedfa958757f3fed60b1ea76}{scene\+\_\+index}} {\bfseries scene\+\_\+index}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{include_2engine_2scene_8h_ac9f95692dedfa958757f3fed60b1ea76}\label{include_2engine_2scene_8h_ac9f95692dedfa958757f3fed60b1ea76}} 
+\index{scene.h@{scene.h}!scene\_index@{scene\_index}}
+\index{scene\_index@{scene\_index}!scene.h@{scene.h}}
+\doxysubsubsection{\texorpdfstring{scene\_index}{scene\_index}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{include_2engine_2scene_8h_ac9f95692dedfa958757f3fed60b1ea76}{scene\+\_\+index}}}
+
+Scene Index \begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SCENE\_TITLE@{SCENE\_TITLE}!scene.h@{scene.h}}\index{scene.h@{scene.h}!SCENE\_TITLE@{SCENE\_TITLE}}}\mbox{\Hypertarget{include_2engine_2scene_8h_ac9f95692dedfa958757f3fed60b1ea76a96f75e824fdc81751dcfc4f447390853}\label{include_2engine_2scene_8h_ac9f95692dedfa958757f3fed60b1ea76a96f75e824fdc81751dcfc4f447390853}} 
+SCENE\+\_\+\+TITLE&Title Screen. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SCENE\_TESTROOM@{SCENE\_TESTROOM}!scene.h@{scene.h}}\index{scene.h@{scene.h}!SCENE\_TESTROOM@{SCENE\_TESTROOM}}}\mbox{\Hypertarget{include_2engine_2scene_8h_ac9f95692dedfa958757f3fed60b1ea76a7dffdf5e1684161a6f87f3bcdff1b943}\label{include_2engine_2scene_8h_ac9f95692dedfa958757f3fed60b1ea76a7dffdf5e1684161a6f87f3bcdff1b943}} 
+SCENE\+\_\+\+TESTROOM&Test Room. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NUM\_SCENES@{NUM\_SCENES}!scene.h@{scene.h}}\index{scene.h@{scene.h}!NUM\_SCENES@{NUM\_SCENES}}}\mbox{\Hypertarget{include_2engine_2scene_8h_ac9f95692dedfa958757f3fed60b1ea76ad6cbc2775dd07fead3eebb0aeca42eab}\label{include_2engine_2scene_8h_ac9f95692dedfa958757f3fed60b1ea76ad6cbc2775dd07fead3eebb0aeca42eab}} 
+NUM\+\_\+\+SCENES&Number of Scenes. \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{include_2engine_2scene_8h_a56c17506094ef3a1926b1171d633c1cc}\label{include_2engine_2scene_8h_a56c17506094ef3a1926b1171d633c1cc}} 
+\index{scene.h@{scene.h}!node\_from\_mesh\_ind@{node\_from\_mesh\_ind}}
+\index{node\_from\_mesh\_ind@{node\_from\_mesh\_ind}!scene.h@{scene.h}}
+\doxysubsubsection{\texorpdfstring{node\_from\_mesh\_ind()}{node\_from\_mesh\_ind()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structnode}{node}} $\ast$ node\+\_\+from\+\_\+mesh\+\_\+ind (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structnode}{node}} $\ast$}]{n,  }\item[{const u16}]{mid }\end{DoxyParamCaption})}
+
+Gets Pointer to Node from Mesh Index 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em n} & Node to start searching through \\
+\hline
+\mbox{\texttt{ in}}  & {\em mid} & Mesh Index \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Node Found (or NULL) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{include_2engine_2scene_8h_a0bffcf01c2f92fb23236c0107318f78d}\label{include_2engine_2scene_8h_a0bffcf01c2f92fb23236c0107318f78d}} 
+\index{scene.h@{scene.h}!scene\_anims\_set\_flags@{scene\_anims\_set\_flags}}
+\index{scene\_anims\_set\_flags@{scene\_anims\_set\_flags}!scene.h@{scene.h}}
+\doxysubsubsection{\texorpdfstring{scene\_anims\_set\_flags()}{scene\_anims\_set\_flags()}}
+{\footnotesize\ttfamily void scene\+\_\+anims\+\_\+set\+\_\+flags (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structscene}{scene}} $\ast$}]{s,  }\item[{u8}]{flags }\end{DoxyParamCaption})}
+
+Sets Flags for All Animations 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em s} & Scene to set Animation Flags For \\
+\hline
+\mbox{\texttt{ in}}  & {\em flags} & Flags themselves \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{include_2engine_2scene_8h_a5bffe8a1314fd08983e99a23d08d1464}\label{include_2engine_2scene_8h_a5bffe8a1314fd08983e99a23d08d1464}} 
+\index{scene.h@{scene.h}!scene\_anims\_set\_frame@{scene\_anims\_set\_frame}}
+\index{scene\_anims\_set\_frame@{scene\_anims\_set\_frame}!scene.h@{scene.h}}
+\doxysubsubsection{\texorpdfstring{scene\_anims\_set\_frame()}{scene\_anims\_set\_frame()}}
+{\footnotesize\ttfamily void scene\+\_\+anims\+\_\+set\+\_\+frame (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structscene}{scene}} $\ast$}]{s,  }\item[{u16}]{frame }\end{DoxyParamCaption})}
+
+Sets Frame for All Animations 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em s} & Scene to set Animation Frame For \\
+\hline
+\mbox{\texttt{ in}}  & {\em frame} & Frame itself \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{include_2engine_2scene_8h_a32deba51662a7ffc9ac5645ba116af11}\label{include_2engine_2scene_8h_a32deba51662a7ffc9ac5645ba116af11}} 
+\index{scene.h@{scene.h}!scene\_anims\_update@{scene\_anims\_update}}
+\index{scene\_anims\_update@{scene\_anims\_update}!scene.h@{scene.h}}
+\doxysubsubsection{\texorpdfstring{scene\_anims\_update()}{scene\_anims\_update()}}
+{\footnotesize\ttfamily void scene\+\_\+anims\+\_\+update (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structscene}{scene}} $\ast$}]{s }\end{DoxyParamCaption})}
+
+Updates all Animations in a Scene Struct 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em s} & Scene to Update Animations for \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{include_2engine_2scene_8h_ade4b60f4ce4eb5edaa75ca0ceafdd9b8}\label{include_2engine_2scene_8h_ade4b60f4ce4eb5edaa75ca0ceafdd9b8}} 
+\index{scene.h@{scene.h}!scene\_destroy@{scene\_destroy}}
+\index{scene\_destroy@{scene\_destroy}!scene.h@{scene.h}}
+\doxysubsubsection{\texorpdfstring{scene\_destroy()}{scene\_destroy()}}
+{\footnotesize\ttfamily void scene\+\_\+destroy (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structscene}{scene}} $\ast$}]{s }\end{DoxyParamCaption})}
+
+Destroys a Scene 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em s} & Scene to Destroy \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{include_2engine_2scene_8h_ad68b930465be813d04dcfb536e5000d0}\label{include_2engine_2scene_8h_ad68b930465be813d04dcfb536e5000d0}} 
+\index{scene.h@{scene.h}!scene\_draw@{scene\_draw}}
+\index{scene\_draw@{scene\_draw}!scene.h@{scene.h}}
+\doxysubsubsection{\texorpdfstring{scene\_draw()}{scene\_draw()}}
+{\footnotesize\ttfamily void scene\+\_\+draw (\begin{DoxyParamCaption}\item[{const struct \mbox{\hyperlink{structscene}{scene}} $\ast$}]{s,  }\item[{const f32}]{subtick }\end{DoxyParamCaption})}
+
+Draws a Scene and its Meshes 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & Scene to Draw \\
+\hline
+\mbox{\texttt{ in}}  & {\em subtick} & Subtick \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{include_2engine_2scene_8h_aa776a6d5aad566ff30c4300d9931c87a}\label{include_2engine_2scene_8h_aa776a6d5aad566ff30c4300d9931c87a}} 
+\index{scene.h@{scene.h}!scene\_global\_spin\_timer\_update@{scene\_global\_spin\_timer\_update}}
+\index{scene\_global\_spin\_timer\_update@{scene\_global\_spin\_timer\_update}!scene.h@{scene.h}}
+\doxysubsubsection{\texorpdfstring{scene\_global\_spin\_timer\_update()}{scene\_global\_spin\_timer\_update()}}
+{\footnotesize\ttfamily void scene\+\_\+global\+\_\+spin\+\_\+timer\+\_\+update (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Updates the Spin Timer for all Scenes \mbox{\Hypertarget{include_2engine_2scene_8h_a4d4d1f19ef7bacc9db944747b0887783}\label{include_2engine_2scene_8h_a4d4d1f19ef7bacc9db944747b0887783}} 
+\index{scene.h@{scene.h}!scene\_read\_file@{scene\_read\_file}}
+\index{scene\_read\_file@{scene\_read\_file}!scene.h@{scene.h}}
+\doxysubsubsection{\texorpdfstring{scene\_read\_file()}{scene\_read\_file()}}
+{\footnotesize\ttfamily void scene\+\_\+read\+\_\+file (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structscene}{scene}} $\ast$}]{s,  }\item[{const char $\ast$}]{path }\end{DoxyParamCaption})}
+
+Reads Scene Object from File 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em s} & Scene Read Output \\
+\hline
+\mbox{\texttt{ in}}  & {\em path} & Path to File to Read from\\
+\hline
+\end{DoxyParams}
+\+\_\+scene\+\_\+read -\/ Test Scene Importing @s\+: Scene to Import To @path\+: Path to Import From FIXME\+: This will cause a crash later

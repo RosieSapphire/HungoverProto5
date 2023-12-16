@@ -1,0 +1,48 @@
+\hypertarget{group__player__camera}{}\doxysection{Player Camera Functions}
+\label{group__player__camera}\index{Player Camera Functions@{Player Camera Functions}}
+Collaboration diagram for Player Camera Functions\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{group__player__camera}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{group__player__camera_gaa7860bc8dc538416dfb24feae1b33f83}{player\+\_\+camera\+\_\+view\+\_\+matrix\+\_\+setup}} (const struct \mbox{\hyperlink{structplayer}{player}} $\ast$p, const \mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} subtick)
+\item 
+void \mbox{\hyperlink{group__player__camera_gaaba75cc60d83a2f3037e6156986599c8}{player\+\_\+camera\+\_\+look\+\_\+update}} (struct \mbox{\hyperlink{structplayer}{player}} $\ast$p, const struct \mbox{\hyperlink{structinput__parms}{input\+\_\+parms}} iparms)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{group__player__camera_gaaba75cc60d83a2f3037e6156986599c8}\label{group__player__camera_gaaba75cc60d83a2f3037e6156986599c8}} 
+\index{Player Camera Functions@{Player Camera Functions}!player\_camera\_look\_update@{player\_camera\_look\_update}}
+\index{player\_camera\_look\_update@{player\_camera\_look\_update}!Player Camera Functions@{Player Camera Functions}}
+\doxysubsubsection{\texorpdfstring{player\_camera\_look\_update()}{player\_camera\_look\_update()}}
+{\footnotesize\ttfamily void player\+\_\+camera\+\_\+look\+\_\+update (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structplayer}{player}} $\ast$}]{p,  }\item[{const struct \mbox{\hyperlink{structinput__parms}{input\+\_\+parms}}}]{iparms }\end{DoxyParamCaption})}
+
+Updates look angles for Player 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em p} & Player to Update angles for \\
+\hline
+\mbox{\texttt{ in}}  & {\em iparms} & Input Parameters \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{group__player__camera_gaa7860bc8dc538416dfb24feae1b33f83}\label{group__player__camera_gaa7860bc8dc538416dfb24feae1b33f83}} 
+\index{Player Camera Functions@{Player Camera Functions}!player\_camera\_view\_matrix\_setup@{player\_camera\_view\_matrix\_setup}}
+\index{player\_camera\_view\_matrix\_setup@{player\_camera\_view\_matrix\_setup}!Player Camera Functions@{Player Camera Functions}}
+\doxysubsubsection{\texorpdfstring{player\_camera\_view\_matrix\_setup()}{player\_camera\_view\_matrix\_setup()}}
+{\footnotesize\ttfamily void player\+\_\+camera\+\_\+view\+\_\+matrix\+\_\+setup (\begin{DoxyParamCaption}\item[{const struct \mbox{\hyperlink{structplayer}{player}} $\ast$}]{p,  }\item[{const \mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}}}]{subtick }\end{DoxyParamCaption})}
+
+Sets up View Matrix for Open\+GL with Cam 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em p} & Player whose camera to reference \\
+\hline
+\mbox{\texttt{ in}}  & {\em subtick} & Subtick between Frames \\
+\hline
+\end{DoxyParams}

@@ -1,0 +1,30 @@
+\hypertarget{texture_8h_source}{}\doxysection{texture.\+h}
+\label{texture_8h_source}\index{include/engine/texture.h@{include/engine/texture.h}}
+\mbox{\hyperlink{texture_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef \_ENGINE\_TEXTURE\_H\_}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define \_ENGINE\_TEXTURE\_H\_}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <libdragon.h>}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{types_8h}{engine/types.h}}"{}}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{config_8h}{engine/config.h}}"{}}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{16 \textcolor{keyword}{struct }\mbox{\hyperlink{structtexture}{texture}}}
+\DoxyCodeLine{17 \{}
+\DoxyCodeLine{18     \mbox{\hyperlink{types_8h_a2caf5cd7bcdbe1eefa727f44ffb10bac}{u32}} \mbox{\hyperlink{structtexture_a80d0e2a9d244ce65a29cb87e5db5c695}{id}}; }
+\DoxyCodeLine{19     sprite\_t *\mbox{\hyperlink{structtexture_aa130cd7032b00832676a2f07fed6c59e}{spr}}; }
+\DoxyCodeLine{20 \};}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22 \textcolor{keyword}{extern} \mbox{\hyperlink{types_8h_a9e6c91d77e24643b888dbd1a1a590054}{u16}} \mbox{\hyperlink{texture_8h_a85e8e15b901c0604afd4ff97d1694a08}{num\_texs\_loaded}};}
+\DoxyCodeLine{23 \textcolor{keyword}{extern} \textcolor{keywordtype}{char} \mbox{\hyperlink{texture_8h_a07b5416f6c18456fe11928eede8e91d5}{tex\_paths\_loaded}}[\mbox{\hyperlink{config_8h_a2cde33d9f3c505c7d4bef767d446b554}{MAX\_TOTAL\_TEXS}}][\mbox{\hyperlink{config_8h_a5e3fb3fca1216d5374bae58e8e8e607f}{TEX\_PATH\_MAX\_LEN}}];}
+\DoxyCodeLine{24 \textcolor{keyword}{extern} \textcolor{keyword}{struct }\mbox{\hyperlink{structtexture}{texture}} *\mbox{\hyperlink{texture_8h_ada8c4ce2827e85303c588f2b5c5cb6f3}{tex\_objs\_loaded}};}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{keywordtype}{void} \mbox{\hyperlink{texture_8h_ab18e09521b2436e2920ec2fbfd38e738}{textures\_init}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{27 \mbox{\hyperlink{types_8h_a2caf5cd7bcdbe1eefa727f44ffb10bac}{u32}} \mbox{\hyperlink{texture_8h_ada91b0a06c997fcd72952d82aa0acebe}{texture\_create\_file}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char} *path);}
+\DoxyCodeLine{28 \textcolor{keywordtype}{void} \mbox{\hyperlink{texture_8h_afadb3987ab2be03d4bb779dc91001ecb}{texture\_destroy}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structtexture}{texture}} *t);}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* \_ENGINE\_TEXTURE\_H\_ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

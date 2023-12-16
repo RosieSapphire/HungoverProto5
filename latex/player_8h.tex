@@ -1,0 +1,190 @@
+\hypertarget{player_8h}{}\doxysection{include/engine/player.h File Reference}
+\label{player_8h}\index{include/engine/player.h@{include/engine/player.h}}
+{\ttfamily \#include \char`\"{}engine/camera.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}engine/item.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}engine/collision\+\_\+mesh.\+h\char`\"{}}\newline
+Include dependency graph for player.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{player_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=210pt]{player_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structplayer}{player}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{player_8h_ae27f3e692f481894e3bdb4ed2e1c9503}{item\+\_\+selected}} \{ \newline
+\mbox{\hyperlink{player_8h_ae27f3e692f481894e3bdb4ed2e1c9503ae391c83816d79fba6b8d15afaf3d7c19}{ITEM\+\_\+\+SELECT\+\_\+\+NONE}} = -\/1
+, \mbox{\hyperlink{player_8h_ae27f3e692f481894e3bdb4ed2e1c9503a565050e6ecab5cce8e97393f67665f6d}{ITEM\+\_\+\+SELECT\+\_\+\+PISTOL}}
+, \mbox{\hyperlink{player_8h_ae27f3e692f481894e3bdb4ed2e1c9503aea4c0dfeb06166a969c563ef8f95d592}{ITEM\+\_\+\+SELECT\+\_\+\+BONG}}
+, \mbox{\hyperlink{player_8h_ae27f3e692f481894e3bdb4ed2e1c9503ae5a612e37812b8ca2c57f019c39532f0}{ITEM\+\_\+\+SELECT\+\_\+\+NITROUS}}
+, \newline
+\mbox{\hyperlink{player_8h_ae27f3e692f481894e3bdb4ed2e1c9503a0e2bf2717d794ae1474c656a77c6856a}{ITEM\+\_\+\+COUNT}}
+ \}
+\item 
+enum \mbox{\hyperlink{player_8h_a04fdbc2b3d6f073ff35baf5c623e79a4}{item\+\_\+equipped\+\_\+flags}} \{ \mbox{\hyperlink{player_8h_a04fdbc2b3d6f073ff35baf5c623e79a4ae6da1f0fa7a3005efa8ad30dfa41377c}{ITEM\+\_\+\+HAS\+\_\+\+NONE}} = 0x0
+, \mbox{\hyperlink{player_8h_a04fdbc2b3d6f073ff35baf5c623e79a4a89056ded492f62eca3f61dc92a5cb58a}{ITEM\+\_\+\+HAS\+\_\+\+PISTOL}} = 0x1
+, \mbox{\hyperlink{player_8h_a04fdbc2b3d6f073ff35baf5c623e79a4ab705900c0cc9a38ed2029e879b979cc0}{ITEM\+\_\+\+HAS\+\_\+\+BONG}} = 0x2
+, \mbox{\hyperlink{player_8h_a04fdbc2b3d6f073ff35baf5c623e79a4a633d1340e9008b80c2c28fa90a298c3e}{ITEM\+\_\+\+HAS\+\_\+\+NITROUS}} = 0x4
+ \}
+\item 
+enum \mbox{\hyperlink{player_8h_a0bfc63b67fc5ec9f019262a7c28397aa}{which\+\_\+drug}} \{ \newline
+\mbox{\hyperlink{player_8h_a0bfc63b67fc5ec9f019262a7c28397aaa95485cca49e049f4ccafe8522a2be4c0}{ON\+\_\+\+DRUG\+\_\+\+WEED}}
+, \mbox{\hyperlink{player_8h_a0bfc63b67fc5ec9f019262a7c28397aaa72ee9ec36e898c6821a69122ae2916c8}{ON\+\_\+\+DRUG\+\_\+\+NITROUS}}
+, \mbox{\hyperlink{player_8h_a0bfc63b67fc5ec9f019262a7c28397aaae488c42d2e8493881b985f4d09b97a34}{ON\+\_\+\+DRUG\+\_\+\+SHROOMS}}
+, \mbox{\hyperlink{player_8h_a0bfc63b67fc5ec9f019262a7c28397aaaaaf5e242652ddf7bcbbe643c7499251a}{ON\+\_\+\+DRUG\+\_\+\+KETAMINE}}
+, \newline
+\mbox{\hyperlink{player_8h_a0bfc63b67fc5ec9f019262a7c28397aaabd7cf98014dbac5778c753e7240d6543}{ON\+\_\+\+DRUG\+\_\+\+ALCOHOL}}
+, \mbox{\hyperlink{player_8h_a0bfc63b67fc5ec9f019262a7c28397aaa5e8efb3925239781eeedc47e8dfc3080}{ON\+\_\+\+DRUG\+\_\+\+CRACK}}
+, \mbox{\hyperlink{player_8h_a0bfc63b67fc5ec9f019262a7c28397aaa53da40386f3bfd1049fec0e862d07512}{ON\+\_\+\+DRUG\+\_\+\+SALVIA}}
+, \mbox{\hyperlink{player_8h_a0bfc63b67fc5ec9f019262a7c28397aaaf80d029d9014d91d8d55475d719df641}{ON\+\_\+\+DRUG\+\_\+\+COUNT}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{group__player__main_gac28470664beabb3f40506a6ff7c25208}{player\+\_\+init}} (const struct \mbox{\hyperlink{structscene}{scene}} $\ast$s, struct \mbox{\hyperlink{structplayer}{player}} $\ast$p, const \mbox{\hyperlink{types_8h_aed742c436da53c1080638ce6ef7d13de}{u8}} items\+\_\+equipped\+\_\+flags)
+\item 
+void \mbox{\hyperlink{group__player__main_ga896c358426e94214cb9ae19c6f101642}{player\+\_\+terminate}} (struct \mbox{\hyperlink{structplayer}{player}} $\ast$p)
+\item 
+void \mbox{\hyperlink{group__player__main_gadcd3073c59d87a9c2e118cb853ee9568}{player\+\_\+update}} (struct \mbox{\hyperlink{structscene}{scene}} $\ast$s, struct \mbox{\hyperlink{structplayer}{player}} $\ast$p, const struct \mbox{\hyperlink{structinput__parms}{input\+\_\+parms}} iparms)
+\item 
+void \mbox{\hyperlink{group__player__camera_gaa7860bc8dc538416dfb24feae1b33f83}{player\+\_\+camera\+\_\+view\+\_\+matrix\+\_\+setup}} (const struct \mbox{\hyperlink{structplayer}{player}} $\ast$p, const \mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} subtick)
+\item 
+void \mbox{\hyperlink{group__player__camera_gaaba75cc60d83a2f3037e6156986599c8}{player\+\_\+camera\+\_\+look\+\_\+update}} (struct \mbox{\hyperlink{structplayer}{player}} $\ast$p, const struct \mbox{\hyperlink{structinput__parms}{input\+\_\+parms}} iparms)
+\item 
+void \mbox{\hyperlink{group__player__physics_gaff6a7cc8ee41e04e6a24eaf761d33f53}{player\+\_\+friction}} (struct \mbox{\hyperlink{structplayer}{player}} $\ast$p)
+\item 
+void \mbox{\hyperlink{group__player__physics_ga3813a866c7cf932f8a9809666b4485e9}{player\+\_\+accelerate}} (struct \mbox{\hyperlink{structplayer}{player}} $\ast$p, const struct \mbox{\hyperlink{structinput__parms}{input\+\_\+parms}} iparms)
+\item 
+void \mbox{\hyperlink{group__player__collision_ga0741d890b3a1a21b24343ca16dd7f974}{player\+\_\+collision}} (const struct \mbox{\hyperlink{structcollision__mesh}{collision\+\_\+mesh}} $\ast$m, struct \mbox{\hyperlink{structplayer}{player}} $\ast$p, enum \mbox{\hyperlink{collision__mesh_8h_abf013669fb468a5fec852a8f4023fda5}{collision\+\_\+type}} coltype)
+\item 
+void \mbox{\hyperlink{group__player__items_ga8d7295c06188b48a99b5577bef70d3ee}{player\+\_\+item\+\_\+load}} (struct \mbox{\hyperlink{structplayer}{player}} $\ast$p, const \mbox{\hyperlink{types_8h_aed742c436da53c1080638ce6ef7d13de}{u8}} flags\+\_\+last)
+\item 
+void \mbox{\hyperlink{group__player__items_ga6602070fff1905fecf558c6cdeccb3cf}{player\+\_\+item\+\_\+check\+\_\+pickup}} (struct \mbox{\hyperlink{structscene}{scene}} $\ast$s, struct \mbox{\hyperlink{structplayer}{player}} $\ast$p)
+\item 
+void \mbox{\hyperlink{group__player__items_ga1753187c965ccc5c2db8c462136d8764}{player\+\_\+items\+\_\+update}} (struct \mbox{\hyperlink{structplayer}{player}} $\ast$p, const struct \mbox{\hyperlink{structinput__parms}{input\+\_\+parms}} iparms)
+\item 
+void \mbox{\hyperlink{group__player__items_ga2b7b148ca89002b238d0bbbcc1e81b03}{player\+\_\+item\+\_\+draw}} (const struct \mbox{\hyperlink{structplayer}{player}} $\ast$p, const \mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} subtick)
+\item 
+void \mbox{\hyperlink{group__player__pistol_ga6abebe21d2126a77df74f177293b2e4b}{player\+\_\+pistol\+\_\+check\+\_\+use}} (struct \mbox{\hyperlink{structplayer}{player}} $\ast$p, const struct \mbox{\hyperlink{structinput__parms}{input\+\_\+parms}} iparms)
+\item 
+void \mbox{\hyperlink{group__player__weed_gae87104df7aa6a811f7ae1908c7087f12}{player\+\_\+bong\+\_\+check\+\_\+use}} (struct \mbox{\hyperlink{structplayer}{player}} $\ast$p, const struct \mbox{\hyperlink{structinput__parms}{input\+\_\+parms}} iparms)
+\item 
+\mbox{\hyperlink{types_8h_a9e6c91d77e24643b888dbd1a1a590054}{u16}} \mbox{\hyperlink{group__player__weed_ga7027a1687b27d80b4ec4b69bd5160c74}{player\+\_\+bong\+\_\+cough\+\_\+setup}} (struct \mbox{\hyperlink{structplayer}{player}} $\ast$p)
+\item 
+void \mbox{\hyperlink{group__player__weed_ga4ef3f1997bb4668faa69cfe793aa5664}{player\+\_\+bong\+\_\+weed\+\_\+effect\+\_\+update}} (struct \mbox{\hyperlink{structplayer}{player}} $\ast$p, const \mbox{\hyperlink{types_8h_a9e6c91d77e24643b888dbd1a1a590054}{u16}} num\+\_\+coughs\+\_\+max)
+\item 
+void \mbox{\hyperlink{group__player__weed_gaf468bb68902275b5af4edef9ad79545a}{player\+\_\+bong\+\_\+weed\+\_\+effect\+\_\+draw}} (const struct \mbox{\hyperlink{structplayer}{player}} $\ast$p, const surface\+\_\+t $\ast$surf, const \mbox{\hyperlink{types_8h_a2caf5cd7bcdbe1eefa727f44ffb10bac}{u32}} tick\+\_\+cnt, const \mbox{\hyperlink{types_8h_a2caf5cd7bcdbe1eefa727f44ffb10bac}{u32}} tick\+\_\+cnt\+\_\+last, const \mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} subtick)
+\item 
+void \mbox{\hyperlink{group__player__nitrous_ga43f21d282a8654c8d5e89d45095cdff5}{player\+\_\+n2o\+\_\+check\+\_\+use}} (struct \mbox{\hyperlink{structplayer}{player}} $\ast$p, const struct \mbox{\hyperlink{structinput__parms}{input\+\_\+parms}} iparms)
+\item 
+void \mbox{\hyperlink{group__player__nitrous_ga518aa7ffb578d3d7533a6c693390b3ec}{player\+\_\+n2o\+\_\+effect\+\_\+draw}} (const struct \mbox{\hyperlink{structplayer}{player}} $\ast$p, const surface\+\_\+t $\ast$surf, const \mbox{\hyperlink{types_8h_a2caf5cd7bcdbe1eefa727f44ffb10bac}{u32}} tick\+\_\+cnt, const \mbox{\hyperlink{types_8h_a2caf5cd7bcdbe1eefa727f44ffb10bac}{u32}} tick\+\_\+cnt\+\_\+last, const \mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} subtick)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{player_8h_a04fdbc2b3d6f073ff35baf5c623e79a4}\label{player_8h_a04fdbc2b3d6f073ff35baf5c623e79a4}} 
+\index{player.h@{player.h}!item\_equipped\_flags@{item\_equipped\_flags}}
+\index{item\_equipped\_flags@{item\_equipped\_flags}!player.h@{player.h}}
+\doxysubsubsection{\texorpdfstring{item\_equipped\_flags}{item\_equipped\_flags}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{player_8h_a04fdbc2b3d6f073ff35baf5c623e79a4}{item\+\_\+equipped\+\_\+flags}}}
+
+Flags for Which Items Player Has \begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ITEM\_HAS\_NONE@{ITEM\_HAS\_NONE}!player.h@{player.h}}\index{player.h@{player.h}!ITEM\_HAS\_NONE@{ITEM\_HAS\_NONE}}}\mbox{\Hypertarget{player_8h_a04fdbc2b3d6f073ff35baf5c623e79a4ae6da1f0fa7a3005efa8ad30dfa41377c}\label{player_8h_a04fdbc2b3d6f073ff35baf5c623e79a4ae6da1f0fa7a3005efa8ad30dfa41377c}} 
+ITEM\+\_\+\+HAS\+\_\+\+NONE&Empty Flag. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ITEM\_HAS\_PISTOL@{ITEM\_HAS\_PISTOL}!player.h@{player.h}}\index{player.h@{player.h}!ITEM\_HAS\_PISTOL@{ITEM\_HAS\_PISTOL}}}\mbox{\Hypertarget{player_8h_a04fdbc2b3d6f073ff35baf5c623e79a4a89056ded492f62eca3f61dc92a5cb58a}\label{player_8h_a04fdbc2b3d6f073ff35baf5c623e79a4a89056ded492f62eca3f61dc92a5cb58a}} 
+ITEM\+\_\+\+HAS\+\_\+\+PISTOL&Pistol Flag. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ITEM\_HAS\_BONG@{ITEM\_HAS\_BONG}!player.h@{player.h}}\index{player.h@{player.h}!ITEM\_HAS\_BONG@{ITEM\_HAS\_BONG}}}\mbox{\Hypertarget{player_8h_a04fdbc2b3d6f073ff35baf5c623e79a4ab705900c0cc9a38ed2029e879b979cc0}\label{player_8h_a04fdbc2b3d6f073ff35baf5c623e79a4ab705900c0cc9a38ed2029e879b979cc0}} 
+ITEM\+\_\+\+HAS\+\_\+\+BONG&Bong Flag. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ITEM\_HAS\_NITROUS@{ITEM\_HAS\_NITROUS}!player.h@{player.h}}\index{player.h@{player.h}!ITEM\_HAS\_NITROUS@{ITEM\_HAS\_NITROUS}}}\mbox{\Hypertarget{player_8h_a04fdbc2b3d6f073ff35baf5c623e79a4a633d1340e9008b80c2c28fa90a298c3e}\label{player_8h_a04fdbc2b3d6f073ff35baf5c623e79a4a633d1340e9008b80c2c28fa90a298c3e}} 
+ITEM\+\_\+\+HAS\+\_\+\+NITROUS&Nitrous Flag. \\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{player_8h_ae27f3e692f481894e3bdb4ed2e1c9503}\label{player_8h_ae27f3e692f481894e3bdb4ed2e1c9503}} 
+\index{player.h@{player.h}!item\_selected@{item\_selected}}
+\index{item\_selected@{item\_selected}!player.h@{player.h}}
+\doxysubsubsection{\texorpdfstring{item\_selected}{item\_selected}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{player_8h_ae27f3e692f481894e3bdb4ed2e1c9503}{item\+\_\+selected}}}
+
+Which item is currently selected \begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ITEM\_SELECT\_NONE@{ITEM\_SELECT\_NONE}!player.h@{player.h}}\index{player.h@{player.h}!ITEM\_SELECT\_NONE@{ITEM\_SELECT\_NONE}}}\mbox{\Hypertarget{player_8h_ae27f3e692f481894e3bdb4ed2e1c9503ae391c83816d79fba6b8d15afaf3d7c19}\label{player_8h_ae27f3e692f481894e3bdb4ed2e1c9503ae391c83816d79fba6b8d15afaf3d7c19}} 
+ITEM\+\_\+\+SELECT\+\_\+\+NONE&No Item. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ITEM\_SELECT\_PISTOL@{ITEM\_SELECT\_PISTOL}!player.h@{player.h}}\index{player.h@{player.h}!ITEM\_SELECT\_PISTOL@{ITEM\_SELECT\_PISTOL}}}\mbox{\Hypertarget{player_8h_ae27f3e692f481894e3bdb4ed2e1c9503a565050e6ecab5cce8e97393f67665f6d}\label{player_8h_ae27f3e692f481894e3bdb4ed2e1c9503a565050e6ecab5cce8e97393f67665f6d}} 
+ITEM\+\_\+\+SELECT\+\_\+\+PISTOL&Pistol Selected. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ITEM\_SELECT\_BONG@{ITEM\_SELECT\_BONG}!player.h@{player.h}}\index{player.h@{player.h}!ITEM\_SELECT\_BONG@{ITEM\_SELECT\_BONG}}}\mbox{\Hypertarget{player_8h_ae27f3e692f481894e3bdb4ed2e1c9503aea4c0dfeb06166a969c563ef8f95d592}\label{player_8h_ae27f3e692f481894e3bdb4ed2e1c9503aea4c0dfeb06166a969c563ef8f95d592}} 
+ITEM\+\_\+\+SELECT\+\_\+\+BONG&Bong Selected. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ITEM\_SELECT\_NITROUS@{ITEM\_SELECT\_NITROUS}!player.h@{player.h}}\index{player.h@{player.h}!ITEM\_SELECT\_NITROUS@{ITEM\_SELECT\_NITROUS}}}\mbox{\Hypertarget{player_8h_ae27f3e692f481894e3bdb4ed2e1c9503ae5a612e37812b8ca2c57f019c39532f0}\label{player_8h_ae27f3e692f481894e3bdb4ed2e1c9503ae5a612e37812b8ca2c57f019c39532f0}} 
+ITEM\+\_\+\+SELECT\+\_\+\+NITROUS&Nitrous Canister Selected. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ITEM\_COUNT@{ITEM\_COUNT}!player.h@{player.h}}\index{player.h@{player.h}!ITEM\_COUNT@{ITEM\_COUNT}}}\mbox{\Hypertarget{player_8h_ae27f3e692f481894e3bdb4ed2e1c9503a0e2bf2717d794ae1474c656a77c6856a}\label{player_8h_ae27f3e692f481894e3bdb4ed2e1c9503a0e2bf2717d794ae1474c656a77c6856a}} 
+ITEM\+\_\+\+COUNT&Max Number of Items. \\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{player_8h_a0bfc63b67fc5ec9f019262a7c28397aa}\label{player_8h_a0bfc63b67fc5ec9f019262a7c28397aa}} 
+\index{player.h@{player.h}!which\_drug@{which\_drug}}
+\index{which\_drug@{which\_drug}!player.h@{player.h}}
+\doxysubsubsection{\texorpdfstring{which\_drug}{which\_drug}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{player_8h_a0bfc63b67fc5ec9f019262a7c28397aa}{which\+\_\+drug}}}
+
+Enum for Which Drug the Player is On \begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ON\_DRUG\_WEED@{ON\_DRUG\_WEED}!player.h@{player.h}}\index{player.h@{player.h}!ON\_DRUG\_WEED@{ON\_DRUG\_WEED}}}\mbox{\Hypertarget{player_8h_a0bfc63b67fc5ec9f019262a7c28397aaa95485cca49e049f4ccafe8522a2be4c0}\label{player_8h_a0bfc63b67fc5ec9f019262a7c28397aaa95485cca49e049f4ccafe8522a2be4c0}} 
+ON\+\_\+\+DRUG\+\_\+\+WEED&High on Weed. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ON\_DRUG\_NITROUS@{ON\_DRUG\_NITROUS}!player.h@{player.h}}\index{player.h@{player.h}!ON\_DRUG\_NITROUS@{ON\_DRUG\_NITROUS}}}\mbox{\Hypertarget{player_8h_a0bfc63b67fc5ec9f019262a7c28397aaa72ee9ec36e898c6821a69122ae2916c8}\label{player_8h_a0bfc63b67fc5ec9f019262a7c28397aaa72ee9ec36e898c6821a69122ae2916c8}} 
+ON\+\_\+\+DRUG\+\_\+\+NITROUS&High on Nitrous Oxide. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ON\_DRUG\_SHROOMS@{ON\_DRUG\_SHROOMS}!player.h@{player.h}}\index{player.h@{player.h}!ON\_DRUG\_SHROOMS@{ON\_DRUG\_SHROOMS}}}\mbox{\Hypertarget{player_8h_a0bfc63b67fc5ec9f019262a7c28397aaae488c42d2e8493881b985f4d09b97a34}\label{player_8h_a0bfc63b67fc5ec9f019262a7c28397aaae488c42d2e8493881b985f4d09b97a34}} 
+ON\+\_\+\+DRUG\+\_\+\+SHROOMS&Tripping on Shrooms. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ON\_DRUG\_KETAMINE@{ON\_DRUG\_KETAMINE}!player.h@{player.h}}\index{player.h@{player.h}!ON\_DRUG\_KETAMINE@{ON\_DRUG\_KETAMINE}}}\mbox{\Hypertarget{player_8h_a0bfc63b67fc5ec9f019262a7c28397aaaaaf5e242652ddf7bcbbe643c7499251a}\label{player_8h_a0bfc63b67fc5ec9f019262a7c28397aaaaaf5e242652ddf7bcbbe643c7499251a}} 
+ON\+\_\+\+DRUG\+\_\+\+KETAMINE&High on Ketamine. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ON\_DRUG\_ALCOHOL@{ON\_DRUG\_ALCOHOL}!player.h@{player.h}}\index{player.h@{player.h}!ON\_DRUG\_ALCOHOL@{ON\_DRUG\_ALCOHOL}}}\mbox{\Hypertarget{player_8h_a0bfc63b67fc5ec9f019262a7c28397aaabd7cf98014dbac5778c753e7240d6543}\label{player_8h_a0bfc63b67fc5ec9f019262a7c28397aaabd7cf98014dbac5778c753e7240d6543}} 
+ON\+\_\+\+DRUG\+\_\+\+ALCOHOL&Drunk on Alcohol. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ON\_DRUG\_CRACK@{ON\_DRUG\_CRACK}!player.h@{player.h}}\index{player.h@{player.h}!ON\_DRUG\_CRACK@{ON\_DRUG\_CRACK}}}\mbox{\Hypertarget{player_8h_a0bfc63b67fc5ec9f019262a7c28397aaa5e8efb3925239781eeedc47e8dfc3080}\label{player_8h_a0bfc63b67fc5ec9f019262a7c28397aaa5e8efb3925239781eeedc47e8dfc3080}} 
+ON\+\_\+\+DRUG\+\_\+\+CRACK&High on Crack. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ON\_DRUG\_SALVIA@{ON\_DRUG\_SALVIA}!player.h@{player.h}}\index{player.h@{player.h}!ON\_DRUG\_SALVIA@{ON\_DRUG\_SALVIA}}}\mbox{\Hypertarget{player_8h_a0bfc63b67fc5ec9f019262a7c28397aaa53da40386f3bfd1049fec0e862d07512}\label{player_8h_a0bfc63b67fc5ec9f019262a7c28397aaa53da40386f3bfd1049fec0e862d07512}} 
+ON\+\_\+\+DRUG\+\_\+\+SALVIA&Has Special Gameplay Properties. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ON\_DRUG\_COUNT@{ON\_DRUG\_COUNT}!player.h@{player.h}}\index{player.h@{player.h}!ON\_DRUG\_COUNT@{ON\_DRUG\_COUNT}}}\mbox{\Hypertarget{player_8h_a0bfc63b67fc5ec9f019262a7c28397aaaf80d029d9014d91d8d55475d719df641}\label{player_8h_a0bfc63b67fc5ec9f019262a7c28397aaaf80d029d9014d91d8d55475d719df641}} 
+ON\+\_\+\+DRUG\+\_\+\+COUNT&Number of Possible Drug States. \\
+\hline
+
+\end{DoxyEnumFields}

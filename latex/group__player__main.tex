@@ -1,0 +1,65 @@
+\hypertarget{group__player__main}{}\doxysection{Player Main Functions}
+\label{group__player__main}\index{Player Main Functions@{Player Main Functions}}
+Collaboration diagram for Player Main Functions\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=337pt]{group__player__main}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{group__player__main_gac28470664beabb3f40506a6ff7c25208}{player\+\_\+init}} (const struct \mbox{\hyperlink{structscene}{scene}} $\ast$s, struct \mbox{\hyperlink{structplayer}{player}} $\ast$p, const \mbox{\hyperlink{types_8h_aed742c436da53c1080638ce6ef7d13de}{u8}} items\+\_\+equipped\+\_\+flags)
+\item 
+void \mbox{\hyperlink{group__player__main_ga896c358426e94214cb9ae19c6f101642}{player\+\_\+terminate}} (struct \mbox{\hyperlink{structplayer}{player}} $\ast$p)
+\item 
+void \mbox{\hyperlink{group__player__main_gadcd3073c59d87a9c2e118cb853ee9568}{player\+\_\+update}} (struct \mbox{\hyperlink{structscene}{scene}} $\ast$s, struct \mbox{\hyperlink{structplayer}{player}} $\ast$p, const struct \mbox{\hyperlink{structinput__parms}{input\+\_\+parms}} iparms)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{group__player__main_gac28470664beabb3f40506a6ff7c25208}\label{group__player__main_gac28470664beabb3f40506a6ff7c25208}} 
+\index{Player Main Functions@{Player Main Functions}!player\_init@{player\_init}}
+\index{player\_init@{player\_init}!Player Main Functions@{Player Main Functions}}
+\doxysubsubsection{\texorpdfstring{player\_init()}{player\_init()}}
+{\footnotesize\ttfamily void player\+\_\+init (\begin{DoxyParamCaption}\item[{const struct \mbox{\hyperlink{structscene}{scene}} $\ast$}]{s,  }\item[{struct \mbox{\hyperlink{structplayer}{player}} $\ast$}]{p,  }\item[{const \mbox{\hyperlink{types_8h_aed742c436da53c1080638ce6ef7d13de}{u8}}}]{items\+\_\+equipped\+\_\+flags }\end{DoxyParamCaption})}
+
+Initializes a player struct. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & Scene to initialize into \\
+\hline
+\mbox{\texttt{ out}}  & {\em p} & Player structure \\
+\hline
+\mbox{\texttt{ in}}  & {\em items\+\_\+equipped\+\_\+flags} & Which items player has in inventory \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{group__player__main_ga896c358426e94214cb9ae19c6f101642}\label{group__player__main_ga896c358426e94214cb9ae19c6f101642}} 
+\index{Player Main Functions@{Player Main Functions}!player\_terminate@{player\_terminate}}
+\index{player\_terminate@{player\_terminate}!Player Main Functions@{Player Main Functions}}
+\doxysubsubsection{\texorpdfstring{player\_terminate()}{player\_terminate()}}
+{\footnotesize\ttfamily void player\+\_\+terminate (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structplayer}{player}} $\ast$}]{p }\end{DoxyParamCaption})}
+
+Terminates a Player Struct 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em p} & Player Structure \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{group__player__main_gadcd3073c59d87a9c2e118cb853ee9568}\label{group__player__main_gadcd3073c59d87a9c2e118cb853ee9568}} 
+\index{Player Main Functions@{Player Main Functions}!player\_update@{player\_update}}
+\index{player\_update@{player\_update}!Player Main Functions@{Player Main Functions}}
+\doxysubsubsection{\texorpdfstring{player\_update()}{player\_update()}}
+{\footnotesize\ttfamily void player\+\_\+update (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structscene}{scene}} $\ast$}]{s,  }\item[{struct \mbox{\hyperlink{structplayer}{player}} $\ast$}]{p,  }\item[{const struct \mbox{\hyperlink{structinput__parms}{input\+\_\+parms}}}]{iparms }\end{DoxyParamCaption})}
+
+Updates a Player Structure 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & Scene to Refer to \\
+\hline
+\mbox{\texttt{ out}}  & {\em p} & Player Structure \\
+\hline
+\mbox{\texttt{ in}}  & {\em iparms} & Input Parameters \\
+\hline
+\end{DoxyParams}

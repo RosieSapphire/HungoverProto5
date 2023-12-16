@@ -1,0 +1,67 @@
+\hypertarget{title_8c}{}\doxysection{src/game/title.c File Reference}
+\label{title_8c}\index{src/game/title.c@{src/game/title.c}}
+{\ttfamily \#include $<$GL/gl.\+h$>$}\newline
+{\ttfamily \#include $<$GL/gl\+\_\+integration.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}engine/util.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}engine/sfx.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}engine/texture.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}engine/scene.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}game/title.\+h\char`\"{}}\newline
+Include dependency graph for title.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{title_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{title_8c_a4413a767ea445de969ffa802cad92499}{title\+\_\+load}} (void)
+\item 
+void \mbox{\hyperlink{title_8c_ae5867e165185323419a0e4561caa5e16}{title\+\_\+unload}} (void)
+\item 
+enum \mbox{\hyperlink{scene_8h_ac9f95692dedfa958757f3fed60b1ea76}{scene\+\_\+index}} \mbox{\hyperlink{title_8c_a0cf3fd5b3776ba51b59434e10b2fdff6}{title\+\_\+update}} (struct \mbox{\hyperlink{structinput__parms}{input\+\_\+parms}} iparms)
+\item 
+void \mbox{\hyperlink{title_8c_aff48155e4d9b970cb169c002222cd145}{title\+\_\+draw}} (\mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}} subtick)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{title_8c_aff48155e4d9b970cb169c002222cd145}\label{title_8c_aff48155e4d9b970cb169c002222cd145}} 
+\index{title.c@{title.c}!title\_draw@{title\_draw}}
+\index{title\_draw@{title\_draw}!title.c@{title.c}}
+\doxysubsubsection{\texorpdfstring{title\_draw()}{title\_draw()}}
+{\footnotesize\ttfamily void title\+\_\+draw (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{types_8h_a5f6906312a689f27d70e9d086649d3fd}{f32}}}]{subtick }\end{DoxyParamCaption})}
+
+Draws the Title Screen 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em subtick} & Delta Value between Frames \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{title_8c_a4413a767ea445de969ffa802cad92499}\label{title_8c_a4413a767ea445de969ffa802cad92499}} 
+\index{title.c@{title.c}!title\_load@{title\_load}}
+\index{title\_load@{title\_load}!title.c@{title.c}}
+\doxysubsubsection{\texorpdfstring{title\_load()}{title\_load()}}
+{\footnotesize\ttfamily void title\+\_\+load (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Initializes Title Screen \mbox{\Hypertarget{title_8c_ae5867e165185323419a0e4561caa5e16}\label{title_8c_ae5867e165185323419a0e4561caa5e16}} 
+\index{title.c@{title.c}!title\_unload@{title\_unload}}
+\index{title\_unload@{title\_unload}!title.c@{title.c}}
+\doxysubsubsection{\texorpdfstring{title\_unload()}{title\_unload()}}
+{\footnotesize\ttfamily void title\+\_\+unload (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Unloads Title Screen \mbox{\Hypertarget{title_8c_a0cf3fd5b3776ba51b59434e10b2fdff6}\label{title_8c_a0cf3fd5b3776ba51b59434e10b2fdff6}} 
+\index{title.c@{title.c}!title\_update@{title\_update}}
+\index{title\_update@{title\_update}!title.c@{title.c}}
+\doxysubsubsection{\texorpdfstring{title\_update()}{title\_update()}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{scene_8h_ac9f95692dedfa958757f3fed60b1ea76}{scene\+\_\+index}} title\+\_\+update (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structinput__parms}{input\+\_\+parms}}}]{iparms }\end{DoxyParamCaption})}
+
+Updates the Title Screen 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em iparms} & Input Parameters \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New Desired Scene Index 
+\end{DoxyReturn}

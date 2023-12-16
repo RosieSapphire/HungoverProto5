@@ -54,7 +54,17 @@ struct animation
 	enum animation_flags flags; ///< Flags, Obviously
 };
 
+/**
+ * @defgroup engine Engine Functions
+ * @{
+ * @defgroup animation Animation Functions
+ * @{
+ */
 void animation_update(struct animation *a);
 void animation_matrix_multiply(const struct animation *a, const f32 subtick);
+/**
+ * @}
+ * @}
+ */
 
 #endif /* _ENGINE_ANIMATION_H_ */

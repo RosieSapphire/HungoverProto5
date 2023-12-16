@@ -43,13 +43,6 @@ static void _scene_free(struct scene *s)
 	}
 }
 
-/**
- * main - Main Function
- * @argc: Argument Count
- * @argv: Argument Values
- *
- * Return: 0 for Success
- */
 int main(int argc, char **argv)
 {
 	if (argc != 3)

@@ -87,6 +87,7 @@ static void _audio(void)
 
 /**
  * Main function
+ * @return 0 = Success
  */
 int main(void)
 {

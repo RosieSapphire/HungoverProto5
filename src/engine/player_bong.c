@@ -95,7 +95,10 @@ u16 player_bong_cough_setup(struct player *p)
 		p->drug_duration = 240;
 		mixer_ch_set_vol(SFXC_MUSIC0, 0, 0);
 		mixer_ch_set_freq(SFXC_MUSIC0, 22050);
-		wav64_play(&nitrous_whine, SFXC_MUSIC0);
+		/*
+		 * TODO: Wrong SFX
+		 */
+		wav64_play(&n2o_whine_sfx, SFXC_MUSIC0);
 	}
 	bong->qty2 = cough_rand;
 	return (bong->qty2);
@@ -133,7 +136,7 @@ void player_bong_weed_effect_update(struct player *p,
 		const u16 cough_col = fmin((u16)(cough_percent * 3), 2);
 		const u16 cough_row = rand() % 3;
 
-		bong->qty2--;
+		bong->qty1--;
 		cough_timer = 12 + (rand() % 16);
 		p->recoil_dir[0] = ((f32)(rand() % 512) / 512.0f) - 0.5f;
 		p->recoil_dir[1] = -1;

@@ -116,12 +116,7 @@ void player_bong_weed_effect_update(struct player *p,
 
 	if (p->drug_duration)
 	{
-		/*
-		 * TODO: Make this fade out at end
-		 */
-		const f32 t = ((f32)p->drug_progress / (f32)p->drug_duration) *
-			p->drug_high_amnt;
-		f32 trip_vol = lerpf(0.0f, 0.5f, fminf(t, 1.0f));
+		const f32 trip_vol = player_drug_get_intensity(p);
 
 		mixer_ch_set_vol(SFXC_MUSIC0, trip_vol, trip_vol);
 		p->drug_progress++;
@@ -165,10 +160,10 @@ void player_bong_weed_effect_draw(const struct player *p,
 				  const u32 tick_cnt_last, const f32 subtick)
 {
 	const f32 tick_cnt_lerp = lerpf(tick_cnt_last, tick_cnt, subtick);
-	const f32 intensity = clampf((f32)p->drug_progress /
-			      ((f32)p->drug_duration * 0.25f), 0, 1);
+	const f32 intensity = player_drug_get_intensity(p);
 	const f32 scale = lerpf(1.0f, 1.04f, intensity);
 
+	debugf("%f\n", intensity);
 	rdpq_set_mode_standard();
 	rdpq_set_fog_color(RGBA32(0, 0, 0, intensity * 255));
 	rdpq_mode_blender(RDPQ_BLENDER_ADDITIVE);

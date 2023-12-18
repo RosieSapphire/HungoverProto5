@@ -132,7 +132,7 @@ void testroom_draw(f32 subtick)
 	color_buffer = display_get();
 	rdpq_attach(color_buffer, &depth_buffer);
 	_testroom_render(subtick);
-	if (player.drug_high_amnt > 0)
+	if (player_drug_get_intensity(&player) != 0.0f)
 	{
 		switch (player.which_drug)
 		{

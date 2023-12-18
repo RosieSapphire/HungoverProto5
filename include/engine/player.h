@@ -171,6 +171,16 @@ void player_n2o_effect_draw(const struct player *p, const surface_t *surf,
 			    const f32 subtick);
 /**
  * @}
+ */
+
+/**
+ * @defgroup player_drugs Player General Drug Functions
+ * @{
+ */
+f32 player_drug_get_intensity(const struct player *p);
+
+/**
+ * @}
  * @}
  * @}
  */

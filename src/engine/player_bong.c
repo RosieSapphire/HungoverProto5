@@ -136,7 +136,7 @@ void player_bong_weed_effect_update(struct player *p,
 		const u16 cough_col = fmin((u16)(cough_percent * 3), 2);
 		const u16 cough_row = rand() % 3;
 
-		bong->qty1--;
+		bong->qty2--;
 		cough_timer = 12 + (rand() % 16);
 		p->recoil_dir[0] = ((f32)(rand() % 512) / 512.0f) - 0.5f;
 		p->recoil_dir[1] = -1;

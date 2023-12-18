@@ -26,11 +26,14 @@ static void _scene_read_mesh(struct scene *s, u16 i)
 {
 	const char *prefix = "rom:/";
 	struct node *n = node_from_mesh_ind(&s->root_node, i);
-	const char *mfpath = n->mesh_path;
-	char *mfpath_conv = malloc(strlen(mfpath) + strlen(prefix));
+	char *mfpath_full = malloc(strlen(n->mesh_path) + 5);
+
+	sprintf(mfpath_full, "%s.mdl", n->mesh_path);
+	char *mfpath_conv = malloc(strlen(mfpath_full) + strlen(prefix));
 
 	strcpy(mfpath_conv, prefix);
-	strcat(mfpath_conv, mfpath + strlen("assets/"));
+	strcat(mfpath_conv, mfpath_full);
+	free(mfpath_full);
 	FILE *mf = fopen(mfpath_conv, "rb");
 
 	if (!mf)

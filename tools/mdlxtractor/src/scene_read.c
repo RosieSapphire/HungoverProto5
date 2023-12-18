@@ -148,12 +148,12 @@ void scene_read_file(struct scene *s, const char *path)
 		if (!n)
 			continue;
 
-		char path_correct[CONF_PATH_MAX];
+		char *path_correct = malloc(strlen("filesystem/") +
+					    strlen(n->mesh_path) + 5);
 
-		sprintf(path_correct, "filesystem/%s",
-			n->mesh_path + strlen("assets/"));
-
+		sprintf(path_correct, "filesystem/%s.mdl", n->mesh_path);
 		scene_read_mesh(s->meshes + i, path_correct);
+		free(path_correct);
 	}
 	freadflipu16(&s->num_anims, sf);
 	for (u16 i = 0; i < s->num_anims; i++)

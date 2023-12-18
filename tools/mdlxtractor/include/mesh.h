@@ -22,15 +22,6 @@ struct mesh
 };
 
 /**
- * Get Mesh Path from Scene Path
- * @param[out] out Output String
- * @param[in] mname Mesh Name
- * @param[in] scnpath Scene Path
- */
-void mesh_path_from_scene_path(char *out, const char *mname,
-			       const char *scnpath);
-
-/**
  * Get Mesh Index by Name
  * @param[in] name Name of Desired Mesh
  * @param[in] meshes Meshes array

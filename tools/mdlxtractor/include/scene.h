@@ -47,7 +47,7 @@ void scene_debug_assimp(const struct scene *s);
 /*
  * Writing
  */
-void scene_write_mesh_file(const struct mesh *m, const char *scnpath);
+void scene_write_mesh_file(const struct mesh *m);
 void scene_write_node(const struct scene *s, const struct node *n,
 		      const char *scnpath, FILE *scnfile);
 void scene_write_anim(const struct animation *a, FILE *f);

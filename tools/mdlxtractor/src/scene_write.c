@@ -1,11 +1,14 @@
+#include <malloc.h>
+
 #include "util.h"
 #include "scene.h"
 
-void scene_write_mesh_file(const struct mesh *m, const char *scnpath)
+void scene_write_mesh_file(const struct mesh *m)
 {
-	char mdlpath[CONF_PATH_MAX];
+	const size_t mdlpath_len = strlen("filesystem/") + strlen(m->name) + 5;
+	char *mdlpath = malloc(mdlpath_len);
 
-	mesh_path_from_scene_path(mdlpath, m->name, scnpath);
+	sprintf(mdlpath, "filesystem/%s.mdl", m->name);
 	FILE *f = fopen(mdlpath, "wb");
 
 	if (f)
@@ -14,6 +17,8 @@ void scene_write_mesh_file(const struct mesh *m, const char *scnpath)
 		remove(mdlpath);
 		f = fopen(mdlpath, "wb");
 	}
+
+	free(mdlpath);
 
 	fwrite(m->name, sizeof(char), CONF_NAME_MAX, f);
 	fwriteflipu16(&m->num_verts, f);
@@ -114,7 +119,7 @@ void scene_write_file(const struct scene *s, const char *outpath)
 
 	fwriteflipu16(&s->num_meshes, f);
 	for (u16 i = 0; i < s->num_meshes; i++)
-		scene_write_mesh_file(s->meshes + i, outpath);
+		scene_write_mesh_file(s->meshes + i);
 
 	fwriteflipu16(&s->num_anims, f);
 	for (u16 i = 0; i < s->num_anims; i++)

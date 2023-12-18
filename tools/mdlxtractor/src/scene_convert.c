@@ -19,8 +19,8 @@ void scene_convert_node(const struct scene *s, const char *scnpath,
 	}
 	else
 	{
-		mesh_path_from_scene_path(no->mesh_path,
-					  ni->mName.data, scnpath);
+		snprintf(no->mesh_path, ni->mName.length + 1,
+	   		 "%s.mdl", ni->mName.data);
 		no->mesh_ind = ni->mMeshes[0];
 	}
 
@@ -63,8 +63,7 @@ void scene_convert_mesh(const struct aiMesh *mi, struct mesh *mo)
 	mo->indis = malloc(sizeof(u16) * mo->num_indis);
 	for (u16 j = 0; j < mo->num_indis / 3; j++)
 		for (u16 k = 0; k < 3; k++)
-			mo->indis[j * 3 + k] =
-					mi->mFaces[j].mIndices[k];
+			mo->indis[j * 3 + k] = mi->mFaces[j].mIndices[k];
 
 	mo->tind = mi->mMaterialIndex;
 }

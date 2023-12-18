@@ -6,3 +6,4 @@ filesystem/
 html/
 latex/
 mdlxtractor
+*.o

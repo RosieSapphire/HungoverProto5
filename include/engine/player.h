@@ -67,7 +67,6 @@ struct player
 	f32 headbob_timer; ///< Current Headbob timer
 	f32 headbob_timer_last; ///< Previous Headbob timer
 	u8 which_drug; ///< Which drug player is on
-	f32 drug_high_amnt; ///< How high player is on `which_drug`
 	u16 drug_progress; ///< Drug progress
 	u16 drug_duration; ///< Used as a percentage for `drug_progress`
 };

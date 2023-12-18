@@ -72,7 +72,6 @@ void player_n2o_trip_setup(struct player *p)
 		}
 
 		p->which_drug = ON_DRUG_NITROUS;
-		p->drug_high_amnt = 1.0f;
 		p->drug_progress = 0;
 		p->drug_duration = 240;
 		mixer_ch_set_vol(SFXC_MUSIC0, 0, 0);
@@ -90,12 +89,7 @@ void player_n2o_effect_update(struct player *p)
 	if (!p->drug_duration)
 		return;
 
-	/*
-	 * TODO: Make this fade out at end
-	 */
-	const f32 t = ((f32)p->drug_progress / (f32)p->drug_duration) *
-		p->drug_high_amnt;
-	f32 womp_vol = lerpf(0.0f, 0.5f, fminf(t, 1.0f));
+	f32 womp_vol = lerpf(0.0f, 0.5f, player_drug_get_intensity(p));
 
 	mixer_ch_set_vol(SFXC_MUSIC0, womp_vol, womp_vol);
 	p->drug_progress++;

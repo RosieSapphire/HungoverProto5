@@ -91,7 +91,6 @@ u16 player_bong_cough_setup(struct player *p)
 			wav64_play(&bong_hit_bad_sfx, SFXC_ITEM1);
 		}
 
-		p->drug_high_amnt = 1.0f;
 		p->drug_progress = 0;
 		p->drug_duration = 240;
 		mixer_ch_set_vol(SFXC_MUSIC0, 0, 0);

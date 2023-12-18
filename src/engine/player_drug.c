@@ -11,8 +11,7 @@ f32 player_drug_get_intensity(const struct player *p)
 	if (!p->drug_duration)
 		return (0.0f);
 
-	f32 calc = ((f32)p->drug_progress / (f32)p->drug_duration) *
-		   p->drug_high_amnt;
+	f32 calc = ((f32)p->drug_progress / (f32)p->drug_duration);
 
 	if (calc >= 1.0f)
 		return (0.0f);

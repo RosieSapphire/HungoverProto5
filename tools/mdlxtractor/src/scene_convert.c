@@ -136,14 +136,36 @@ void scene_convert_assimp(const struct aiScene *si, struct scene *so,
 
 	assert(si->mNumMaterials < MAX_SCENE_TEXS);
 	so->num_tex_paths = si->mNumMaterials;
+	u8 num_tex_excluded = 0;
+
 	for (int i = 0; i < so->num_tex_paths; i++)
 	{
 		struct aiString tex_path;
+		u8 do_continue = 0;
 
 		aiGetMaterialString(si->mMaterials[i],
 				    AI_MATKEY_NAME, &tex_path);
-		strncpy(so->tex_paths[i], tex_path.data, tex_path.length + 1);
+		for (int j = 0; j < so->num_tex_paths; j++)
+		{
+			if (j == i)
+				continue;
+
+			do_continue = !strncmp(tex_path.data,
+	     				       so->tex_paths[j],
+					       tex_path.length);
+			num_tex_excluded += do_continue;
+		}
+
+		if (do_continue)
+			continue;
+
+		u8 new_ind = i - num_tex_excluded;
+
+		strncpy(so->tex_paths[new_ind], tex_path.data,
+	  		tex_path.length + 1);
 	}
+
+	so->num_tex_paths -= num_tex_excluded;
 
 	assert(si->mNumMeshes);
 	so->num_meshes = si->mNumMeshes;

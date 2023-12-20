@@ -25,6 +25,7 @@ enum sfx_channels
 extern wav64_t title_music_intro;
 extern wav64_t title_music_init;
 extern wav64_t title_music_main;
+extern wav64_t title_music_start;
 extern wav64_t pistol_fire_sfx;
 extern wav64_t pistol_click_sfx;
 extern wav64_t pistol_pullout_sfx;
@@ -44,7 +45,8 @@ extern wav64_t cough_small0_sfx;
 extern wav64_t cough_small1_sfx;
 extern wav64_t cough_small2_sfx;
 extern wav64_t trip_music;
-extern wav64_t nitrous_whine;
+extern wav64_t n2o_huffing_sfx;
+extern wav64_t n2o_whine_sfx;
 
 void sfx_load(void);
 

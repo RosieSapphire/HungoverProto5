@@ -9,6 +9,9 @@
 #include "engine/item.h"
 #include "engine/collision_mesh.h"
 
+#define BONG_USAGE_TIMER_MAX 56
+#define NITROUS_USAGE_TIMER_MAX 80
+
 /**
  * Which item is currently selected
  */
@@ -165,6 +168,8 @@ void player_bong_weed_effect_draw(const struct player *p,
  * @{
  */
 void player_n2o_check_use(struct player *p, const struct input_parms iparms);
+void player_n2o_trip_setup(struct player *p);
+void player_n2o_effect_update(struct player *p);
 void player_n2o_effect_draw(const struct player *p, const surface_t *surf,
 			    const u32 tick_cnt, const u32 tick_cnt_last,
 			    const f32 subtick);

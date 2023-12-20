@@ -8,6 +8,7 @@
 wav64_t title_music_intro; ///< Title music intro
 wav64_t title_music_init; ///< Title music init
 wav64_t title_music_main; ///< Title music main
+wav64_t title_music_start; ///< Title music Starting Game
 wav64_t pistol_fire_sfx; ///< Pistol fire sfx
 wav64_t pistol_click_sfx; ///< Pistol click sfx
 wav64_t pistol_pullout_sfx; ///< Pistol pullout sfx
@@ -27,7 +28,8 @@ wav64_t cough_small0_sfx; ///< Cough small 0
 wav64_t cough_small1_sfx; ///< Cough small 1
 wav64_t cough_small2_sfx; ///< Cough small 2
 wav64_t trip_music; ///< Tripping music
-wav64_t nitrous_whine; ///< Nitrous Oxide whine
+wav64_t n2o_huffing_sfx; // Nitrous Oxide Huffing
+wav64_t n2o_whine_sfx; ///< Nitrous Oxide whine
 
 static void _sfx_set_mixer_ch_vols(void)
 {
@@ -45,6 +47,7 @@ static void _sfx_samples_open(void)
 	wav64_open(&title_music_intro, "rom:/title_intro.wav64");
 	wav64_open(&title_music_init, "rom:/title_init.wav64");
 	wav64_open(&title_music_main, "rom:/title_main.wav64");
+	wav64_open(&title_music_start, "rom:/title_play.wav64");
 	wav64_open(&pistol_fire_sfx, "rom:/pistol_fire.wav64");
 	wav64_open(&pistol_click_sfx, "rom:/pistol_click.wav64");
 	wav64_open(&pistol_pullout_sfx, "rom:/pistol_pullout.wav64");
@@ -64,7 +67,8 @@ static void _sfx_samples_open(void)
 	wav64_open(&cough_small1_sfx, "rom:/cough_small1.wav64");
 	wav64_open(&cough_small2_sfx, "rom:/cough_small2.wav64");
 	wav64_open(&trip_music, "rom:/tripmusic.wav64");
-	wav64_open(&nitrous_whine, "rom:/nitrous_whine.wav64");
+	wav64_open(&n2o_huffing_sfx, "rom:/nitrous_huffing.wav64");
+	wav64_open(&n2o_whine_sfx, "rom:/nitrous_whine.wav64");
 }
 
 static void _sfx_set_looping(void)
@@ -72,6 +76,7 @@ static void _sfx_set_looping(void)
 	wav64_set_loop(&title_music_intro, 0);
 	wav64_set_loop(&title_music_init, 1);
 	wav64_set_loop(&title_music_main, 1);
+	wav64_set_loop(&title_music_start, 0);
 	wav64_set_loop(&pistol_fire_sfx, 0);
 	wav64_set_loop(&pistol_click_sfx, 0);
 	wav64_set_loop(&pistol_pullout_sfx, 0);
@@ -91,7 +96,8 @@ static void _sfx_set_looping(void)
 	wav64_set_loop(&cough_small1_sfx, 0);
 	wav64_set_loop(&cough_small2_sfx, 0);
 	wav64_set_loop(&trip_music, 0);
-	wav64_set_loop(&nitrous_whine, 1);
+	wav64_set_loop(&n2o_huffing_sfx, 0);
+	wav64_set_loop(&n2o_whine_sfx, 1);
 }
 
 /**

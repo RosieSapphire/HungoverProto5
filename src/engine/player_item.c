@@ -14,17 +14,20 @@ static const s8 item_has_flags[ITEM_COUNT] = {
 static const s8 item_select[ITEM_COUNT] = {
 	ITEM_SELECT_PISTOL,
 	ITEM_SELECT_BONG,
+	ITEM_SELECT_NITROUS,
 };
 
 static const char *item_paths[ITEM_COUNT] = {
 	"rom:/Pistol.scn",
 	"rom:/Bong.scn",
+	"rom:/Nitrous.scn",
 };
 
 static void (*item_use_funcs[ITEM_COUNT])(struct player *,
 					  const struct input_parms) = {
 	player_pistol_check_use,
 	player_bong_check_use,
+	player_n2o_check_use,
 };
 
 /**
@@ -61,6 +64,11 @@ void player_item_load(struct player *p, const u8 flags_last)
 
 	case ITEM_SELECT_BONG:
 		item->qty1 = 3;
+		item->qty2 = 0;
+		break;
+
+	case ITEM_SELECT_NITROUS:
+		item->qty1 = 8;
 		item->qty2 = 0;
 		break;
 
@@ -103,6 +111,15 @@ void player_item_check_pickup(struct scene *s, struct player *p)
 				mixer_ch_set_vol(SFXC_ITEM0, 0.6f, 0.7f);
 				wav64_play(&bong_pullout_sfx, SFXC_ITEM0);
 			}
+			else if (!strcmp(m->name + 3, "Nitrous"))
+			{
+				p->item_flags |= ITEM_HAS_NITROUS;
+				mixer_ch_set_vol(SFXC_ITEM0, 0.7f, 0.6f);
+				/*
+				 * TODO: Make this a different sound effect
+				 */
+				wav64_play(&bong_pullout_sfx, SFXC_ITEM0);
+			}
 
 			player_item_load(p, item_flags_last);
 			m->flags &= ~(MESH_IS_ACTIVE);
@@ -134,7 +151,7 @@ static void _player_item_check_switching(struct player *p,
 		switch (p->item_selected)
 		{
 		case ITEM_SELECT_PISTOL:
-			item = p->items + 0;
+			item = p->items + ITEM_SELECT_PISTOL;
 			item->anim_index = 0;
 			scene_anims_set_frame(&item->s, 0);
 			scene_anims_set_flags(&item->s, ANIM_IS_PLAYING);
@@ -142,11 +159,22 @@ static void _player_item_check_switching(struct player *p,
 			wav64_play(&pistol_pullout_sfx, SFXC_ITEM0);
 			break;
 		case ITEM_SELECT_BONG:
-			item = p->items + 1;
+			item = p->items + ITEM_SELECT_BONG;
 			item->anim_index = 0;
 			scene_anims_set_frame(&item->s, 0);
 			scene_anims_set_flags(&item->s, ANIM_IS_PLAYING);
 			mixer_ch_set_vol(SFXC_ITEM0, 0.6f, 0.7f);
+			wav64_play(&bong_pullout_sfx, SFXC_ITEM0);
+			break;
+		case ITEM_SELECT_NITROUS:
+			item = p->items + ITEM_SELECT_NITROUS;
+			item->anim_index = 0;
+			scene_anims_set_frame(&item->s, 0);
+			scene_anims_set_flags(&item->s, ANIM_IS_PLAYING);
+			mixer_ch_set_vol(SFXC_ITEM0, 0.7f, 0.6f);
+			/*
+			 * TODO: Change sound effect
+			 */
 			wav64_play(&bong_pullout_sfx, SFXC_ITEM0);
 			break;
 		default:
@@ -159,6 +187,9 @@ static void _player_item_check_switching(struct player *p,
  * Updates all attributes of players items
  * @param[in,out] p Player Structure
  * @param[in] iparms Input Parameters
+ */
+/*
+ * TODO: Rename this to player_recoil_update or something
  */
 void player_items_update(struct player *p, const struct input_parms iparms)
 {

@@ -10,34 +10,29 @@
  */
 void player_n2o_check_use(struct player *p, const struct input_parms iparms)
 {
-	struct item *n2o = p->items + 1;
+	struct item *n2o = p->items + ITEM_SELECT_NITROUS;
 
 	n2o->usage_timer_last = n2o->usage_timer;
 
-	if (iparms.press.z && item_anim_at_end(n2o, 0) &&
-	    n2o->qty2 == 0)
+	if (iparms.press.z && item_anim_at_end(n2o, 0) && n2o->qty1 != 0)
 	{
 		n2o->usage_timer = 1;
 		n2o->anim_index = 1;
 		item_anim_set_frame(n2o, 1, 0);
-		mixer_ch_set_vol(SFXC_ITEM1, 0.6f, 0.6f);
-		wav64_play(&lighter_flick_sfx, SFXC_ITEM1);
 	}
 
 	if (n2o->anim_index == 1)
 	{
+		mixer_ch_set_freq(SFXC_ITEM0, 32000);
 		if ((iparms.held.z || iparms.press.z) &&
-		    n2o->usage_timer < 56 &&
+		    n2o->usage_timer < NITROUS_USAGE_TIMER_MAX &&
 		    n2o->usage_timer != 0)
 		{
 			item_anim_set_flags(n2o, 1, ANIM_IS_PLAYING);
-			mixer_ch_set_freq(SFXC_ITEM0,
-					  32000 + (n2o->usage_timer * 200));
 			n2o->usage_timer += n2o->usage_timer > 0;
 		}
 		else
 		{
-			mixer_ch_set_freq(SFXC_ITEM0, 32000);
 			mixer_ch_stop(SFXC_ITEM0);
 			item_anim_set_flags(n2o, 1,
 					    ANIM_IS_PLAYING | ANIM_IS_BACKWARD);
@@ -48,48 +43,60 @@ void player_n2o_check_use(struct player *p, const struct input_parms iparms)
 	if (n2o->usage_timer_last == 17 && n2o->usage_timer == 18)
 	{
 		mixer_ch_set_vol(SFXC_ITEM0, 0.4f, 0.4f);
-		
-		// FIXME: Change this to Nitrous Huffing
-		wav64_play(&bong_bubbling_sfx, SFXC_ITEM0);
+		wav64_play(&n2o_huffing_sfx, SFXC_ITEM0);
 	}
 }
 
 void player_n2o_trip_setup(struct player *p)
 {
-	struct item *n2o = p->items + 1;
+	struct item *n2o = p->items + ITEM_SELECT_NITROUS;
 
+	/*
+	 * Upon finishing huffing
+	 */
 	if (n2o->usage_timer_last)
 	{
-		if (n2o->usage_timer_last >= 48 && n2o->usage_timer_last <= 50)
-		{
-			mixer_ch_set_vol(SFXC_ITEM1, 0.3f, 0.3f);
-			wav64_play(&bong_hit_good_sfx, SFXC_ITEM1);
-		}
-		else
-		{
-			mixer_ch_set_vol(SFXC_ITEM1, 0.3f, 0.3f);
-			wav64_play(&bong_hit_bad_sfx, SFXC_ITEM1);
-		}
+		mixer_ch_set_vol(SFXC_ITEM1, 0.3f, 0.3f);
+		wav64_play(&bong_hit_good_sfx, SFXC_ITEM1);
 
+		n2o->qty1--;
+		n2o->qty2++;
 		p->which_drug = ON_DRUG_NITROUS;
-		p->drug_progress = 0;
-		p->drug_duration = 240;
+		p->drug_duration += 800 / n2o->qty2;
 		mixer_ch_set_vol(SFXC_MUSIC0, 0, 0);
-		mixer_ch_set_freq(SFXC_MUSIC0, 22050);
-		wav64_play(&nitrous_whine, SFXC_MUSIC0);
+		mixer_ch_set_freq(SFXC_MUSIC0, 32000);
+		wav64_play(&n2o_whine_sfx, SFXC_MUSIC0);
 	}
 }
 
 /**
- * player_n2o_effect_update - Updates the Weed Effect for Player
- * @p: Player to Update for
+ * Updates the Weed Effect for Player
+ * @param[in,out] p Player to Update for
  */
 void player_n2o_effect_update(struct player *p)
 {
 	if (!p->drug_duration)
 		return;
 
-	f32 womp_vol = lerpf(0.0f, 0.5f, player_drug_get_intensity(p));
+	if (p->which_drug != ON_DRUG_NITROUS)
+		return;
+
+	/*
+	 * On trip end
+	 */
+	if (p->drug_progress >= p->drug_duration)
+	{
+		p->drug_duration = 0;
+		p->drug_progress = 0;
+		p->items[ITEM_SELECT_NITROUS].qty2 = 0;
+	}
+
+	const f32 intens = player_drug_get_intensity(p);
+	f32 womp_vol = lerpf(0.0f, 0.5f, intens);
+
+	debugf("drug_progress=%d, drug_duration=%d, intensity=%f, qty2=%d\n",
+	       p->drug_progress, p->drug_duration, intens,
+	       p->items[ITEM_SELECT_NITROUS].qty2);
 
 	mixer_ch_set_vol(SFXC_MUSIC0, womp_vol, womp_vol);
 	p->drug_progress++;
@@ -108,9 +115,10 @@ void player_n2o_effect_draw(const struct player *p, const surface_t *surf,
 			    const f32 subtick)
 {
 	const f32 tick_cnt_lerp = lerpf(tick_cnt_last, tick_cnt, subtick);
-	const f32 intensity = clampf((f32)p->drug_progress /
-			      ((f32)p->drug_duration * 0.25f), 0, 1);
+	const f32 intensity = player_drug_get_intensity(p);
 	const f32 scale = lerpf(1.0f, 1.04f, intensity);
+
+	debugf("%f\n", intensity);
 
 	rdpq_set_mode_standard();
 	rdpq_set_fog_color(RGBA32(0, 0, 0, intensity * 255));

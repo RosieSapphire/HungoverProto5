@@ -33,7 +33,7 @@ void player_bong_check_use(struct player *p, const struct input_parms iparms)
 	if (bong->anim_index == 1)
 	{
 		if ((iparms.held.z || iparms.press.z) &&
-		    bong->usage_timer < 56 &&
+		    bong->usage_timer < BONG_USAGE_TIMER_MAX &&
 		    bong->usage_timer != 0)
 		{
 			item_anim_set_flags(bong, 1, ANIM_IS_PLAYING);

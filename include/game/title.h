@@ -16,6 +16,7 @@ enum title_music_state
 	TM_INTRO = 0, ///< Intro State
 	TM_INIT, ///< Initial State
 	TM_MAIN, ///< Main State
+	TM_END, ///< End State
 	TM_COUNT, ///< Number of Title Music States
 };
 

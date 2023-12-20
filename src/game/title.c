@@ -66,11 +66,11 @@ enum scene_index title_update(struct input_parms iparms)
 
 	scene_anims_update(&scene);
 
-	if (title_music_state == TM_INTRO && (u16)beat_counter >= 32)
+	if (title_music_state == TM_INTRO && (u16)beat_counter_last >= 32)
 	{
 		title_music_state = TM_INIT;
 		mixer_ch_set_vol(SFXC_MUSIC0, 0.0f, 0.0f);
-		mixer_ch_set_vol(SFXC_MUSIC1, 0.5f, 0.5f);
+		mixer_ch_set_vol(SFXC_MUSIC1, 0.8f, 0.8f);
 		return (SCENE_TITLE);
 	}
 
@@ -78,15 +78,17 @@ enum scene_index title_update(struct input_parms iparms)
 	{
 		title_music_state = TM_MAIN;
 		mixer_ch_set_vol(SFXC_MUSIC1, 0.0f, 0.0f);
-		mixer_ch_set_vol(SFXC_MUSIC2, 0.5f, 0.5f);
+		mixer_ch_set_vol(SFXC_MUSIC2, 0.8f, 0.8f);
 		return (SCENE_TITLE);
 	}
 
 	if (title_music_state == TM_MAIN && iparms.press.start)
 	{
-		mixer_ch_stop(SFXC_MUSIC0);
-		mixer_ch_stop(SFXC_MUSIC1);
-		mixer_ch_stop(SFXC_MUSIC2);
+		title_music_state = TM_END;
+		mixer_ch_set_vol(SFXC_MUSIC0, 0.8f, 0.8f);
+		mixer_ch_set_vol(SFXC_MUSIC1, 0.0f, 0.0f);
+		mixer_ch_set_vol(SFXC_MUSIC2, 0.0f, 0.0f);
+		wav64_play(&title_music_start, SFXC_MUSIC0);
 		return (SCENE_TESTROOM);
 	}
 

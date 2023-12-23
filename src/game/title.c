@@ -15,7 +15,10 @@
 static surface_t *color_buffer, depth_buffer;
 
 static struct scene scene;
-static f32 beat_counter_last, beat_counter;
+static f32 beat_counter_last;
+static f32 beat_counter;
+static f32 beat_counter_at_state_change;
+static u8 title_music_state_last;
 static u8 title_music_state;
 
 /**
@@ -63,33 +66,49 @@ enum scene_index title_update(struct input_parms iparms)
 {
 	beat_counter_last = beat_counter;
 	beat_counter += 0.1215375f;
-
 	scene_anims_update(&scene);
+	if (title_music_state_last != title_music_state)
+		beat_counter_at_state_change = beat_counter;
 
-	if (title_music_state == TM_INTRO && (u16)beat_counter_last >= 32)
+	f32 title_music_fade_lerp =
+		clampf((beat_counter - beat_counter_at_state_change) * 0.5f,
+		       0, 1) * 0.8f;
+	const f32 vol = title_music_fade_lerp;
+
+	title_music_state_last = title_music_state;
+	if ((title_music_state == TM_INTRO) && ((u16)beat_counter_last >= 30))
 	{
 		title_music_state = TM_INIT;
-		mixer_ch_set_vol(SFXC_MUSIC0, 0.0f, 0.0f);
-		mixer_ch_set_vol(SFXC_MUSIC1, 0.8f, 0.8f);
 		return (SCENE_TITLE);
 	}
 
-	if (title_music_state == TM_INIT && iparms.press.start)
+	if (title_music_state == TM_INIT)
 	{
-		title_music_state = TM_MAIN;
-		mixer_ch_set_vol(SFXC_MUSIC1, 0.0f, 0.0f);
-		mixer_ch_set_vol(SFXC_MUSIC2, 0.8f, 0.8f);
-		return (SCENE_TITLE);
+		if (iparms.press.start)
+		{
+			title_music_state = TM_MAIN;
+			debugf("%f, %f\n", vol, 0.8f - vol);
+			return (SCENE_TITLE);
+		}
+
+		mixer_ch_set_vol(SFXC_MUSIC0, 0.8f - vol, 0.8f - vol);
+		mixer_ch_set_vol(SFXC_MUSIC1, vol, vol);
 	}
 
-	if (title_music_state == TM_MAIN && iparms.press.start)
+	if (title_music_state == TM_MAIN)
 	{
-		title_music_state = TM_END;
-		mixer_ch_set_vol(SFXC_MUSIC0, 0.8f, 0.8f);
-		mixer_ch_set_vol(SFXC_MUSIC1, 0.0f, 0.0f);
-		mixer_ch_set_vol(SFXC_MUSIC2, 0.0f, 0.0f);
-		wav64_play(&title_music_start, SFXC_MUSIC0);
-		return (SCENE_TESTROOM);
+		if (iparms.press.start)
+		{
+			title_music_state = TM_END;
+			mixer_ch_set_vol(SFXC_MUSIC0, 0.8f, 0.8f);
+			mixer_ch_set_vol(SFXC_MUSIC1, 0.0f, 0.0f);
+			mixer_ch_set_vol(SFXC_MUSIC2, 0.0f, 0.0f);
+			wav64_play(&title_music_start, SFXC_MUSIC0);
+			return (SCENE_TESTROOM);
+		}
+
+		mixer_ch_set_vol(SFXC_MUSIC1, 0.8f - vol, 0.8f - vol);
+		mixer_ch_set_vol(SFXC_MUSIC2, vol, vol);
 	}
 
 	return (SCENE_TITLE);

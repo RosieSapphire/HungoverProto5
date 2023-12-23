@@ -8,7 +8,7 @@
 #include "engine/vector.h"
 #include "engine/scene.h"
 
-enum scene_index scene_index = SCENE_TESTROOM;
+enum scene_index scene_index = SCENE_TITLE;
 static f32 spin_timer_last, spin_timer;
 
 /**

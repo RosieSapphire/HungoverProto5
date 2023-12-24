@@ -1,9 +1,9 @@
+#ifndef _ENGINE_CONFIG_H_
+#define _ENGINE_CONFIG_H_
+
 /**
  * @file include/engine/config.h
  */
-
-#ifndef _ENGINE_CONFIG_H_
-#define _ENGINE_CONFIG_H_
 
 #define CONF_DEBUG ///< If debugging is enabled
 

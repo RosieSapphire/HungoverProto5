@@ -1,9 +1,9 @@
+#ifndef _ENGINE_ITEM_H_
+#define _ENGINE_ITEM_H_
+
 /**
  * @file include/engine/item.h
  */
-
-#ifndef _ENGINE_ITEM_H_
-#define _ENGINE_ITEM_H_
 
 #include "engine/scene.h"
 

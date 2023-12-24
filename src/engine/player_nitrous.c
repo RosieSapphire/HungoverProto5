@@ -47,6 +47,10 @@ void player_n2o_check_use(struct player *p, const struct input_parms iparms)
 	}
 }
 
+/**
+ * Sets up nitrous oxide trip
+ * @param[in,out] p Player
+ */
 void player_n2o_trip_setup(struct player *p)
 {
 	struct item *n2o = p->items + ITEM_SELECT_NITROUS;

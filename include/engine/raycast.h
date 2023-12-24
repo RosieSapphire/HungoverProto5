@@ -1,9 +1,9 @@
+#ifndef _ENGINE_RAYCAST_H_
+#define _ENGINE_RAYCAST_H_
+
 /**
  * @file include/engine/raycast.h
  */
-
-#ifndef _ENGINE_RAYCAST_H_
-#define _ENGINE_RAYCAST_H_
 
 #include "engine/types.h"
 #include "engine/collision_mesh.h"

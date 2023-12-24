@@ -1,9 +1,9 @@
+#ifndef _ENGINE_SFX_H_
+#define _ENGINE_SFX_H_
+
 /**
  * @file include/engine/sfx.h
  */
-
-#ifndef _ENGINE_SFX_H_
-#define _ENGINE_SFX_H_
 
 #include <libdragon.h>
 

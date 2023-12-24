@@ -1,9 +1,9 @@
+#ifndef ENGINE_VECTOR_H_
+#define ENGINE_VECTOR_H_
+
 /**
  * @file include/engine/vector.h
  */
-
-#ifndef ENGINE_VECTOR_H_
-#define ENGINE_VECTOR_H_
 
 #include "engine/types.h"
 

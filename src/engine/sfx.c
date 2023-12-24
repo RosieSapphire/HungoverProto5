@@ -28,7 +28,7 @@ wav64_t cough_small0_sfx; ///< Cough small 0
 wav64_t cough_small1_sfx; ///< Cough small 1
 wav64_t cough_small2_sfx; ///< Cough small 2
 wav64_t trip_music; ///< Tripping music
-wav64_t n2o_huffing_sfx; // Nitrous Oxide Huffing
+wav64_t n2o_huffing_sfx; ///< Nitrous Oxide Huffing
 wav64_t n2o_whine_sfx; ///< Nitrous Oxide whine
 
 static void _sfx_set_mixer_ch_vols(void)

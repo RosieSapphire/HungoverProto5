@@ -55,15 +55,10 @@ clean:
 
 BETTY_SCAN=include/*/*.h src/*/*.c src/*.c
 
-betty-style:
+betty:
 	betty-style --subjective --strict \
 		--allow-global-variables --root=. \
-		--ignore=CAMELCASE,PREFER_KERNEL_TYPES $(BETTY_SCAN)
-
-betty-doc:
-	betty-doc $(BETTY_SCAN)
-
-betty:
-	clear; make betty-doc; make betty-style;
+		--ignore=CAMELCASE,PREFER_KERNEL_TYPES,C99_COMMENTS \
+		$(BETTY_SCAN)
 
 .PHONY: all clean

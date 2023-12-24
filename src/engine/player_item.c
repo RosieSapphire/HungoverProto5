@@ -97,33 +97,32 @@ void player_item_check_pickup(struct scene *s, struct player *p)
 		const u8 item_flags_last = p->item_flags;
 
 		vector_sub(p->pos, n->trans[3], vec, 3);
-		if (vector_magnitude_sqr(vec, 3) < dist_touch * dist_touch)
-		{
-			if (!strcmp(m->name + 3, "Pistol"))
-			{
-				p->item_flags |= ITEM_HAS_PISTOL;
-				mixer_ch_set_vol(SFXC_ITEM0, 0.3f, 0.4f);
-				wav64_play(&pistol_pullout_sfx, SFXC_ITEM0);
-			}
-			else if (!strcmp(m->name + 3, "Bong"))
-			{
-				p->item_flags |= ITEM_HAS_BONG;
-				mixer_ch_set_vol(SFXC_ITEM0, 0.6f, 0.7f);
-				wav64_play(&bong_pullout_sfx, SFXC_ITEM0);
-			}
-			else if (!strcmp(m->name + 3, "Nitrous"))
-			{
-				p->item_flags |= ITEM_HAS_NITROUS;
-				mixer_ch_set_vol(SFXC_ITEM0, 0.7f, 0.6f);
-				/*
-				 * TODO: Make this a different sound effect
-				 */
-				wav64_play(&bong_pullout_sfx, SFXC_ITEM0);
-			}
+		if (vector_magnitude_sqr(vec, 3) >= dist_touch * dist_touch)
+			continue;
 
-			player_item_load(p, item_flags_last);
-			m->flags &= ~(MESH_IS_ACTIVE);
+		if (!strcmp(m->name + 3, "Pistol"))
+		{
+			p->item_flags |= ITEM_HAS_PISTOL;
+			mixer_ch_set_vol(SFXC_ITEM0, 0.3f, 0.4f);
+			wav64_play(&pistol_pullout_sfx, SFXC_ITEM0);
 		}
+		else if (!strcmp(m->name + 3, "Bong"))
+		{
+			p->item_flags |= ITEM_HAS_BONG;
+			mixer_ch_set_vol(SFXC_ITEM0, 0.6f, 0.7f);
+			wav64_play(&bong_pullout_sfx, SFXC_ITEM0);
+		}
+		else if (!strcmp(m->name + 3, "Nitrous"))
+		{
+			p->item_flags |= ITEM_HAS_NITROUS;
+			mixer_ch_set_vol(SFXC_ITEM0, 0.7f, 0.6f);
+			/*
+			 * TODO: Make this a different sound effect
+			 */
+			wav64_play(&bong_pullout_sfx, SFXC_ITEM0);
+		}
+		player_item_load(p, item_flags_last);
+		m->flags &= ~(MESH_IS_ACTIVE);
 	}
 }
 
@@ -132,7 +131,6 @@ static void _player_item_check_switching(struct player *p,
 {
 	const u8 num_items = __builtin_popcount(p->item_flags);
 	const s8 item_selected_last = p->item_selected;
-	struct item *item;
 
 	p->item_selected += iparms.press.a - iparms.press.b;
 	if (p->item_selected != item_selected_last)
@@ -146,40 +144,30 @@ static void _player_item_check_switching(struct player *p,
 			p->item_selected = item_selected_last;
 	}
 
-	if (p->item_selected != item_selected_last)
+	if (p->item_selected == item_selected_last)
+		return;
+
+	struct item *item = p->items + p->item_selected;
+
+	item->anim_index = 0;
+	scene_anims_set_frame(&item->s, 0);
+	scene_anims_set_flags(&item->s, ANIM_IS_PLAYING);
+	switch (p->item_selected)
 	{
-		switch (p->item_selected)
-		{
-		case ITEM_SELECT_PISTOL:
-			item = p->items + ITEM_SELECT_PISTOL;
-			item->anim_index = 0;
-			scene_anims_set_frame(&item->s, 0);
-			scene_anims_set_flags(&item->s, ANIM_IS_PLAYING);
-			mixer_ch_set_vol(SFXC_ITEM0, 0.3f, 0.4f);
-			wav64_play(&pistol_pullout_sfx, SFXC_ITEM0);
-			break;
-		case ITEM_SELECT_BONG:
-			item = p->items + ITEM_SELECT_BONG;
-			item->anim_index = 0;
-			scene_anims_set_frame(&item->s, 0);
-			scene_anims_set_flags(&item->s, ANIM_IS_PLAYING);
-			mixer_ch_set_vol(SFXC_ITEM0, 0.6f, 0.7f);
-			wav64_play(&bong_pullout_sfx, SFXC_ITEM0);
-			break;
-		case ITEM_SELECT_NITROUS:
-			item = p->items + ITEM_SELECT_NITROUS;
-			item->anim_index = 0;
-			scene_anims_set_frame(&item->s, 0);
-			scene_anims_set_flags(&item->s, ANIM_IS_PLAYING);
-			mixer_ch_set_vol(SFXC_ITEM0, 0.7f, 0.6f);
-			/*
-			 * TODO: Change sound effect
-			 */
-			wav64_play(&bong_pullout_sfx, SFXC_ITEM0);
-			break;
-		default:
-			break;
-		}
+	case ITEM_SELECT_PISTOL:
+		mixer_ch_set_vol(SFXC_ITEM0, 0.3f, 0.4f);
+		wav64_play(&pistol_pullout_sfx, SFXC_ITEM0);
+		break;
+	case ITEM_SELECT_BONG:
+		mixer_ch_set_vol(SFXC_ITEM0, 0.6f, 0.7f);
+		wav64_play(&bong_pullout_sfx, SFXC_ITEM0);
+		break;
+	case ITEM_SELECT_NITROUS:
+		mixer_ch_set_vol(SFXC_ITEM0, 0.7f, 0.6f);
+		wav64_play(&bong_pullout_sfx, SFXC_ITEM0);
+		break;
+	default:
+		break;
 	}
 }
 

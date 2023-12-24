@@ -1,9 +1,9 @@
+#ifndef _ENGINE_SCENE_H_
+#define _ENGINE_SCENE_H_
+
 /**
  * @file include/engine/scene.h
  */
-
-#ifndef _ENGINE_SCENE_H_
-#define _ENGINE_SCENE_H_
 
 #include "engine/mesh.h"
 #include "engine/node.h"
@@ -15,7 +15,8 @@
  */
 enum scene_index
 {
-	SCENE_TITLE, ///< Title Screen
+	SCENE_UNKNOWN = 0xFFFF, ///< Unknown Scene
+	SCENE_TITLE = 0, ///< Title Screen
 	SCENE_TESTROOM, ///< Test Room
 	NUM_SCENES, ///< Number of Scenes
 };

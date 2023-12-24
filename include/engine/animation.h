@@ -1,9 +1,9 @@
+#ifndef _ENGINE_ANIMATION_H_
+#define _ENGINE_ANIMATION_H_
+
 /**
  * @file include/engine/animation.h
  */
-
-#ifndef _ENGINE_ANIMATION_H_
-#define _ENGINE_ANIMATION_H_
 
 #include "engine/types.h"
 #include "engine/config.h"

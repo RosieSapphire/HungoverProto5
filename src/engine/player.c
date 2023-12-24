@@ -91,6 +91,4 @@ void player_update(struct scene *s, struct player *p,
 
 	player_bong_weed_effect_update(p, num_coughs_max);
 	player_n2o_effect_update(p);
-
-
 }

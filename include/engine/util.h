@@ -1,9 +1,9 @@
+#ifndef _ENGINE_UTIL_H_
+#define _ENGINE_UTIL_H_
+
 /**
  * @file include/engine/util.h
  */
-
-#ifndef _ENGINE_UTIL_H_
-#define _ENGINE_UTIL_H_
 
 #include "engine/types.h"
 

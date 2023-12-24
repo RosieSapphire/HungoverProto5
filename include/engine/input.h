@@ -1,9 +1,9 @@
+#ifndef _ENGINE_INPUT_H_
+#define _ENGINE_INPUT_H_
+
 /**
  * @file include/engine/input.h
  */
-
-#ifndef _ENGINE_INPUT_H_
-#define _ENGINE_INPUT_H_
 
 #include <libdragon.h>
 

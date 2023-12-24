@@ -44,7 +44,6 @@ static void _scene_draw_node(const struct scene *s,
 	{
 		for (int i = 0; i < n->num_children; i++)
 			_scene_draw_node(s, n->children + i, subtick, anim_set);
-
 		return;
 	}
 	const struct mesh *m = s->meshes + n->mesh_ind;
@@ -56,10 +55,8 @@ static void _scene_draw_node(const struct scene *s,
 
 		if ((a->name[0] - '0') != anim_set)
 			continue;
-
 		if (a->mesh_ind != n->mesh_ind)
 			continue;
-
 		anim_ind = i;
 		break;
 	}
@@ -79,7 +76,6 @@ static void _scene_draw_node(const struct scene *s,
 		animation_matrix_multiply(s->anims + anim_ind, subtick);
 	else
 		glMultMatrixf((f32 *)n->trans);
-
 	mesh_draw(m);
 	for (u16 i = 0; i < n->num_children; i++)
 		_scene_draw_node(s, n->children + i, subtick, anim_set);
@@ -90,6 +86,7 @@ static void _scene_draw_node(const struct scene *s,
  * Draws a Scene and its Meshes
  * @param[in] s Scene to Draw
  * @param[in] subtick Subtick
+ * @param[in] anim_set Which Animation Set to Use
  */
 void scene_draw(const struct scene *s, const f32 subtick, const u16 anim_set)
 {

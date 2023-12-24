@@ -1,9 +1,9 @@
+#ifndef _ENGINE_PROFILER_H_
+#define _ENGINE_PROFILER_H_
+
 /**
  * @file include/engine/profiler.h
  */
-
-#ifndef _ENGINE_PROFILER_H_
-#define _ENGINE_PROFILER_H_
 
 /**
  * Begins the Profiler on the code you want to profile

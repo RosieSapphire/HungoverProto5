@@ -1,9 +1,9 @@
+#ifndef _ENGINE_COLLISSION_MESH_H_
+#define _ENGINE_COLLISSION_MESH_H_
+
 /**
  * @file include/engine/collision_mesh.h
  */
-
-#ifndef _ENGINE_COLLISSION_MESH_H_
-#define _ENGINE_COLLISSION_MESH_H_
 
 #include "engine/mesh.h"
 
@@ -28,7 +28,7 @@ enum collision_type
 struct collision_mesh
 {
 	u16 num_verts; ///< Number of vertices
-	vec3 *verts; ///< Vertices array
+	vec3 * verts; ///< Vertices array
 };
 
 void collision_mesh_gen(struct collision_mesh *out,

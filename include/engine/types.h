@@ -1,9 +1,9 @@
+#ifndef _ENGINE_TYPES_H_
+#define _ENGINE_TYPES_H_
+
 /**
  * @file include/engine/types.h
  */
-
-#ifndef _ENGINE_TYPES_H_
-#define _ENGINE_TYPES_H_
 
 typedef unsigned long  u32; ///< Unsigned 32-bit Integer
 typedef unsigned short u16; ///< Unsigned 16-bit Integer

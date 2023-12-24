@@ -41,7 +41,6 @@ static void _scene_read_mesh(struct scene *s, u16 i)
 		debugf("Couldn't find mesh at '%s'\n", mfpath_conv);
 		exit(1);
 	}
-
 	free(mfpath_conv);
 	struct mesh *m = s->meshes + i;
 

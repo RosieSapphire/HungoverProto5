@@ -1,9 +1,9 @@
+#ifndef _ENGINE_TEXTURE_H_
+#define _ENGINE_TEXTURE_H_
+
 /**
  * @file include/engine/texture.h
  */
-
-#ifndef _ENGINE_TEXTURE_H_
-#define _ENGINE_TEXTURE_H_
 
 #include <libdragon.h>
 

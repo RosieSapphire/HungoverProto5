@@ -1,16 +1,16 @@
+#ifndef _ENGINE_PLAYER_H_
+#define _ENGINE_PLAYER_H_
+
 /**
  * @file include/engine/player.h
  */
-
-#ifndef _ENGINE_PLAYER_H_
-#define _ENGINE_PLAYER_H_
 
 #include "engine/camera.h"
 #include "engine/item.h"
 #include "engine/collision_mesh.h"
 
-#define BONG_USAGE_TIMER_MAX 56
-#define NITROUS_USAGE_TIMER_MAX 80
+#define BONG_USAGE_TIMER_MAX 56 ///< Maximum usage timer for bong
+#define NITROUS_USAGE_TIMER_MAX 80 ///< Maximum usage timer for nitrous
 
 /**
  * Which item is currently selected

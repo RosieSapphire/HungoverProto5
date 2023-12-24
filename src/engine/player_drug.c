@@ -21,6 +21,8 @@ f32 player_drug_get_intensity(const struct player *p)
 	if (p->which_drug == ON_DRUG_NITROUS)
 		max_intens *= p->items[ITEM_SELECT_NITROUS].qty2;
 
- 	return (2 * lerpf(0.0f, max_intens,
-	                  (calc > 0.5f) ? fmaxf(1 - calc, 0) : fminf(calc, 1)));
+	const f32 intens_lerp =
+		(calc > 0.5f) ? fmaxf(1 - calc, 0) : fminf(calc, 1);
+
+	return (2 * lerpf(0.0f, max_intens, intens_lerp));
 }

@@ -48,7 +48,7 @@ static void _init(void)
 {
 	srand(TICKS_READ());
 	display_init((resolution_t){CONF_WIDTH, CONF_HEIGHT, 0},
-	      DEPTH_32_BPP, 3, GAMMA_CORRECT_DITHER, FILTERS_RESAMPLE);
+		     DEPTH_32_BPP, 3, GAMMA_CORRECT_DITHER, FILTERS_RESAMPLE);
 	rdpq_init();
 	dfs_init(DFS_DEFAULT_LOCATION);
 	joypad_init();

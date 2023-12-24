@@ -1,9 +1,9 @@
+#ifndef _ENGINE_CAMERA_H_
+#define _ENGINE_CAMERA_H_
+
 /**
  * @file include/engine/camera.h
  */
-
-#ifndef _ENGINE_CAMERA_H_
-#define _ENGINE_CAMERA_H_
 
 #include "engine/types.h"
 #include "engine/input.h"

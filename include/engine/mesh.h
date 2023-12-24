@@ -1,9 +1,9 @@
+#ifndef _ENGINE_MESH_H_
+#define _ENGINE_MESH_H_
+
 /**
  * @file include/engine/mesh.h
  */
-
-#ifndef _ENGINE_MESH_H_
-#define _ENGINE_MESH_H_
 
 #include <libdragon.h>
 

@@ -52,7 +52,7 @@ struct scene
  */
 void scene_global_spin_timer_update(void);
 void scene_read_file(struct scene *s, const char *path);
-void scene_draw(const struct scene *s, const f32 subtick);
+void scene_draw(const struct scene *s, const f32 subtick, const u16 anim_set);
 void scene_destroy(struct scene *s);
 struct node *node_from_mesh_ind(struct node *n, const u16 mid);
 /**
@@ -63,7 +63,7 @@ struct node *node_from_mesh_ind(struct node *n, const u16 mid);
  * @defgroup scene_anims Scene Animation Functions
  * @{
  */
-void scene_anims_update(struct scene *s);
+void scene_anims_update(struct scene *s, const u16 index);
 void scene_anims_set_flags(struct scene *s, u8 flags);
 void scene_anims_set_frame(struct scene *s, u16 frame);
 /**

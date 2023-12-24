@@ -37,12 +37,13 @@ static void _scene_draw_node_pickup(const struct scene *s,
 }
 
 static void _scene_draw_node(const struct scene *s,
-			     const struct node *n, const f32 subtick)
+			     const struct node *n, const f32 subtick,
+			     const u16 anim_set)
 {
 	if (n->mesh_ind == 0xFFFF)
 	{
 		for (int i = 0; i < n->num_children; i++)
-			_scene_draw_node(s, n->children + i, subtick);
+			_scene_draw_node(s, n->children + i, subtick, anim_set);
 
 		return;
 	}
@@ -51,7 +52,12 @@ static void _scene_draw_node(const struct scene *s,
 
 	for (u16 i = 0; i < s->num_anims; i++)
 	{
-		if (s->anims[i].mesh_ind != n->mesh_ind)
+		const struct animation *a = s->anims + i;
+
+		if ((a->name[0] - '0') != anim_set)
+			continue;
+
+		if (a->mesh_ind != n->mesh_ind)
 			continue;
 
 		anim_ind = i;
@@ -60,7 +66,7 @@ static void _scene_draw_node(const struct scene *s,
 	if (!(m->flags & MESH_IS_ACTIVE))
 	{
 		for (u16 i = 0; i < n->num_children; i++)
-			_scene_draw_node(s, n->children + i, subtick);
+			_scene_draw_node(s, n->children + i, subtick, anim_set);
 		return;
 	}
 	glPushMatrix();
@@ -76,7 +82,7 @@ static void _scene_draw_node(const struct scene *s,
 
 	mesh_draw(m);
 	for (u16 i = 0; i < n->num_children; i++)
-		_scene_draw_node(s, n->children + i, subtick);
+		_scene_draw_node(s, n->children + i, subtick, anim_set);
 	glPopMatrix();
 }
 
@@ -85,9 +91,9 @@ static void _scene_draw_node(const struct scene *s,
  * @param[in] s Scene to Draw
  * @param[in] subtick Subtick
  */
-void scene_draw(const struct scene *s, const f32 subtick)
+void scene_draw(const struct scene *s, const f32 subtick, const u16 anim_set)
 {
-	_scene_draw_node(s, &s->root_node, subtick);
+	_scene_draw_node(s, &s->root_node, subtick, anim_set);
 }
 
 /**

@@ -67,7 +67,7 @@ enum scene_index testroom_update(struct input_parms iparms)
 	else
 		player_update(&scene, &player, iparms);
 
-	scene_anims_update(&scene);
+	scene_anims_update(&scene, 0);
 	player_items_update(&player, iparms);
 
 	ui_timer_update();
@@ -96,7 +96,7 @@ static void _testroom_render(const f32 subtick)
 	else
 		player_camera_view_matrix_setup(&player, subtick);
 
-	scene_draw(&scene, subtick);
+	scene_draw(&scene, subtick, 0);
 	if (testroom_flags & TR_FREECAM_ENABLED)
 	{
 		glDisable(GL_DEPTH_TEST);

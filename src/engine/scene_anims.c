@@ -10,11 +10,20 @@
 /**
  * Updates all Animations in a Scene Struct
  * @param[in,out] s Scene to Update Animations for
+ * @param[in] index Index to Update
  */
-void scene_anims_update(struct scene *s)
+void scene_anims_update(struct scene *s, const u16 index)
 {
 	for (u16 i = 0; i < s->num_anims; i++)
-		animation_update(s->anims + i);
+	{
+		struct animation *a = s->anims + i;
+
+		if ((a->name[0] - '0') == index)
+		{
+			debugf("Update anim '%s'\n", a->name);
+			animation_update(a);
+		}
+	}
 }
 
 /**

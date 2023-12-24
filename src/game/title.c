@@ -66,7 +66,7 @@ enum scene_index title_update(struct input_parms iparms)
 {
 	beat_counter_last = beat_counter;
 	beat_counter += 0.1215375f;
-	scene_anims_update(&scene);
+	scene_anims_update(&scene, (title_music_state == TM_MAIN));
 	if (title_music_state_last != title_music_state)
 		beat_counter_at_state_change = beat_counter;
 
@@ -144,13 +144,13 @@ void title_draw(f32 subtick)
 	glDepthFunc(GL_LESS);
 	glDisable(GL_CULL_FACE);
 	const f32 beat_counter_lerp = lerpf(beat_counter_last,
-				     beat_counter, subtick);
+					    beat_counter, subtick);
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	_title_setup_wiggle(beat_counter_lerp, 0);
-	scene_draw(&scene, subtick);
+	scene_draw(&scene, subtick, (title_music_state == TM_MAIN));
 
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);

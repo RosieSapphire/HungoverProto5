@@ -58,6 +58,9 @@ u32 texture_create_file(const char *path)
 
 	strcpy(tex_paths_loaded[num_texs_loaded - 1], path);
 	tex_objs_loaded[num_texs_loaded - 1] = t;
+	assertf(num_texs_loaded,
+		"Number of textures is somehow 0, even after loading.\n");
+
 	return (tex_objs_loaded[num_texs_loaded - 1].id);
 }
 

@@ -36,11 +36,7 @@ static void _scene_read_mesh(struct scene *s, u16 i)
 	free(mfpath_full);
 	FILE *mf = fopen(mfpath_conv, "rb");
 
-	if (!mf)
-	{
-		debugf("Couldn't find mesh at '%s'\n", mfpath_conv);
-		exit(1);
-	}
+	assertf(mf, "Couldn't find mesh at '%s'\n", mfpath_conv);
 	free(mfpath_conv);
 	struct mesh *m = s->meshes + i;
 
@@ -61,6 +57,8 @@ static void _scene_read_mesh(struct scene *s, u16 i)
 	fread(&m->tind, sizeof(u16), 1, mf);
 	fclose(mf);
 	const u32 id = m->tind == 0xFFFF ? 0 : s->tex_ids[m->tind];
+
+	debugf("mesh=%s, tind=%u, id=%lu\n", m->name, m->tind, id);
 
 	mesh_gen_rspqblock(m, id);
 	m->flags = MESH_IS_ACTIVE;
@@ -100,12 +98,8 @@ void scene_read_file(struct scene *s, const char *path)
 {
 	FILE *sf = fopen(path, "rb");
 
-	if (!sf)
-	{
-		debugf("Couldn't find scene at '%s'\n", path);
-		exit(1);
-	}
-
+	assertf(s, "Scene output pointer is NULL.\n");
+	assertf(sf, "Couldn't find scene at '%s'.\n", path);
 	_scene_read_node(&s->root_node, sf);
 
 	fread(&s->num_tex_ids, sizeof(u16), 1, sf);
@@ -116,6 +110,7 @@ void scene_read_file(struct scene *s, const char *path)
 
 		fread(tpath, sizeof(char), TEX_PATH_MAX_LEN, sf);
 		s->tex_ids[i] = texture_create_file(tpath);
+		debugf("%s: %lu\n", tpath, s->tex_ids[i]);
 	}
 
 	fread(&s->num_meshes, sizeof(u16), 1, sf);

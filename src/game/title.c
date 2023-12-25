@@ -142,11 +142,11 @@ void title_draw(f32 subtick)
 	glLoadIdentity();
 
 	const f32 pos_off[3] = {
-		sinf(beat_counter_lerp + offset) * 0.1f,
-		sinf((beat_counter_lerp + offset) * 1.5f) * 0.1f,
+		sinf(beat_counter_lerp) * 0.1f,
+		sinf((beat_counter_lerp) * 1.5f) * 0.1f,
 		0,
 	};
-	const f32 rot_off = sinf(beat_counter_lerp + offset) * 4;
+	const f32 rot_off = sinf(beat_counter_lerp) * 4;
 
 	glTranslatef(pos_off[0], pos_off[1], pos_off[2]);
 	glRotatef(rot_off, 0, 0, 1);

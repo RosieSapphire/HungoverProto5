@@ -27,8 +27,8 @@ void scene_debug_assimp(const struct scene *s)
 	{
 		const struct mesh *m = s->meshes + i;
 
-		printf("\t[MESH %d] name='%s', num_verts=%d\n",
-		       i, m->name, m->num_verts);
+		printf("\t[MESH %d] name='%s', tind=%u, num_verts=%d\n",
+		       i, m->name, m->tind, m->num_verts);
 		/*
 		for (u16 j = 0; j < m->num_verts; j++)
 		{

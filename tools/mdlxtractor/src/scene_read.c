@@ -138,9 +138,6 @@ void scene_read_file(struct scene *s, const char *path)
 	freadflipu16(&s->num_meshes, sf);
 	assert(s->num_meshes > 0);
 	s->meshes = malloc(sizeof(struct mesh) * s->num_meshes);
-	/**
-	 * FIXME: This will cause a crash later
-	 */
 	for (u16 i = 0; i < s->num_meshes; i++)
 	{
 		const struct node *n = _node_from_mesh_ind(&s->root_node, i);

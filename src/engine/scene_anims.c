@@ -19,10 +19,7 @@ void scene_anims_update(struct scene *s, const u16 index)
 		struct animation *a = s->anims + i;
 
 		if ((a->name[0] - '0') == index)
-		{
-			debugf("Update anim '%s'\n", a->name);
 			animation_update(a);
-		}
 	}
 }
 

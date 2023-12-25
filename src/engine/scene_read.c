@@ -58,8 +58,6 @@ static void _scene_read_mesh(struct scene *s, u16 i)
 	fclose(mf);
 	const u32 id = m->tind == 0xFFFF ? 0 : s->tex_ids[m->tind];
 
-	debugf("mesh=%s, tind=%u, id=%lu\n", m->name, m->tind, id);
-
 	mesh_gen_rspqblock(m, id);
 	m->flags = MESH_IS_ACTIVE;
 }
@@ -110,7 +108,6 @@ void scene_read_file(struct scene *s, const char *path)
 
 		fread(tpath, sizeof(char), TEX_PATH_MAX_LEN, sf);
 		s->tex_ids[i] = texture_create_file(tpath);
-		debugf("%s: %lu\n", tpath, s->tex_ids[i]);
 	}
 
 	fread(&s->num_meshes, sizeof(u16), 1, sf);

@@ -98,10 +98,6 @@ void player_n2o_effect_update(struct player *p)
 	const f32 intens = player_drug_get_intensity(p);
 	f32 womp_vol = lerpf(0.0f, 0.5f, intens);
 
-	debugf("drug_progress=%d, drug_duration=%d, intensity=%f, qty2=%d\n",
-	       p->drug_progress, p->drug_duration, intens,
-	       p->items[ITEM_SELECT_NITROUS].qty2);
-
 	mixer_ch_set_vol(SFXC_MUSIC0, womp_vol, womp_vol);
 	p->drug_progress++;
 }
@@ -121,8 +117,6 @@ void player_n2o_effect_draw(const struct player *p, const surface_t *surf,
 	const f32 tick_cnt_lerp = lerpf(tick_cnt_last, tick_cnt, subtick);
 	const f32 intensity = player_drug_get_intensity(p);
 	const f32 scale = lerpf(1.0f, 1.04f, intensity);
-
-	debugf("%f\n", intensity);
 
 	rdpq_set_mode_standard();
 	rdpq_set_fog_color(RGBA32(0, 0, 0, intensity * 255));

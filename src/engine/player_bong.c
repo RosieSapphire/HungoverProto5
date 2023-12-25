@@ -165,7 +165,6 @@ void player_bong_weed_effect_draw(const struct player *p,
 	const f32 intensity = player_drug_get_intensity(p);
 	const f32 scale = lerpf(1.0f, 1.04f, intensity);
 
-	debugf("%f\n", intensity);
 	rdpq_set_mode_standard();
 	rdpq_set_fog_color(RGBA32(0, 0, 0, intensity * 255));
 	rdpq_mode_blender(RDPQ_BLENDER_ADDITIVE);

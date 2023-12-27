@@ -6,7 +6,10 @@ void scene_debug_node(const struct node *n, const u8 depth)
 {
 	for (u8 i = 0; i < depth; i++)
 		printf("\t");
-	printf("[NODE] name='%s', mesh_ind=%d\n", n->mesh_path, n->mesh_ind);
+
+	printf("[NODE '%s'] mesh_path='%s', mesh_ind=%d\n",
+	       n->name, n->mesh_path, n->mesh_ind);
+
 	for (u16 i = 0; i < n->num_children; i++)
 		scene_debug_node(n->children + i, depth + 1);
 }

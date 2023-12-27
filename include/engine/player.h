@@ -72,6 +72,10 @@ struct player
 	u8 which_drug; ///< Which drug player is on
 	u16 drug_progress; ///< Drug progress
 	u16 drug_duration; ///< Used as a percentage for `drug_progress`
+	u16 area_index_last; ///< Previous Area Index
+	u16 area_index; ///< Current Area Index
+	struct collision_mesh floor_mesh; ///< Floor Collision Mesh
+	struct collision_mesh walls_mesh; ///< Walls Collision Mesh
 };
 
 /**
@@ -85,7 +89,7 @@ struct player
  * @defgroup player_main Player Main Functions
  * @{
  */
-void player_init(const struct scene *s, struct player *p,
+void player_init(struct scene *s, struct player *p,
 		 const u8 items_equipped_flags);
 void player_terminate(struct player *p);
 void player_update(struct scene *s, struct player *p,
@@ -120,8 +124,11 @@ void player_accelerate(struct player *p, const struct input_parms iparms);
  * @defgroup player_collision Player Collision Functions
  * @{
  */
+void player_init_area_node_pointers(struct scene *s, struct player *p);
+void player_init_collision_by_area(struct scene *s, struct player *p);
 void player_collision(const struct collision_mesh *m, struct player *p,
 		      enum collision_type coltype);
+void player_check_area_change(struct scene *s, struct player *p);
 /**
  * @}
  */

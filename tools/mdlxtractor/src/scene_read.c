@@ -45,6 +45,7 @@ void scene_read_mesh(struct mesh *m, const char *mpath)
 
 void scene_read_node(struct scene *s, struct node *n, FILE *f)
 {
+	fread(n->name, 1, CONF_NAME_MAX, f);
 	fread(n->mesh_path, 1, CONF_PATH_MAX, f);
 	freadflipu16(&n->num_children, f);
 	freadflipu16(&n->mesh_ind, f);

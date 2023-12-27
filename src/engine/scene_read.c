@@ -13,6 +13,7 @@
 
 static void _scene_read_node(struct node *n, FILE *f)
 {
+	fread(n->name, sizeof(char), CONF_NAME_MAX, f);
 	fread(n->mesh_path, sizeof(char), CONF_PATH_MAX, f);
 	fread(&n->num_children, sizeof(u16), 1, f);
 	fread(&n->mesh_ind, sizeof(u16), 1, f);

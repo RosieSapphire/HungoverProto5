@@ -17,6 +17,7 @@
 
 #define CONF_NAME_MAX 128 ///< Max name length
 #define CONF_PATH_MAX 128 ///< Max path length
+#define CONF_MAX_NUM_AREAS 128 ///< Max number of areas in a scene
 
 #define CONF_NEAR  0.1f ///< Near plane
 #define CONF_FAR  256 ///< Far plane

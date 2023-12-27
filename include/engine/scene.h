@@ -69,8 +69,6 @@ void scene_anims_set_flags(struct scene *s, u8 flags);
 void scene_anims_set_frame(struct scene *s, u16 frame);
 /**
  * @}
- * @}
- * @}
  */
 
 #endif /* _ENGINE_SCENE_H_ */

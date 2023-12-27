@@ -1,3 +1,4 @@
+#include "engine/util.h"
 #include "engine/vector.h"
 #include "engine/raycast.h"
 #include "engine/player.h"
@@ -5,8 +6,67 @@
 #define HEIGHT 2.1f
 #define GIRTH  1.8f
 
+static u16 num_area_nodes = 0;
+static struct node **area_nodes = NULL;
 static const f32 upward[3] = {0, 1, 0}, downward[3] = {0, -1, 0};
 static const f32 floor_check_extra[3] = {0, 0.5f, 0};
+
+void player_init_area_node_pointers(struct scene *s, struct player *p)
+{
+	if (!area_nodes)
+		area_nodes = malloc(0);
+
+	while (num_area_nodes < CONF_MAX_NUM_AREAS)
+	{
+		char str[16];
+		struct node *n;
+
+		sprintf(str, "Area.%d", num_area_nodes);
+		n = node_children_find(&s->root_node, str);
+
+		if (!n)
+			break;
+
+		area_nodes = realloc(area_nodes,
+				     sizeof(struct node *) * ++num_area_nodes);
+		area_nodes[num_area_nodes - 1] = n;
+	}
+
+	for (u16 i = 0; i < num_area_nodes; i++)
+		node_tree_toggle_meshes(s->meshes, s->num_meshes,
+					area_nodes[i], 0);
+
+	node_tree_toggle_meshes(s->meshes, s->num_meshes,
+				area_nodes[p->area_index], 1);
+}
+
+void player_init_collision_by_area(struct scene *s, struct player *p)
+{
+	char floor_mesh_name[CONF_NAME_MAX];
+	char walls_mesh_name[CONF_NAME_MAX];
+	const struct mesh *floor_mesh;
+	const struct mesh *walls_mesh;
+
+	node_tree_toggle_meshes(s->meshes, s->num_meshes,
+				area_nodes[p->area_index_last], 0);
+	node_tree_toggle_meshes(s->meshes, s->num_meshes,
+				area_nodes[p->area_index], 1);
+
+	snprintf(floor_mesh_name, CONF_NAME_MAX - 1,
+		 "Ground.%d", p->area_index);
+	snprintf(walls_mesh_name, CONF_NAME_MAX - 1,
+		 "Walls.%d", p->area_index);
+	floor_mesh = mesh_get_name(s->meshes, floor_mesh_name, s->num_meshes);
+	walls_mesh = mesh_get_name(s->meshes, walls_mesh_name, s->num_meshes);
+	debugf("%s, %s\n", floor_mesh->name, walls_mesh->name);
+	assertf(floor_mesh, "Floor Mesh not found\n");
+	assertf(walls_mesh, "Wall Mesh not found\n");
+
+	collision_mesh_free(&p->floor_mesh);
+	collision_mesh_free(&p->walls_mesh);
+	collision_mesh_gen(&p->floor_mesh, floor_mesh);
+	collision_mesh_gen(&p->walls_mesh, walls_mesh);
+}
 
 /**
  * Handles Player Collision with Floor Triangle
@@ -113,5 +173,36 @@ void player_collision(const struct collision_mesh *m, struct player *p,
 		 */
 		assertf(coltype < COLTYPE_COUNT, "Invalid Collision Type.\n");
 		(*colfuncs[coltype])(p, v, n, eye, dir, &dist);
+	}
+}
+
+void player_check_area_change(struct scene *s, struct player *p)
+{
+	p->area_index_last = p->area_index;
+
+	for (u16 i = 0; i < num_area_nodes; i++)
+	{
+		f32 dist_vec[3];
+		f32 dist;
+
+		vector_sub(area_nodes[i]->children->trans[3],
+			   p->view.eye, dist_vec, 3);
+		dist = vector_magnitude_sqr(dist_vec, 3);
+
+		if (dist >= 8.0f)
+			continue;
+
+		if (i == p->area_index_last)
+			continue;
+
+      		p->area_index = i;
+		break;
+	}
+
+	if (p->area_index != p->area_index_last)
+	{
+		debugf("Switched from area %u to %u\n",
+	 	       p->area_index_last, p->area_index);
+		player_init_collision_by_area(s, p);
 	}
 }

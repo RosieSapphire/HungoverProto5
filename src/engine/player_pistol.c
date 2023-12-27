@@ -1,6 +1,33 @@
 #include "engine/sfx.h"
 #include "engine/vector.h"
+#include "engine/raycast.h"
 #include "engine/player.h"
+
+/*
+static void _player_pistol_check_hit(struct player *p,
+				     const struct collision_mesh *m)
+{
+	f32 dir[3], eye[3], dist;
+
+	for (u16 i = 0; i < m->num_verts / 3; i++)
+	{
+		vec3 v[3], a, b, n;
+
+		vector_copy(v[0], m->verts[i * 3 + 0], 3);
+		vector_copy(v[1], m->verts[i * 3 + 1], 3);
+		vector_copy(v[2], m->verts[i * 3 + 2], 3);
+
+		vector_sub(v[1], v[0], a, 3);
+		vector_sub(v[2], v[0], b, 3);
+		vector3_cross(a, b, n);
+		vector_normalize(n, 3);
+		vector_copy(eye, p->pos, 3);
+
+		assertf(coltype < COLTYPE_COUNT, "Invalid Collision Type.\n");
+		(*colfuncs[coltype])(p, v, n, eye, dir, &dist);
+	}
+}
+*/
 
 /**
  * Checks if player is using pistol.
@@ -34,6 +61,7 @@ void player_pistol_check_use(struct player *p,
 			(f32)((rand() % 255) - 127) / 128.0f,
 			(f32)((rand() % 255) - 127) / 128.0f},
 			2);
+		// _player_pistol_check_hit(p);
 	}
 	else if (has_reserve && !has_loaded)
 	{

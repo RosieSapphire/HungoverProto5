@@ -12,6 +12,7 @@ void scene_convert_node(const struct scene *s, const char *scnpath,
 	assert(ni);
 	assert(no);
 
+	strncpy(no->name, ni->mName.data, ni->mName.length + 1);
 	if (!ni->mNumMeshes)
 	{
 		strcpy(no->mesh_path, "N/A");

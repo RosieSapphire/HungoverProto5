@@ -48,6 +48,7 @@ void scene_write_mesh_file(const struct mesh *m)
 void scene_write_node(const struct scene *s, const struct node *n,
 		      const char *scnpath, FILE *scnfile)
 {
+	fwrite(n->name, sizeof(char), CONF_NAME_MAX, scnfile);
 	fwrite(n->mesh_path, sizeof(char), CONF_PATH_MAX, scnfile);
 	fwriteflipu16(&n->num_children, scnfile);
 	fwriteflipu16(&n->mesh_ind, scnfile);

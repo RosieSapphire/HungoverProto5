@@ -6,16 +6,13 @@
 #include "engine/vector.h"
 #include "engine/player.h"
 
-static struct collision_mesh floormesh;
-static struct collision_mesh wallsmesh;
-
 /**
  * Initializes a player struct.
  * @param[in] s Scene to initialize into
  * @param[out] p Player structure
  * @param[in] items_equipped_flags Which items player has in inventory
  */
-void player_init(const struct scene *s, struct player *p,
+void player_init(struct scene *s, struct player *p,
 		 const u8 items_equipped_flags)
 {
 	camera_init(&p->view);
@@ -28,16 +25,11 @@ void player_init(const struct scene *s, struct player *p,
 	p->headbob_timer = 0;
 	p->headbob_timer_last = 0;
 	p->item_selected = ITEM_SELECT_NONE;
+	p->area_index_last = 0;
+	p->area_index = 0;
 	player_item_load(p, ITEM_HAS_NONE);
-	const struct mesh *floor_mesh =
-		mesh_get_name(s->meshes, "Ground", s->num_meshes);
-	const struct mesh *walls_mesh =
-		mesh_get_name(s->meshes, "Walls", s->num_meshes);
-	assertf(floor_mesh, "Floor Mesh not found\n");
-	assertf(walls_mesh, "Wall Mesh not found\n");
-
-	collision_mesh_gen(&floormesh, floor_mesh);
-	collision_mesh_gen(&wallsmesh, walls_mesh);
+	player_init_area_node_pointers(s, p);
+	player_init_collision_by_area(s, p);
 }
 
 /**
@@ -70,8 +62,12 @@ void player_update(struct scene *s, struct player *p,
 	player_accelerate(p, iparms);
 	vector_add(p->pos, p->vel, p->pos, 3);
 
-	player_collision(&floormesh, p, COLTYPE_FLOOR);
-	player_collision(&wallsmesh, p, COLTYPE_WALLS);
+	player_check_area_change(s, p);
+	/*
+	 * TODO: Refactor this
+	 */
+	player_collision(&p->floor_mesh, p, COLTYPE_FLOOR);
+	player_collision(&p->walls_mesh, p, COLTYPE_WALLS);
 	vector_copy(p->view.eye, p->pos, 3);
 
 	player_item_check_pickup(s, p);

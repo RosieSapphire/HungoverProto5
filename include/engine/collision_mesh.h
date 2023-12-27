@@ -31,7 +31,18 @@ struct collision_mesh
 	vec3 * verts; ///< Vertices array
 };
 
+/**
+ * @defgroup engine Engine Functions
+ * @{
+ * @defgroup collision_mesh Collision Mesh Functions
+ * @{
+ */
 void collision_mesh_gen(struct collision_mesh *out,
 			const struct mesh *in);
+void collision_mesh_free(struct collision_mesh *m);
+/**
+ * @}
+ * @}
+ */
 
 #endif /* _ENGINE_COLLISSION_MESH_H_ */

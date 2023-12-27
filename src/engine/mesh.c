@@ -109,3 +109,17 @@ struct mesh *mesh_get_name(struct mesh *array,
 
 	return (NULL);
 }
+
+struct mesh *mesh_get_ind(struct mesh *array, const u16 ind,
+			  const u16 num_elem)
+{
+	for (u16 i = 0; i < num_elem; i++)
+	{
+		struct mesh *m = array + i;
+
+		if (i == ind && m)
+			return (m);
+	}
+
+	return (NULL);
+}

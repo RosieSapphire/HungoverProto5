@@ -26,3 +26,16 @@ void collision_mesh_gen(struct collision_mesh *out,
 		vector_copy(po, pi, 3);
 	}
 }
+
+/**
+ * Frees a Collision Mesh for later use
+ * @param[in,out] m Collision Mesh
+ */
+void collision_mesh_free(struct collision_mesh *m)
+{
+	if (!m->verts || !m->num_verts)
+		return;
+
+	m->num_verts = 0;
+	free(m->verts);
+}

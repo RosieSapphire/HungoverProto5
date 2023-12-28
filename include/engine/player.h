@@ -151,6 +151,7 @@ void player_item_draw(const struct player *p, const f32 subtick);
  */
 void player_pistol_check_use(struct player *p,
 			     const struct input_parms iparms);
+void player_pistol_decal_draw(const struct player *p);
 /**
  * @}
  */

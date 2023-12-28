@@ -102,11 +102,13 @@ static void _testroom_render(const f32 subtick)
 		glDisable(GL_DEPTH_TEST);
 		return;
 	}
-
+	player_pistol_decal_draw(&player);
 	player_item_draw(&player, subtick);
-
-	glDisable(GL_DEPTH_TEST);
 	gl_context_end();
+
+	/*
+	 * Drawing UI
+	 */
 	const u8 is_weapon = player.item_selected == ITEM_SELECT_PISTOL;
 	const struct item *item = player.items + player.item_selected;
 

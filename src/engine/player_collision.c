@@ -198,14 +198,11 @@ void player_check_area_change(struct scene *s, struct player *p)
 
 			p->area_index_last = p->area_index;
 			p->area_index = i;
-			if (p->area_index_last == i)
-			{
-				p->area_index_last = p->area_index;
-				p->area_index = tmp;
-			}
-			debugf("%u %u\n",
-			       p->area_index_last,
-			       p->area_index);
+			if (p->area_index_last != i)
+				continue;
+
+			p->area_index_last = p->area_index;
+			p->area_index = tmp;
 			break;
 		}
 	}

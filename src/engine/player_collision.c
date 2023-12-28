@@ -58,7 +58,6 @@ void player_init_collision_by_area(struct scene *s, struct player *p)
 		 "Walls.%d", p->area_index);
 	floor_mesh = mesh_get_name(s->meshes, floor_mesh_name, s->num_meshes);
 	walls_mesh = mesh_get_name(s->meshes, walls_mesh_name, s->num_meshes);
-	debugf("%s, %s\n", floor_mesh->name, walls_mesh->name);
 	assertf(floor_mesh, "Floor Mesh not found\n");
 	assertf(walls_mesh, "Wall Mesh not found\n");
 
@@ -178,7 +177,10 @@ void player_collision(const struct collision_mesh *m, struct player *p,
 
 void player_check_area_change(struct scene *s, struct player *p)
 {
-	p->area_index_last = p->area_index;
+	static u8 has_collided_last;
+	static u8 has_collided;
+
+	has_collided_last = has_collided;
 
 	for (u16 i = 0; i < num_area_nodes; i++)
 	{
@@ -188,21 +190,27 @@ void player_check_area_change(struct scene *s, struct player *p)
 		vector_sub(area_nodes[i]->children->trans[3],
 			   p->view.eye, dist_vec, 3);
 		dist = vector_magnitude_sqr(dist_vec, 3);
+		has_collided = dist < 8.0f;
 
-		if (dist >= 8.0f)
-			continue;
+		if (has_collided && !has_collided_last)
+		{
+			u16 tmp = p->area_index_last;
 
-		if (i == p->area_index_last)
-			continue;
-
-      		p->area_index = i;
-		break;
+			p->area_index_last = p->area_index;
+			p->area_index = i;
+			if (p->area_index_last == i)
+			{
+				p->area_index_last = p->area_index;
+				p->area_index = tmp;
+			}
+			debugf("%u %u\n",
+			       p->area_index_last,
+			       p->area_index);
+			break;
+		}
 	}
+
 
 	if (p->area_index != p->area_index_last)
-	{
-		debugf("Switched from area %u to %u\n",
-	 	       p->area_index_last, p->area_index);
 		player_init_collision_by_area(s, p);
-	}
 }

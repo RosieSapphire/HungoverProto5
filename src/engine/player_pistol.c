@@ -5,7 +5,7 @@
 #include "engine/raycast.h"
 #include "engine/player.h"
 
-static f32 hit_vec[3];
+static f32 hit_pos[3];
 static struct collision_mesh decal_mesh;
 static u16 decal_head = 0;
 
@@ -37,9 +37,9 @@ static void _player_pistol_check_hit(struct player *p)
 
 		if (raycast_triangle(eye, dir, v, &dist))
 		{
-			vector_copy(hit_vec, dir, 3);
-			vector_scale(hit_vec, dist, 3);
-			vector_add(hit_vec, eye, hit_vec, 3);
+			vector_copy(hit_pos, dir, 3);
+			vector_scale(hit_pos, dist, 3);
+			vector_add(hit_pos, eye, hit_pos, 3);
 
 			decal_mesh.num_verts += 3;
 			decal_mesh.verts = realloc(decal_mesh.verts,
@@ -54,23 +54,11 @@ static void _player_pistol_check_hit(struct player *p)
 			vector_normalize(axis_a, 3);
 			vector3_cross(axis_a, n, axis_b);
 
-			vec3 bottom_left = {
-				(hit_vec[0] - 0.5f),
-				(hit_vec[1] - 0.5f),
-				(hit_vec[2] + 0.0f),
-			};
+			vec3 bottom_left, bottom_right, top_middle;
 
-			vec3 bottom_right = {
-				(hit_vec[0] + 0.5f),
-				(hit_vec[1] - 0.5f),
-				(hit_vec[2] + 0.0f),
-			};
-
-			vec3 top_middle = {
-				(hit_vec[0] + 0.0f),
-				(hit_vec[1] + 0.5f),
-				(hit_vec[2] + 0.0f),
-			};
+			vector_add(hit_pos, axis_a, bottom_left, 3);
+			vector_sub(hit_pos, axis_a, bottom_right, 3);
+			vector_add(hit_pos, axis_b, top_middle, 3);
 
 			vector_copy(decal_mesh.verts[vind + 0],
 				    bottom_left, 3);
@@ -133,12 +121,12 @@ void player_pistol_decal_draw(__attribute__((unused))const struct player *p)
 {
 	const struct collision_mesh *m = &decal_mesh;
 
-	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_CULL_FACE);
+	glDisable(GL_DEPTH_TEST);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(3, GL_FLOAT, sizeof(vec3), m->verts);
 	glDrawArrays(GL_TRIANGLES, 0, decal_mesh.num_verts);
 	glDisableClientState(GL_VERTEX_ARRAY);
-	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
 }

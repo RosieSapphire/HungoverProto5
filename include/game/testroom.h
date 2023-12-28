@@ -14,7 +14,7 @@
  */
 enum testroom_flags
 {
-	TR_FREECAM_ENABLED = 0x1, ///<  Whether or not Freecam is Enabled
+	TR_NOCLIP_ENABLED = 0x1, ///< Whether or not Noclip is Enabled
 };
 
 /**

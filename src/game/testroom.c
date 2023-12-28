@@ -60,12 +60,10 @@ enum scene_index testroom_update(struct input_parms iparms)
 	tick_cnt_last = tick_cnt++;
 
 	if (iparms.press.start)
-		testroom_flags ^= TR_FREECAM_ENABLED;
+		testroom_flags ^= TR_NOCLIP_ENABLED;
 
-	if (testroom_flags & TR_FREECAM_ENABLED)
-		camera_update(&cam, iparms);
-	else
-		player_update(&scene, &player, iparms);
+	player_update(&scene, &player, iparms,
+		      (testroom_flags & TR_NOCLIP_ENABLED));
 
 	scene_anims_update(&scene, 0);
 	player_items_update(&player, iparms);
@@ -91,17 +89,8 @@ static void _testroom_render(const f32 subtick)
 	glMatrixMode(GL_MODELVIEW);
 
 	glLoadIdentity();
-	if (testroom_flags & TR_FREECAM_ENABLED)
-		camera_view_matrix_setup(&cam, subtick);
-	else
-		player_camera_view_matrix_setup(&player, subtick);
-
+	player_camera_view_matrix_setup(&player, subtick);
 	scene_draw(&scene, subtick, 0);
-	if (testroom_flags & TR_FREECAM_ENABLED)
-	{
-		glDisable(GL_DEPTH_TEST);
-		return;
-	}
 	player_pistol_decal_draw(&player);
 	player_item_draw(&player, subtick);
 	gl_context_end();

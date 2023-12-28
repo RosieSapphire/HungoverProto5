@@ -49,7 +49,7 @@ void player_terminate(struct player *p)
  * @param[in] iparms Input Parameters
  */
 void player_update(struct scene *s, struct player *p,
-		   const struct input_parms iparms)
+		   const struct input_parms iparms, const u8 ignore_collision)
 {
 	vector_copy(p->view.angles_last, p->view.angles, 2);
 	vector_copy(p->view.eye_last, p->view.eye, 3);
@@ -63,11 +63,11 @@ void player_update(struct scene *s, struct player *p,
 	vector_add(p->pos, p->vel, p->pos, 3);
 
 	player_check_area_change(s, p);
-	/*
-	 * TODO: Refactor this
-	 */
-	player_collision(&p->floor_mesh, p, COLTYPE_FLOOR);
-	player_collision(&p->walls_mesh, p, COLTYPE_WALLS);
+	if (!ignore_collision)
+	{
+		player_collision(&p->floor_mesh, p, COLTYPE_FLOOR);
+		player_collision(&p->walls_mesh, p, COLTYPE_WALLS);
+	}
 	vector_copy(p->view.eye, p->pos, 3);
 
 	player_item_check_pickup(s, p);

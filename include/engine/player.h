@@ -93,7 +93,7 @@ void player_init(struct scene *s, struct player *p,
 		 const u8 items_equipped_flags);
 void player_terminate(struct player *p);
 void player_update(struct scene *s, struct player *p,
-		   const struct input_parms iparms);
+		   const struct input_parms iparms, const u8 ignore_collision);
 /**
  * @}
  */

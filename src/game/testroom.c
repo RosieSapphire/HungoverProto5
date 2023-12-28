@@ -10,6 +10,7 @@
 #include "engine/camera.h"
 #include "engine/crosshair.h"
 #include "engine/ui.h"
+#include "engine/decal.h"
 #include "engine/player.h"
 
 #include "game/testroom.h"
@@ -91,7 +92,7 @@ static void _testroom_render(const f32 subtick)
 	glLoadIdentity();
 	player_camera_view_matrix_setup(&player, subtick);
 	scene_draw(&scene, subtick, 0);
-	player_pistol_decal_draw(&player);
+	decal_buffer_draw();
 	player_item_draw(&player, subtick);
 	gl_context_end();
 

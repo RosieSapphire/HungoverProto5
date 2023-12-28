@@ -1,13 +1,8 @@
-#include <GL/gl.h>
-
 #include "engine/sfx.h"
 #include "engine/vector.h"
 #include "engine/raycast.h"
+#include "engine/decal.h"
 #include "engine/player.h"
-
-static f32 hit_pos[3];
-static struct collision_mesh decal_mesh;
-static u16 decal_head = 0;
 
 static void _player_pistol_check_hit(struct player *p)
 {
@@ -32,42 +27,16 @@ static void _player_pistol_check_hit(struct player *p)
 		vector_normalize(n, 3);
 		vector_copy(eye, p->pos, 3);
 
-		if (!decal_mesh.verts)
-			decal_mesh.verts = malloc(0);
+		if (!raycast_triangle(eye, dir, v, &dist))
+			continue;
 
-		if (raycast_triangle(eye, dir, v, &dist))
-		{
-			vector_copy(hit_pos, dir, 3);
-			vector_scale(hit_pos, dist, 3);
-			vector_add(hit_pos, eye, hit_pos, 3);
+		vec3 hit_pos;
 
-			decal_mesh.num_verts += 3;
-			decal_mesh.verts = realloc(decal_mesh.verts,
-						   sizeof(struct vertex) *
-						   decal_mesh.num_verts);
-			decal_head++;
-			const u16 vind = (decal_head - 1) * 3;
-			f32 axis_a[3];
-			f32 axis_b[3];
-
-			vector_copy(axis_a, a, 3);
-			vector_normalize(axis_a, 3);
-			vector3_cross(axis_a, n, axis_b);
-
-			vec3 bottom_left, bottom_right, top_middle;
-
-			vector_add(hit_pos, axis_a, bottom_left, 3);
-			vector_sub(hit_pos, axis_a, bottom_right, 3);
-			vector_add(hit_pos, axis_b, top_middle, 3);
-
-			vector_copy(decal_mesh.verts[vind + 0],
-				    bottom_left, 3);
-			vector_copy(decal_mesh.verts[vind + 1],
-				    bottom_right, 3);
-			vector_copy(decal_mesh.verts[vind + 2],
-				    top_middle, 3);
-			break;
-		}
+		vector_copy(hit_pos, dir, 3);
+		vector_scale(hit_pos, dist, 3);
+		vector_add(hit_pos, eye, hit_pos, 3);
+		decal_add(hit_pos, n, a);
+		break;
 	}
 }
 
@@ -115,18 +84,4 @@ void player_pistol_check_use(struct player *p,
 		mixer_ch_set_vol(SFXC_ITEM0, 0.5f, 0.5f);
 		wav64_play(&pistol_click_sfx, SFXC_ITEM0);
 	}
-}
-
-void player_pistol_decal_draw(__attribute__((unused))const struct player *p)
-{
-	const struct collision_mesh *m = &decal_mesh;
-
-	glDisable(GL_CULL_FACE);
-	glDisable(GL_DEPTH_TEST);
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(3, GL_FLOAT, sizeof(vec3), m->verts);
-	glDrawArrays(GL_TRIANGLES, 0, decal_mesh.num_verts);
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
 }

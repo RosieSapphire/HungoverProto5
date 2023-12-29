@@ -73,6 +73,13 @@ void decal_add(const f32 *hit_pos, const f32 *normal, f32 *angle1)
 	memcpy(decals_vertex_buffer[vind + 2].col, white, 4);
 }
 
+void decal_buffer_wipe(void)
+{
+	decal_head = 0;
+	decals_vertex_buffer_count = 0;
+	decals_vertex_buffer = realloc(decals_vertex_buffer, 0);
+}
+
 void decal_buffer_draw(void)
 {
 	glDisable(GL_CULL_FACE);

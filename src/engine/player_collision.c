@@ -1,6 +1,7 @@
 #include "engine/util.h"
 #include "engine/vector.h"
 #include "engine/raycast.h"
+#include "engine/decal.h"
 #include "engine/player.h"
 
 #define HEIGHT 2.1f
@@ -196,6 +197,7 @@ void player_check_area_change(struct scene *s, struct player *p)
 		{
 			u16 tmp = p->area_index_last;
 
+			decal_buffer_wipe();
 			p->area_index_last = p->area_index;
 			p->area_index = i;
 			if (p->area_index_last != i)
@@ -207,7 +209,8 @@ void player_check_area_change(struct scene *s, struct player *p)
 		}
 	}
 
+	if (p->area_index == p->area_index_last)
+		return;
 
-	if (p->area_index != p->area_index_last)
-		player_init_collision_by_area(s, p);
+	player_init_collision_by_area(s, p);
 }

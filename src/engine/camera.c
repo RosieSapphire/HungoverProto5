@@ -49,8 +49,8 @@ void camera_update(struct camera *c, const struct input_parms iparms)
 	vector_sub(focus, c->eye, forw, 3);
 	vector_normalize(forw, 3);
 	vector3_cross(forw, (f32[3]) {0, 1, 0}, side);
-	vector_scale(forw, move_forw * go_fast, 3);
-	vector_scale(side, move_side * go_fast, 3);
+	vector_scale(forw, move_forw * go_fast, forw, 3);
+	vector_scale(side, move_side * go_fast, side, 3);
 
 	vector_copy(c->eye_last, c->eye, 3);
 	vector_add(move, forw, move, 3);
@@ -71,6 +71,17 @@ void camera_get_focus_now(const struct camera *c, f32 *out)
 	out[0] += cosf(c->angles[0]) * cospl;
 	out[1] += sinf(c->angles[1]);
 	out[2] += sinf(c->angles[0]) * cospl;
+}
+
+void camera_get_focus_now_offset(const struct camera *c,
+				 f32 *out, const f32 *angle_offset)
+{
+	const f32 cospl = cosf(c->angles[1] + angle_offset[1]);
+
+	vector_copy(out, c->eye, 3);
+	out[0] += cosf(c->angles[0] + angle_offset[0]) * cospl;
+	out[1] += sinf(c->angles[1] + angle_offset[1]);
+	out[2] += sinf(c->angles[0] + angle_offset[0]) * cospl;
 }
 
 /**

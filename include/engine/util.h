@@ -12,6 +12,7 @@
 
 #define TO_RADIANS (PI / 180.0f) ///< Multiply to convert to radians
 #define TO_DEGREES (180.0f / PI) ///< Multiply to convert to degrees
+#define SQRT_3 (1.73205080756887729353f) ///< Square Root of 3
 
 /*
  * Base

@@ -28,6 +28,8 @@ struct camera
 void camera_init(struct camera *c);
 void camera_update(struct camera *c, const struct input_parms iparms);
 void camera_get_focus_now(const struct camera *c, f32 *out);
+void camera_get_focus_now_offset(const struct camera *c,
+				 f32 *out, const f32 *angle_offset);
 void camera_get_focus_lerp(f32 *eye_lerp, f32 *angles_lerp, f32 *out);
 void camera_view_matrix_setup(const struct camera *c, f32 subtick);
 /**

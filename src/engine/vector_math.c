@@ -33,14 +33,15 @@ void vector_sub(const f32 *a, const f32 *b, f32 *c, const u8 comp)
 
 /**
  * Scales a vector by a scalar
- * @param[in,out] x Vector
+ * @param[in] Input Vector
  * @param[in] s Scalar
+ * @param[out] Output Vector
  * @param[in] comp Number of Components
  */
-void vector_scale(f32 *x, f32 s, const u8 comp)
+void vector_scale(const f32 *in, f32 s, f32 *out, const u8 comp)
 {
 	for (int i = 0; i < comp; i++)
-		x[i] = x[i] * s;
+		out[i] = in[i] * s;
 }
 
 /**

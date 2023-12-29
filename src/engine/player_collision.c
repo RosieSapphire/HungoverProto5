@@ -86,7 +86,7 @@ static void _player_collision_floor(struct player *p, vec3 *v, vec3 n,
 		return;
 
 	vector_copy(dir, n, 3);
-	vector_scale(dir, -1, 3);
+	vector_scale(dir, -1, dir, 3);
 	if (!raycast_triangle(eye, dir, v, dist))
 		return;
 
@@ -100,7 +100,7 @@ static void _player_collision_floor(struct player *p, vec3 *v, vec3 n,
 		push = fmaxf(push, 0);
 
 	vector_copy(push_vec, n, 3);
-	vector_scale(push_vec, push, 3);
+	vector_scale(push_vec, push, push_vec, 3);
 	vector_add(p->pos, push_vec, p->pos, 3);
 }
 
@@ -119,7 +119,7 @@ static void _player_collision_walls(struct player *p, vec3 *v, vec3 n,
 	f32 push_vec[3], push;
 
 	vector_copy(dir, n, 3);
-	vector_scale(dir, -1, 3);
+	vector_scale(dir, -1, dir, 3);
 	if (!raycast_triangle(eye, dir, v, dist))
 		return;
 
@@ -130,7 +130,7 @@ static void _player_collision_walls(struct player *p, vec3 *v, vec3 n,
 	 */
 	push = fmaxf(push_amnt, 0);
 	vector_copy(push_vec, n, 3);
-	vector_scale(push_vec, push, 3);
+	vector_scale(push_vec, push, push_vec, 3);
 	vector_add(p->pos, push_vec, p->pos, 3);
 }
 

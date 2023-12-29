@@ -8,6 +8,7 @@
 #include "engine/texture.h"
 #include "engine/ui.h"
 #include "engine/sfx.h"
+#include "engine/decal.h"
 #include "engine/util.h"
 
 #include "game/title.h"
@@ -69,6 +70,8 @@ static void _init(void)
 	glFrontFace(GL_CCW);
 
 	projection_setup();
+	
+	decals_load();
 
 	(*load_funcs[scene_index])();
 }

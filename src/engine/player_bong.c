@@ -140,7 +140,7 @@ void player_bong_weed_effect_update(struct player *p,
 		cough_timer = 12 + (rand() % 16);
 		p->recoil_dir[0] = ((f32)(rand() % 512) / 512.0f) - 0.5f;
 		p->recoil_dir[1] = -1;
-		vector_scale(p->recoil_dir, cough_percent, 2);
+		vector_scale(p->recoil_dir, cough_percent, p->recoil_dir, 2);
 		p->recoil_amnt = (f32)(rand() % 256) * 0.01f;
 
 		mixer_ch_set_vol(SFXC_PLAYER, 0.5f, 0.5f);

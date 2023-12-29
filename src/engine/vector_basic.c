@@ -41,3 +41,13 @@ void vector_print(f32 *x, const u8 comp)
 		debugf("%f ", x[i]);
 	debugf("\n");
 }
+
+void vector3_rotate_z(f32 *in, float angle, f32 *out)
+{
+	const f32 costheta = cos(angle * TO_RADIANS);
+	const f32 sintheta = sin(angle * TO_RADIANS);
+
+	out[0] = in[0] * costheta - in[1] * sintheta;
+	out[1] = in[0] * sintheta + in[1] * costheta;
+	out[2] = in[2];
+}

@@ -6,10 +6,13 @@
 
 static void _player_pistol_check_hit(struct player *p)
 {
-	f32 dir[3] = {0}, eye[3] = {0}, focus[3] = {0}, dist;
+	f32 dir[3] = {0}, eye[3] = {0}, focus[3] = {0}, dist, recoil[2];
+
+	vector_copy(recoil, p->recoil_dir, 3);
+	vector_scale(recoil, p->recoil_amnt, recoil, 3);
 
 	vector_copy(eye, p->view.eye, 3);
-	camera_get_focus_now(&p->view, focus);
+	camera_get_focus_now_offset(&p->view, focus, recoil);
 	vector_sub(focus, eye, dir, 3);
 	vector_normalize(dir, 3);
 
@@ -33,7 +36,7 @@ static void _player_pistol_check_hit(struct player *p)
 		vec3 hit_pos;
 
 		vector_copy(hit_pos, dir, 3);
-		vector_scale(hit_pos, dist, 3);
+		vector_scale(hit_pos, dist, hit_pos, 3);
 		vector_add(hit_pos, eye, hit_pos, 3);
 		decal_add(hit_pos, n, a);
 		break;
@@ -67,12 +70,12 @@ void player_pistol_check_use(struct player *p,
 		scene_anims_set_frame(&pistol->s, 0);
 		mixer_ch_set_vol(SFXC_ITEM1, 0.8f, 0.8f);
 		wav64_play(&pistol_fire_sfx, SFXC_ITEM1);
+		_player_pistol_check_hit(p);
 		p->recoil_amnt += 0.2f;
 		vector_copy(p->recoil_dir, (f32[2]) {
 			(f32)((rand() % 255) - 127) / 128.0f,
 			(f32)((rand() % 255) - 127) / 128.0f},
 			2);
-		_player_pistol_check_hit(p);
 	}
 	else if (has_reserve && !has_loaded)
 	{

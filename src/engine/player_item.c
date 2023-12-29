@@ -231,7 +231,7 @@ void player_item_draw(const struct player *p, const f32 subtick)
 		     fabsf(cosf(headbob_timer_lerp) * velmag_lerp * 0.5f), 0);
 	vector_lerp(p->turn_offset_last, p->turn_offset,
 		    subtick, turn_offset_lerp, 2);
-	vector_scale(turn_offset_lerp, 0.35f, 2);
+	vector_scale(turn_offset_lerp, 0.35f, turn_offset_lerp, 2);
 
 	glTranslatef(-turn_offset_lerp[0], -turn_offset_lerp[1], 0);
 	glRotatef(-90, 0, 1, 0);

@@ -27,7 +27,7 @@ void player_friction(struct player *p)
 	if (newspeed < 0.001f)
 		newspeed = 0;
 	newspeed /= speed;
-	vector_scale(p->vel, newspeed, 3);
+	vector_scale(p->vel, newspeed, p->vel, 3);
 }
 
 /**
@@ -47,17 +47,17 @@ void player_accelerate(struct player *p, const struct input_parms iparms)
 	forw[1] = 0.0f;
 	vector_normalize(forw, 3);
 	vector3_cross(forw, (f32[3]) {0, 1, 0}, side);
-	vector_scale(forw, move_forw, 3);
-	vector_scale(side, move_side, 3);
+	vector_scale(forw, move_forw, forw, 3);
+	vector_scale(side, move_side, side, 3);
 	vector_add(accel, forw, accel, 3);
 	vector_add(accel, side, accel, 3);
 	vector_normalize(accel, 3);
-	vector_scale(accel, ACCEL_RATE * go_fast, 3);
+	vector_scale(accel, ACCEL_RATE * go_fast, accel, 3);
 	f32 velmagsqr = vector_magnitude_sqr(p->vel, 3);
 	const f32 maxvelsqr = MAX_VEL * MAX_VEL * go_fast;
 
 	if (velmagsqr > maxvelsqr)
-		vector_scale(p->vel, maxvelsqr / velmagsqr, 3);
+		vector_scale(p->vel, maxvelsqr / velmagsqr, p->vel, 3);
 
 	vector_add(p->vel, accel, p->vel, 3);
 

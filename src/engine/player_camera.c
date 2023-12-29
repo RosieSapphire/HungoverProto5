@@ -21,7 +21,7 @@ void player_camera_view_matrix_setup(const struct player *p,
 		lerpf(p->recoil_amnt_last, p->recoil_amnt, subtick);
 
 	vector_copy(recoil_vec, p->recoil_dir, 2);
-	vector_scale(recoil_vec, recoil_amnt_lerp, 2);
+	vector_scale(recoil_vec, recoil_amnt_lerp, recoil_vec, 2);
 
 	vector_lerp(p->view.eye_last, p->view.eye,
 		    subtick, eye_lerp, 3);
@@ -53,7 +53,7 @@ static void _player_camera_turn_offset_update(struct player *p)
 		if (newturn < 0.001f)
 			newturn = 0;
 		newturn /= turn_off_mag;
-		vector_scale(p->turn_offset, newturn, 2);
+		vector_scale(p->turn_offset, newturn, p->turn_offset, 2);
 	}
 	else
 	{
@@ -64,7 +64,8 @@ static void _player_camera_turn_offset_update(struct player *p)
 	const f32 turn_off_max = 1.0f;
 
 	if (turn_off_mag > turn_off_max)
-		vector_scale(p->turn_offset, turn_off_max / turn_off_mag, 2);
+		vector_scale(p->turn_offset, turn_off_max / turn_off_mag,
+			     p->turn_offset, 2);
 }
 
 /**

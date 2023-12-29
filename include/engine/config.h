@@ -11,6 +11,8 @@
 #define CONF_HEIGHT 240 ///< Viewport height
 #define CONF_ASPECT ((float)CONF_WIDTH / (float)CONF_HEIGHT) ///< Aspect ratio
 
+#define CONF_DECAL_MAX 128 ///< Maximum number of decals
+
 #define CONF_TICKRATE 24 ///< Update tickrate
 #define CONF_DELTATIME (1.0f / (float)CONF_TICKRATE) ///< Update deltatime
 #define CONF_DELTATICKS (CONF_DELTATIME * TICKS_PER_SECOND) ///< Update dticks

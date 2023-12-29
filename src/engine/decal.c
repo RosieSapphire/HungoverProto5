@@ -12,7 +12,7 @@
 static const u8 white[4] = {0xFF, 0xFF, 0xFF, 0xFF};
 
 static u16 decals_vertex_buffer_count;
-static u16 decal_head;
+static s16 decal_head;
 static struct vertex *decals_vertex_buffer;
 
 static u32 decal_bullet_hole_id;
@@ -28,14 +28,23 @@ void decal_add(const f32 *hit_pos, const f32 *normal, f32 *angle1)
 	if (!decals_vertex_buffer)
 		decals_vertex_buffer = malloc(0);
 
-	decals_vertex_buffer_count += 3;
-	decals_vertex_buffer = realloc(decals_vertex_buffer,
-				       sizeof(struct vertex) *
-				       decals_vertex_buffer_count);
+	if (decals_vertex_buffer_count < CONF_DECAL_MAX * 3)
+	{
+		decals_vertex_buffer_count += 3;
+		decals_vertex_buffer = realloc(decals_vertex_buffer,
+					       sizeof(struct vertex) *
+					       decals_vertex_buffer_count);
+	}
+
 	decal_head++;
-	const u16 vind = (decal_head - 1) * 3;
+	if (decal_head > CONF_DECAL_MAX)
+		decal_head = 1;
+
+	s16 vind = (decal_head - 1) * 3;
+
 	f32 angle2[3];
 
+	debugf("%d\n", vind / 3);
 	vector_normalize(angle1, 3);
 	vector3_cross(angle1, normal, angle2);
 	vec3 bottom_left, bottom_right, top_middle;

@@ -11,11 +11,14 @@
 #include "engine/crosshair.h"
 #include "engine/ui.h"
 #include "engine/decal.h"
+#include "engine/particles.h"
 #include "engine/player.h"
 
 #include "game/testroom.h"
 
 static surface_t *color_buffer, depth_buffer;
+
+static struct particle_emitter emitter_test;
 
 static struct scene scene;
 static struct camera cam;
@@ -36,6 +39,7 @@ void testroom_load(void)
 	scene_read_file(&scene, "rom:/Test.scn");
 	player_init(&scene, &player, ITEM_HAS_NONE);
 	crosshair_block = crosshair_rspq_block_gen(7);
+	particle_emitter_init(&emitter_test, 2, (f32[3]) {3, 3, 3});
 	tick_cnt_last = 0;
 	tick_cnt = 0;
 }
@@ -49,6 +53,7 @@ void testroom_unload(void)
 	rspq_block_free(crosshair_block);
 	rspq_block_free(weed_high_block);
 	surface_free(&depth_buffer);
+	particle_emitter_terminate(&emitter_test);
 }
 
 /**
@@ -68,6 +73,7 @@ enum scene_index testroom_update(struct input_parms iparms)
 
 	scene_anims_update(&scene, 0);
 	player_items_update(&player, iparms);
+	particle_emitter_update(&emitter_test);
 
 	ui_timer_update();
 
@@ -93,6 +99,7 @@ static void _testroom_render(const f32 subtick)
 	player_camera_view_matrix_setup(&player, subtick);
 	scene_draw(&scene, subtick, 0);
 	decal_buffer_draw();
+	particle_emitter_draw(&emitter_test, subtick);
 	player_item_draw(&player, subtick);
 	gl_context_end();
 

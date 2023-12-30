@@ -22,6 +22,7 @@ int clampi(int x, int min, int max);
 f32 lerpf(f32 a, f32 b, f32 t);
 f32 smoothf(f32 a, f32 b, f32 t);
 f32 wrapf(f32 x, f32 max);
+f32 randf01(void);
 
 /*
  * Trig

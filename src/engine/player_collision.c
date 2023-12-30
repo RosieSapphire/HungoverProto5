@@ -57,6 +57,7 @@ void player_init_collision_by_area(struct scene *s, struct player *p)
 		 "Ground.%d", p->area_index);
 	snprintf(walls_mesh_name, CONF_NAME_MAX - 1,
 		 "Walls.%d", p->area_index);
+	debugf("%s, %s\n", floor_mesh_name, walls_mesh_name);
 	floor_mesh = mesh_get_name(s->meshes, floor_mesh_name, s->num_meshes);
 	walls_mesh = mesh_get_name(s->meshes, walls_mesh_name, s->num_meshes);
 	assertf(floor_mesh, "Floor Mesh not found\n");

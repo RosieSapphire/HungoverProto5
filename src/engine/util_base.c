@@ -2,6 +2,7 @@
  * @file src/engine/util_base.c
  */
 
+#include <stdlib.h>
 #include <GL/gl.h>
 
 #include "engine/config.h"
@@ -80,4 +81,11 @@ f32 wrapf(f32 x, f32 max)
 		x -= max;
 
 	return (x);
+}
+
+f32 randf01(void)
+{
+	const u16 intermediate = rand() & 0xFFFF;
+
+	return ((f32)intermediate / (f32)0xFFFF);
 }

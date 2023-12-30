@@ -49,7 +49,8 @@ static void _player_pistol_check_hit(struct player *p)
  * @param[in] iparms Input Parameters
  */
 void player_pistol_check_use(struct player *p,
-			     const struct input_parms iparms)
+			     const struct input_parms iparms,
+			     struct particle_emitter *emitter)
 {
 	struct item *pistol = p->items + 0;
 
@@ -76,6 +77,7 @@ void player_pistol_check_use(struct player *p,
 			(f32)((rand() % 255) - 127) / 128.0f,
 			(f32)((rand() % 255) - 127) / 128.0f},
 			2);
+		particle_emitter_spawn(emitter);
 	}
 	else if (has_reserve && !has_loaded)
 	{

@@ -72,7 +72,7 @@ enum scene_index testroom_update(struct input_parms iparms)
 		      (testroom_flags & TR_NOCLIP_ENABLED));
 
 	scene_anims_update(&scene, 0);
-	player_items_update(&player, iparms);
+	player_items_update(&player, iparms, &emitter_test);
 	particle_emitter_update(&emitter_test);
 
 	ui_timer_update();

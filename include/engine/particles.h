@@ -2,12 +2,14 @@
 #define _ENGINE_PARTICLES_H_
 
 #include "engine/types.h"
+#include "engine/config.h"
 
 struct particle
 {
 	f32 pos_last[3];
 	f32 pos[3];
 	f32 vel[3];
+	u16 lifetime;
 };
 
 struct particle_emitter
@@ -22,6 +24,7 @@ struct particle_emitter
 
 void particle_emitter_init(struct particle_emitter *e,
 			   const u16 emit_timer_max, const f32 *pos);
+void particle_emitter_spawn(struct particle_emitter *e);
 void particle_emitter_update(struct particle_emitter *e);
 void particle_emitter_draw(const struct particle_emitter *e,
 			   const f32 subtick);

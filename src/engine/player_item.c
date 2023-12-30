@@ -3,6 +3,7 @@
 #include "engine/sfx.h"
 #include "engine/util.h"
 #include "engine/vector.h"
+#include "engine/particles.h"
 #include "engine/player.h"
 
 static const s8 item_has_flags[ITEM_COUNT] = {
@@ -24,7 +25,8 @@ static const char *item_paths[ITEM_COUNT] = {
 };
 
 static void (*item_use_funcs[ITEM_COUNT])(struct player *,
-					  const struct input_parms) = {
+					  const struct input_parms,
+					  struct particle_emitter *) = {
 	player_pistol_check_use,
 	player_bong_check_use,
 	player_n2o_check_use,
@@ -179,7 +181,8 @@ static void _player_item_check_switching(struct player *p,
 /*
  * TODO: Rename this to player_recoil_update or something
  */
-void player_items_update(struct player *p, const struct input_parms iparms)
+void player_items_update(struct player *p, const struct input_parms iparms,
+			 struct particle_emitter *emitter)
 {
 	p->recoil_amnt_last = p->recoil_amnt;
 
@@ -190,7 +193,7 @@ void player_items_update(struct player *p, const struct input_parms iparms)
 	 */
 	if (p->item_selected != ITEM_SELECT_NONE)
 	{
-		(*item_use_funcs[p->item_selected])(p, iparms);
+		(*item_use_funcs[p->item_selected])(p, iparms, emitter);
 		item_anim_update(p->items + p->item_selected);
 	}
 

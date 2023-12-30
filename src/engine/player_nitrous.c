@@ -8,7 +8,8 @@
  * @param[in] p Player to Check
  * @param[in] iparms Input Parameters
  */
-void player_n2o_check_use(struct player *p, const struct input_parms iparms)
+void player_n2o_check_use(struct player *p, const struct input_parms iparms,
+			  __attribute__((unused))struct particle_emitter *e)
 {
 	struct item *n2o = p->items + ITEM_SELECT_NITROUS;
 

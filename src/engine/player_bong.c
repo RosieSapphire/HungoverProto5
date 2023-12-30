@@ -14,7 +14,8 @@ static wav64_t *cough_sfx[9] = {
  * @param[in,out] p Player
  * @param[in] iparms Input Parameters
  */
-void player_bong_check_use(struct player *p, const struct input_parms iparms)
+void player_bong_check_use(struct player *p, const struct input_parms iparms,
+			   __attribute__((unused))struct particle_emitter *e)
 {
 	struct item *bong = p->items + 1;
 

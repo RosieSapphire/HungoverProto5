@@ -7,6 +7,7 @@
 
 #include "engine/camera.h"
 #include "engine/item.h"
+#include "engine/particles.h"
 #include "engine/collision_mesh.h"
 
 #define BONG_USAGE_TIMER_MAX 56 ///< Maximum usage timer for bong
@@ -139,7 +140,8 @@ void player_check_area_change(struct scene *s, struct player *p);
  */
 void player_item_load(struct player *p, const u8 flags_last);
 void player_item_check_pickup(struct scene *s, struct player *p);
-void player_items_update(struct player *p, const struct input_parms iparms);
+void player_items_update(struct player *p, const struct input_parms iparms,
+			 struct particle_emitter *emitter);
 void player_item_draw(const struct player *p, const f32 subtick);
 /**
  * @}
@@ -150,7 +152,8 @@ void player_item_draw(const struct player *p, const f32 subtick);
  * @{
  */
 void player_pistol_check_use(struct player *p,
-			     const struct input_parms iparms);
+			     const struct input_parms iparms,
+			     struct particle_emitter *emitter);
 void player_pistol_decal_draw(const struct player *p);
 /**
  * @}
@@ -160,7 +163,8 @@ void player_pistol_decal_draw(const struct player *p);
  * @defgroup player_weed Player Weed Functions
  * @{
  */
-void player_bong_check_use(struct player *p, const struct input_parms iparms);
+void player_bong_check_use(struct player *p, const struct input_parms iparms,
+			   struct particle_emitter *emitter);
 u16 player_bong_cough_setup(struct player *p);
 void player_bong_weed_effect_update(struct player *p,
 				    const u16 num_coughs_max);
@@ -175,7 +179,8 @@ void player_bong_weed_effect_draw(const struct player *p,
  * @defgroup player_nitrous Player Nitrous Functions
  * @{
  */
-void player_n2o_check_use(struct player *p, const struct input_parms iparms);
+void player_n2o_check_use(struct player *p, const struct input_parms iparms,
+			  struct particle_emitter *emitter);
 void player_n2o_trip_setup(struct player *p);
 void player_n2o_effect_update(struct player *p);
 void player_n2o_effect_draw(const struct player *p, const surface_t *surf,

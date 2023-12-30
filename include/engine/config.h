@@ -12,6 +12,7 @@
 #define CONF_ASPECT ((float)CONF_WIDTH / (float)CONF_HEIGHT) ///< Aspect ratio
 
 #define CONF_DECAL_MAX 32 ///< Maximum number of decals
+#define CONF_PARTICLE_MAX_LIFETIME 8 ///< Maximum lifetime of a single particle
 
 #define CONF_TICKRATE 24 ///< Update tickrate
 #define CONF_DELTATIME (1.0f / (float)CONF_TICKRATE) ///< Update deltatime

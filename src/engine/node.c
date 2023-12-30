@@ -61,6 +61,9 @@ void node_tree_toggle_meshes(struct mesh *meshes, const u16 num_meshes,
 	if (!(m = mesh_get_ind(meshes, start->mesh_ind, num_meshes)))
 		goto check_children;
 
+	if (!strncmp("PU.", m->name, 3))
+		goto check_children;
+
 	if (toggle)
 		m->flags |= MESH_IS_ACTIVE;
 	else

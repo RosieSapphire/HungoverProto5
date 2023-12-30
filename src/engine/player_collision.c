@@ -188,6 +188,9 @@ void player_check_area_change(struct scene *s, struct player *p)
 		f32 dist_vec[3];
 		f32 dist;
 
+		if (i == 0)
+			continue;
+
 		vector_sub(area_nodes[i]->children->trans[3],
 			   p->view.eye, dist_vec, 3);
 		dist = vector_magnitude_sqr(dist_vec, 3);
@@ -195,16 +198,19 @@ void player_check_area_change(struct scene *s, struct player *p)
 
 		if (has_collided && !has_collided_last)
 		{
-			u16 tmp = p->area_index_last;
-
 			decal_buffer_wipe();
+			if (i == p->area_index)
+			{
+				const u16 tmp = p->area_index_last;
+
+				p->area_index_last = i;
+				p->area_index = tmp;
+				debugf("%u, %u\n", p->area_index_last, p->area_index);
+				break;
+			}
 			p->area_index_last = p->area_index;
 			p->area_index = i;
-			if (p->area_index_last != i)
-				continue;
-
-			p->area_index_last = p->area_index;
-			p->area_index = tmp;
+			debugf("%u, %u\n", p->area_index_last, p->area_index);
 			break;
 		}
 	}

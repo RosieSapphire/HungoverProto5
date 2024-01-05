@@ -4,7 +4,8 @@
 #include "engine/decal.h"
 #include "engine/player.h"
 
-static void _player_pistol_check_hit(struct player *p)
+static void _player_pistol_check_hit(struct player *p,
+				     struct particle_emitter *emitter)
 {
 	f32 dir[3] = {0}, eye[3] = {0}, focus[3] = {0}, dist, recoil[2];
 
@@ -35,10 +36,12 @@ static void _player_pistol_check_hit(struct player *p)
 
 		vec3 hit_pos;
 
-		vector_copy(hit_pos, dir, 3);
-		vector_scale(hit_pos, dist, hit_pos, 3);
+		vector_scale(dir, dist, hit_pos, 3);
 		vector_add(hit_pos, eye, hit_pos, 3);
 		decal_add(hit_pos, n, a);
+
+		for (u16 j = 0; j < 3; j++)
+			particle_emitter_spawn(emitter, hit_pos, n);
 		break;
 	}
 }
@@ -71,13 +74,12 @@ void player_pistol_check_use(struct player *p,
 		scene_anims_set_frame(&pistol->s, 0);
 		mixer_ch_set_vol(SFXC_ITEM1, 0.8f, 0.8f);
 		wav64_play(&pistol_fire_sfx, SFXC_ITEM1);
-		_player_pistol_check_hit(p);
+		_player_pistol_check_hit(p, emitter);
 		p->recoil_amnt += 0.2f;
 		vector_copy(p->recoil_dir, (f32[2]) {
 			(f32)((rand() % 255) - 127) / 128.0f,
 			(f32)((rand() % 255) - 127) / 128.0f},
 			2);
-		particle_emitter_spawn(emitter);
 	}
 	else if (has_reserve && !has_loaded)
 	{

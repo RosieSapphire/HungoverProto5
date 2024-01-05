@@ -39,7 +39,7 @@ void testroom_load(void)
 	scene_read_file(&scene, "rom:/Test.scn");
 	player_init(&scene, &player, ITEM_HAS_NONE);
 	crosshair_block = crosshair_rspq_block_gen(7);
-	particle_emitter_init(&emitter_test, 2, (f32[3]) {3, 3, 3});
+	particle_emitter_init(&emitter_test, 0, NULL);
 	tick_cnt_last = 0;
 	tick_cnt = 0;
 }
@@ -73,7 +73,7 @@ enum scene_index testroom_update(struct input_parms iparms)
 
 	scene_anims_update(&scene, 0);
 	player_items_update(&player, iparms, &emitter_test);
-	particle_emitter_update(&emitter_test);
+	particle_emitter_update(&emitter_test, &player.floor_mesh);
 
 	ui_timer_update();
 

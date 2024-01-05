@@ -57,7 +57,6 @@ void player_init_collision_by_area(struct scene *s, struct player *p)
 		 "Ground.%d", p->area_index);
 	snprintf(walls_mesh_name, CONF_NAME_MAX - 1,
 		 "Walls.%d", p->area_index);
-	debugf("%s, %s\n", floor_mesh_name, walls_mesh_name);
 	floor_mesh = mesh_get_name(s->meshes, floor_mesh_name, s->num_meshes);
 	walls_mesh = mesh_get_name(s->meshes, walls_mesh_name, s->num_meshes);
 	assertf(floor_mesh, "Floor Mesh not found\n");
@@ -81,28 +80,26 @@ void player_init_collision_by_area(struct scene *s, struct player *p)
 static void _player_collision_floor(struct player *p, vec3 *v, vec3 n,
 				    vec3 eye, vec3 dir, f32 *dist)
 {
-	f32 push_vec[3], push;
 
 	vector_add(eye, floor_check_extra, eye, 3);
 	if (vector_dot(n, upward, 3) < 0.0f)
 		return;
 
-	vector_copy(dir, n, 3);
-	vector_scale(dir, -1, dir, 3);
+	vector_scale(n, -1, dir, 3);
 	if (!raycast_triangle(eye, dir, v, dist))
 		return;
 
 	const f32 push_amnt = HEIGHT - *dist + 0.5f;
+	f32 push_vec[3];
 
 	/*
 	 * If you're on a slope, it will snap you to it
 	 */
-	push = push_amnt;
+	f32 push = push_amnt;
 	if (vector_dot(dir, downward, 3) == 1.0f)
 		push = fmaxf(push, 0);
 
-	vector_copy(push_vec, n, 3);
-	vector_scale(push_vec, push, push_vec, 3);
+	vector_scale(n, push, push_vec, 3);
 	vector_add(p->pos, push_vec, p->pos, 3);
 }
 
@@ -120,19 +117,14 @@ static void _player_collision_walls(struct player *p, vec3 *v, vec3 n,
 {
 	f32 push_vec[3], push;
 
-	vector_copy(dir, n, 3);
-	vector_scale(dir, -1, dir, 3);
+	vector_scale(n, -1, dir, 3);
 	if (!raycast_triangle(eye, dir, v, dist))
 		return;
 
 	const f32 push_amnt = GIRTH - *dist;
 
-	/*
-	 * If you're on a slope, it will snap you to it
-	 */
 	push = fmaxf(push_amnt, 0);
-	vector_copy(push_vec, n, 3);
-	vector_scale(push_vec, push, push_vec, 3);
+	vector_scale(n, push, push_vec, 3);
 	vector_add(p->pos, push_vec, p->pos, 3);
 }
 
@@ -206,12 +198,10 @@ void player_check_area_change(struct scene *s, struct player *p)
 
 				p->area_index_last = i;
 				p->area_index = tmp;
-				debugf("%u, %u\n", p->area_index_last, p->area_index);
 				break;
 			}
 			p->area_index_last = p->area_index;
 			p->area_index = i;
-			debugf("%u, %u\n", p->area_index_last, p->area_index);
 			break;
 		}
 	}

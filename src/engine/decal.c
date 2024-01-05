@@ -44,7 +44,6 @@ void decal_add(const f32 *hit_pos, const f32 *normal, f32 *angle1)
 
 	f32 angle2[3];
 
-	debugf("%d\n", vind / 3);
 	vector_normalize(angle1, 3);
 	vector3_cross(angle1, normal, angle2);
 	vec3 bottom_left, bottom_right, top_middle;
